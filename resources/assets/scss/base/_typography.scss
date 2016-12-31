@@ -1,0 +1,50 @@
+/**
+* Este archivo permite configurar los siguientes items:
+* 	- Tipo de fuente a utilizar
+*   - Color de la fuente
+*	- Tamaño de la fuente
+*   - El peso de la fuente(font-weight)
+*   - Margenes
+*   - Alto de la linea(line-height)
+*/
+
+// Importación de fuentes desde Google Fonts
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,600');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
+// Typography
+$font-family-sans-serif: "Source Sans Pro", sans-serif;
+$font-size-base        : 14px;
+$line-height-base      : 1.6;
+
+// Variables para aplicarlas en font-weight
+ $light      : 300;
+ $normal     : 400;
+ $semi-bold  : 600;
+ $bold       : 700;
+ $extra-bold : 800;
+
+// ESTILOS DE ENCABEZADOS
+ $header--font-family    : 'Raleway', sans-serif;  // Fuente para los headers (h1,h2,h3,h4,h5,h6)
+ $header--font-weight    : $normal;               // Grosor de fuente para los headers
+ $header--text-transform : normal;                // normal, uppercase, lowercase, capitalize
+ $header--color          : #444444;               // Color predeterminado de los header
+
+// TAMAÑO DE LOS ENCABEZADOS (h1,h2,h3,h4,h5,h6)
+ $h1--font-size : 2em;
+ $h2--font-size : 1.7em;
+ $h3--font-size : 1.4em;
+ $h4--font-size : 1.2em;
+ $h5--font-size : 0.9em;
+ $h6--font-size : 0.8em;
+
+// ESTIILOS DE ENLACES
+ $link--color 	  : lighten($color-primary, 15%);  // Color para los enlaces
+ $text-decoration : none;    // Decoración de los enlaces
+
+// ESTILOS DE PÁRRAFOS
+ $p--font-size     : 1em;     // Tamaño de fuente
+ $p--line-height   : 1.5;     // Altura de línea
+ $p--margin-bottom : 1em;  	  // Separación entre un párrafo y el siguiente -> margin-bottom
+ $p--font-weight   : $normal; // Grosor predeterminado de la fuente
+ $p--text-align    : justify; // Alineación del Texto

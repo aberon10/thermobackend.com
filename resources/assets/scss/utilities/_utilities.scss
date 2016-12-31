@@ -1,0 +1,22 @@
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}
+
+.bold {
+    font-weight: $bold;
+}
+
+.center {
+	text-align: center;
+}
+
+.divider {
+	width: 100%;
+	height: 1px;
+	display: block;
+	background: $border-color;
+}

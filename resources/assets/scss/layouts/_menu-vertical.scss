@@ -1,0 +1,102 @@
+// Sidebar 
+.sidebar {
+	position: fixed;
+
+	top: 0;
+
+	left: 0;
+
+	width: 230px;
+
+	min-height: 100vh;
+
+	background: $sidebar-bg-color;
+
+	&__header {
+		padding: .5em;
+
+		height: 60px;
+
+		border-bottom: 1px solid rgba(#fff, .1);
+
+		cursor: pointer;
+		.app-logo {
+			height: 100%;
+
+			width: 100%;
+
+			display: flex;
+
+			justify-content: space-around;
+
+			align-items: center;
+
+			&__name {
+				h3 {
+					color: #fff;
+					.icon {
+						top: 0;
+
+						margin-left: .2em;
+					}
+				}
+			}
+		}
+
+		&:hover {
+			background: rgba(#fff, .1);
+		}
+	}
+
+	ul {
+		list-style: none;
+
+		padding: 0;
+	}
+
+	.menu-vertical {
+		&__item {}
+
+		&__link {
+			color: #fff;
+
+			padding: .5em .9em;
+
+			text-decoration: none;
+
+			display: block;
+
+			width: 100%;
+
+			&:hover {
+				background: rgba(#fff, .1);
+			}
+		}
+
+		&__submenu {
+			position: relative;
+			background: $submenu-bg-color;
+			a {
+				padding-left: 2.5em;
+				color: rgba(#FFF, 0.6);
+				&:hover {
+					background: transparent;
+					color: #FFF;
+				}
+			}
+		}
+
+		.item-selected {
+			color: $alice-blue;
+			background: $submenu-bg-color;
+			font-size: 1.1em;
+			.divider {
+				background: rgba(#FFF, 0.1);
+			}
+
+			&:hover {
+				background: $submenu-bg-color;
+			}
+		}
+	}
+}

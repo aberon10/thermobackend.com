@@ -1,0 +1,253 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "iconos";
+  src:url("fonts/iconos.eot");
+  src:url("fonts/iconos.eot?#iefix") format("embedded-opentype"),
+    url("fonts/iconos.woff") format("woff"),
+    url("fonts/iconos.ttf") format("truetype"),
+    url("fonts/iconos.svg#iconos") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "iconos" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "iconos" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-calendar:before {
+  content: "\ca";
+}
+.icon-show-password:before {
+  content: "\64";
+}
+.icon-hide-password:before {
+  content: "\65";
+}
+.icon-user:before {
+  content: "\67";
+}
+.icon-lock-password:before {
+  content: "\61";
+}
+.icon-download:before {
+  content: "\6c";
+}
+.icon-sign-out:before {
+  content: "\6e";
+}
+.icon-close:before {
+  content: "\78";
+}
+.icon-clipboard-pencil:before {
+  content: "\63";
+}
+.icon-bars:before {
+  content: "\41";
+}
+.icon-check:before {
+  content: "\42";
+}
+.icon-facebook-square:before {
+  content: "\69";
+}
+.icon-shuffle:before {
+  content: "\74";
+}
+.icon-reload:before {
+  content: "\7a";
+}
+.icon-sort-desc:before {
+  content: "\43";
+}
+.icon-search:before {
+  content: "\45";
+}
+.icon-cart-plus:before {
+  content: "\47";
+}
+.icon-plus:before {
+  content: "\48";
+}
+.icon-user-add:before {
+  content: "\49";
+}
+.icon-configuration:before {
+  content: "\4a";
+}
+.icon-music:before {
+  content: "\4b";
+}
+.icon-hourglass:before {
+  content: "\4e";
+}
+.icon-clock:before {
+  content: "\50";
+}
+.icon-play-circle:before {
+  content: "\52";
+}
+.icon-list:before {
+  content: "\53";
+}
+.icon-list-ul:before {
+  content: "\54";
+}
+.icon-disabled-volume:before {
+  content: "\55";
+}
+.icon-home:before {
+  content: "\58";
+}
+.icon-disc:before {
+  content: "\5a";
+}
+.icon-add-list:before {
+  content: "\59";
+}
+.icon-chat:before {
+  content: "\31";
+}
+.icon-bubble-comment-streamline-talk:before {
+  content: "\33";
+}
+.icon-help:before {
+  content: "\36";
+}
+.icon-trash:before {
+  content: "\37";
+}
+.icon-dollar:before {
+  content: "\38";
+}
+.icon-config:before {
+  content: "\39";
+}
+.icon-torso:before {
+  content: "\21";
+}
+.icon-users:before {
+  content: "\22";
+}
+.icon-google:before {
+  content: "\23";
+}
+.icon-refresh:before {
+  content: "\24";
+}
+.icon-contact:before {
+  content: "\25";
+}
+.icon-star:before {
+  content: "\4d";
+}
+.icon-note:before {
+  content: "\26";
+}
+.icon-users-2:before {
+  content: "\28";
+}
+.icon-file-add:before {
+  content: "\29";
+}
+.icon-save:before {
+  content: "\2a";
+}
+.icon-arrow-up-1:before {
+  content: "\2b";
+}
+.icon-edit:before {
+  content: "\2c";
+}
+.icon-upload-cloud:before {
+  content: "\2d";
+}
+.icon-arrow-circle-right:before {
+  content: "\2e";
+}
+.icon-like:before {
+  content: "\2f";
+}
+.icon-notification:before {
+  content: "\30";
+}
+.icon-arrows-h:before {
+  content: "\32";
+}
+.icon-picture-oexpand:before {
+  content: "\3e";
+}
+.icon-expand:before {
+  content: "\3f";
+}
+.icon-chart-pie:before {
+  content: "\40";
+}
+.icon-chevron-down:before {
+  content: "\5b";
+}
+.icon-chevron-left:before {
+  content: "\5d";
+}
+.icon-chevron-right:before {
+  content: "\5e";
+}
+.icon-chevron-up:before {
+  content: "\5f";
+}
+.icon-google-plus-square:before {
+  content: "\62";
+}
+.icon-user-plus:before {
+  content: "\66";
+}
+.icon-pie-chart:before {
+  content: "\68";
+}
+.icon-paperclip:before {
+  content: "\6a";
+}
+.icon-music-1:before {
+  content: "\6b";
+}
+.icon-folder-open:before {
+  content: "\6d";
+}
+.icon-folder-open-o:before {
+  content: "\6f";
+}
+.icon-folder-o:before {
+  content: "\44";
+}
+.icon-folder:before {
+  content: "\46";
+}
+.icon-film:before {
+  content: "\4c";
+}
+.icon-at:before {
+  content: "\4f";
+}

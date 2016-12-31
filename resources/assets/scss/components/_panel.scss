@@ -1,0 +1,88 @@
+.main-container {
+    margin-left: 230px;
+}
+
+.panel-container {
+    @include from(m) {
+        @include grid(div, 3);
+    }
+}
+
+.panel {
+    margin-bottom: 22px;
+
+    border: 1px solid $panel-default-border;
+
+    border-radius: 3px;
+
+    background-color: #fff;
+
+    box-shadow: 0 1px 1px rgba(#fff, .5);
+
+    min-width: 320px;
+
+    overflow: hidden;
+
+    width: 100%;
+
+    &.panel-small {
+        max-width: 360px;
+
+        margin: .5em auto;
+    }
+
+    &.panel-middle {
+        margin: .5em auto;
+
+        max-width: 800px;
+    }
+
+    &__heading {
+        padding: 6px 15px;
+
+        font-size: 1.1em;
+
+        border-color: $panel-default-border;
+
+        border-bottom: 1px solid $panel-default-border;
+
+        border-top-left-radius: 3px;
+
+        border-top-right-radius: 3px;
+
+        background-color: #fff;
+
+        // Colores de la cabezera 
+        &.heading-green {
+        }
+    }
+
+    &__body {
+        padding: 20px;
+    }
+
+    // Paneles de colores 
+    &.panel-green {
+        border-color: $color-success;
+        .panel__heading {
+            border-color: $color-success;
+
+            background: lighten($color-success, 30%);
+
+            color: $color-success;
+
+            font-weight: $bold;
+        }
+    }
+
+    &.panel-blue {
+        border-color: $color-primary;
+        .panel__heading {
+            border-color: $color-primary;
+
+            background: lighten($color-primary, 30%);
+
+            color: $color-primary;
+        }
+    }
+}

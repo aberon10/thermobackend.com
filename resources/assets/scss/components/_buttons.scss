@@ -1,0 +1,48 @@
+.button {
+     @include button(#DDD, $text-color, radius);
+
+    transition: all 0.3s ease;
+
+    font-size: 1.1em;
+
+    text-decoration: none;
+    text-align: center;
+
+    &-full {
+        display: block;
+        width: 100%;
+    }
+    
+    &-center {
+        display: block;
+        margin: 0.5em; 
+    }
+    
+    &:hover {
+        color: #333;
+    }   
+    
+    &.button-blue {
+        color: #FFF;        
+        background: $color-primary;
+
+        &:hover {
+            background: darken($color-primary, 10%);
+            color: #FFF;
+        }
+
+        &.gradient {
+            background-image: linear-gradient(to bottom, lighten($color-primary, 10%), $color-primary );
+
+            &:hover {
+                background-image: linear-gradient(to bottom, lighten($color-primary, 6%), darken($color-primary, 5%) );
+            }
+        }
+    }
+
+    // icons
+    .icon {
+        top: 3px;
+        right: 4px;
+    }
+}
