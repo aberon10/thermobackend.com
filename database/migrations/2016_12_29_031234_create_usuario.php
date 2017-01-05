@@ -15,7 +15,7 @@ class CreateUsuario extends Migration
     {
         Schema::create('usuario', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            
+
             $table->increments('id_usuario');
             $table->unsignedInteger('id_tipo_usuario');
             $table->string('usuario', 30)->unique();

@@ -1,13 +1,41 @@
+// Colors class
+.primary {
+	color: $color-primary !important;
+}
+
+.info {
+	color: $color-info !important;
+}
+
+.error {
+	color: $color-error !important;
+}
+
+.danger {
+	color: $color-danger !important;
+}
+
+.warning {
+	color: $color-warning !important;
+}
+.success {
+	color: $color-success !important;
+}
+
+.alice {
+	color: $alice-blue;
+}
+
 .float-right {
-    float: right;
+	float: right;
 }
 
 .float-left {
-    float: left;
+	float: left;
 }
 
 .bold {
-    font-weight: $bold;
+	font-weight: $bold;
 }
 
 .center {
@@ -16,7 +44,43 @@
 
 .divider {
 	width: 100%;
+
 	height: 1px;
+
 	display: block;
+
 	background: $border-color;
+}
+
+// other classes
+.bg-facebook {
+	background-color: $facebook !important;
+}
+
+.color-facebook {
+	color: $facebook !important;
+}
+
+.bg-googlemas {
+	background-color: $googlemas !important;
+}
+
+.color-googlemas {
+	color: $googlemas !important;
+}
+
+.show {
+	display: block;
+}
+
+.hide {
+	display: none;
+}
+
+.reduce-size {
+	transform: scale(.95);
+}
+
+.zoom {
+	transform: scale(1.2);
 }

@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Hash;
 use DB;
 
 class LoginController extends Controller
-{   
+{
 
     /**
-     * showLoginForm 
-     * 
+     * showLoginForm
+     *
      * @return \Illuminate\Http\Response
      */
     public function showLoginForm()
@@ -34,15 +34,17 @@ class LoginController extends Controller
         ], [
             'usuario.required' => 'Ingresa tu nombre de usuario',
             'pass.required'    => 'Ingresa tu contraseña'
-        ]); 
-        
+        ]);
+
         $userdata = Usuario::where('usuario', $request->usuario)->first();
 
+        var_dump($userdata);
+
         if ($userdata != null) {
-            // comparo el hash con el password ingresado   
+            // comparo el hash con el password ingresado
             if (Hash::check($request->pass, $userdata->pass)) {
-                    
-                // creo una sesion 
+
+                // creo una sesion
                 $request->session()->regenerate();
 
                 $request->session()->put('user', $request->usuario);

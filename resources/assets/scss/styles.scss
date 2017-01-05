@@ -13,6 +13,11 @@ $max-width: 1600px;
 @import 'components/_form';
 @import 'components/_buttons';
 @import 'components/_buttons';
+@import 'components/_indicators.scss';
+@import 'components/_table.scss';
+@import 'components/_bar-loading';
 
 @import 'layouts/_header';
+@import 'layouts/_footer';
 @import 'layouts/_menu-vertical';
+@import 'layouts/_preview';

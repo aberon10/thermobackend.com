@@ -1,5 +1,6 @@
 .main-container {
     margin-left: 230px;
+	margin-bottom: 100px;
 }
 
 .panel-container {
@@ -52,7 +53,7 @@
 
         background-color: #fff;
 
-        // Colores de la cabezera 
+        // Colores de la cabezera
         &.heading-green {
         }
     }
@@ -61,7 +62,7 @@
         padding: 20px;
     }
 
-    // Paneles de colores 
+    // Paneles de colores
     &.panel-green {
         border-color: $color-success;
         .panel__heading {

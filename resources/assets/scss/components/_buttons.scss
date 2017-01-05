@@ -8,22 +8,24 @@
     text-decoration: none;
     text-align: center;
 
+    margin: 0;
+
     &-full {
         display: block;
         width: 100%;
     }
-    
+
     &-center {
         display: block;
-        margin: 0.5em; 
+        margin: 0.5em;
     }
-    
+
     &:hover {
         color: #333;
-    }   
-    
+    }
+
     &.button-blue {
-        color: #FFF;        
+        color: #FFF;
         background: $color-primary;
 
         &:hover {
@@ -37,6 +39,16 @@
             &:hover {
                 background-image: linear-gradient(to bottom, lighten($color-primary, 6%), darken($color-primary, 5%) );
             }
+        }
+    }
+
+    &.button-alice {
+	    color: #FFF;
+        background: $alice-blue;
+
+        &:hover {
+            background: darken($alice-blue, 20%);
+            color: #FFF;
         }
     }
 

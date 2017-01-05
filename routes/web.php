@@ -18,4 +18,11 @@ Route::get('/home', 'HomeController@index');
 Route::get('/login', 'LoginController@showLoginForm');
 Route::post('/login', 'LoginController@authenticate');
 
+// Dashboard
 Route::get('/dashboard', 'DashboardController@index');
+
+// Genres
+Route::get('/genres', 'GenresController@index');
+Route::get('/genres/add', 'GenresController@showFormAddGenre');
+Route::post('/genres/add', 'GenresController@add');
+

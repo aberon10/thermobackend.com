@@ -15,7 +15,7 @@
 
     <!-- Icons -->
     <link href="{{url('css/icons/icons.css')}}" rel="stylesheet">
-    
+
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -24,20 +24,20 @@
     </script>
 </head>
 <body>
-    
+
     {{-- Header --}}
     @section('header')
         <header class="main-header">
-            <div class="">ThermoBackend</div>   
-            @if (session('user'))                
+            <div class="">ThermoBackend</div>
+            @if (session('user'))
                 {{-- Submenu preferences --}}
                  <nav class="main-nav">
                     <ul class="main-menu">
-                        <li>              
-                            <img src="{{url('images/avatars/user.jpg')}}" alt="" class="avatar">              
+                        <li>
+                            <img src="{{asset('storage/avatars/user.jpg')}}" alt="" class="avatar">
                             <a href="#" class="dropdown">
                                 {{session('user')}} <span class="icon icon-sort-desc"></span>
-                            </a>    
+                            </a>
                             <ul class="main-submenu">
                                 <li><a href="#">Mi Perfil</a></li>
                                 <li><a href="#">Ayuda</a></li>
@@ -47,18 +47,21 @@
                         </li>
                     </ul>
                 </nav>
-            @else 
+            @else
                 <nav class="main-nav">
                     <ul class="main-menu">
                         <li><a href="{{url('/login')}}">Login</a></li>
                     </ul>
                 </nav>
             @endif
-            
+
         </header>
     @show
 
-    @yield('content')
-    @yield('menuapp')
+    @yield('content') {{-- Contenido principal --}}
+    @yield('menuapp') {{-- Menu vertical --}}
+    @yield('footerapp') {{-- Pie de página --}}
+
+    @yield('scripts') {{-- Scripts JS --}}
 </body>
 </html>

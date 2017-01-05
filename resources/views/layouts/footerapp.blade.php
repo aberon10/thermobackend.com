@@ -1,8 +1,13 @@
 @section('footerapp')
 	<footer class="main-footer">
-		<div class="float-right main-footer__buttons">
-			<a href="#" class="button">Cancelar</a>
-			<a href="#" class="button button-blue">Guardar cambios</a>
+		<span id="help-block" class="help-block {{ $errors->first('message') ? 'error' : '' }}">
+			@if ($errors->has('message'))
+				{{$errors->first('message')}}
+			@endif
+		</span>
+		<div class="float-right">
+			<a href="#" id="@yield('id_button_cancel')" class="button">Cancelar</a>
+			<a href="#" id="@yield('id_button_accept')" class="button button-alice">Guardar cambios</a>
 		</div>
 	</footer>
-@show
+@endsection

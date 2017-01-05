@@ -1,89 +1,101 @@
 .form {
-    padding: 15px;
+	padding: 15px;
 
-    .form-group {
-        margin: 0 0 1.2em;
+	.form-group {
+		margin: 0 0 1.2em;
 
-        // Validation errors
-        &.error {
-            // input
-            .input {
-                border-color: $color-error;
-            }
+		// Validation errors
+		&.error {
+			// input
+			.input {
+				border-color: $color-error;
+			}
 
-            // message error
-            .message,
-            .label {
-                color: $color-error;
-            }
-        }
-    }
+			// message error
+			.message,
+			.label {
+				color: $color-error;
+			}
+		}
+	}
 
-    .input {
-        display: block;
+	.input {
+		display: block;
 
-        width: 100%;
+		border-radius: 3px;
 
-        height: 36px;
+		width: 100%;
 
-        padding: 6px 12px;
+		height: 36px;
 
-        color: $input-color;
+		padding: 6px 12px;
 
-        border: 1px solid darken($border-color, 10%);
+		color: $input-color;
 
-        outline: none;
+		border: 1px solid darken($border-color, 10%);
 
-        background-color: $body-bg;
+		outline: none;
 
-        box-shadow: inset 0 1px 1px rgba(#fff, .5);
-        &:focus {
-            border-color: lighten($color-primary, 15%);
+		box-shadow: inset 0 1px 1px rgba(#fff, .5);
+		&:focus {
+			border-color: lighten($color-primary, 15%);
 
-            background: #fff;
-        }
+			background: #fff;
+		}
 
-        // Placeholder
-        &::-webkit-input-placeholder {
-            color: $input-color-placeholder;
-        }
+		// Placeholder
+		&::-webkit-input-placeholder {
+			color: $input-color-placeholder;
+		}
 
-        &:-moz-placeholder {
-            /* Firefox 18- */
-            color: $input-color-placeholder;
-        }
+		&:-moz-placeholder {
+			/* Firefox 18- */
+			color: $input-color-placeholder;
+		}
 
-        &::-moz-placeholder {
-            /* Firefox 19+ */
-            color: $input-color-placeholder;
-        }
+		&::-moz-placeholder {
+			/* Firefox 19+ */
+			color: $input-color-placeholder;
+		}
 
-        &:-ms-input-placeholder {
-            color: $input-color-placeholder;
-        }
-    }
+		&:-ms-input-placeholder {
+			color: $input-color-placeholder;
+		}
 
-    .label {
-        padding: 1em 0;
+		&:disabled {
+			background-color: $body-bg;
+		}
+	}
 
-        font-size: 1.1em;
-    }
+	.label {
+		padding: 1em 0;
+
+		font-size: 1.1em;
+	}
+
+	textarea {
+		resize: vertical;
+
+		min-height: 36px;
+
+		max-height: 120px !important;
+	}
 }
 
 label.checkbox {
-    cursor: pointer;
-    input {
-        position: relative;
+	cursor: pointer;
+	input {
+		position: relative;
 
-        top: 3px;
+		top: 3px;
 
-        margin-right: 6px;
-    }
+		margin-right: 6px;
+	}
 }
 
 // messages
 .message {
-    margin: 5px 0;
+	margin: 5px 0;
 
-    color: $color-info;
+	color: $color-info;
 }
