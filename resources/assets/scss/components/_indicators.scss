@@ -1,0 +1,84 @@
+.indicators-container {
+	@include from(m) {
+		@include grid(div, 2);
+
+		margin-bottom: 0;
+	}
+
+	@include from(l) {
+		@include grid(div, 4);
+	}
+}
+
+.indicator {
+	border: 1px solid $panel-default-border;
+
+	border-radius: 3px;
+
+	background-color: #ccc;
+
+	color: #fff;
+
+	box-shadow: 0 1px 1px rgba($panel-default-border, .5);
+
+	display: flex;
+
+	justify-content: space-between;
+
+	align-items: center;
+
+	padding: 1em;
+
+	overflow: hidden;
+
+	font-weight: bold;
+
+	transition: all .3s;
+
+	@include to(m) {
+		margin-bottom: 1em;
+	}
+
+	&__logo {
+		font-size: 2.5em;
+	}
+
+	&__number {
+		font-size: 3em;
+	}
+
+	// indicators colors
+	&.indicator-alice-blue {
+		background: $alice-blue !important;
+
+		border-color: $alice-blue;
+		&:hover {
+			background: darken($alice-blue, 5%);
+		}
+	}
+
+	&.indicator-default {
+		background: $panel-default-border;
+		&:hover {
+			background: darken($panel-default-border, 5%);
+		}
+	}
+
+	&.indicator-facebook {
+		background-color: $facebook;
+
+		border-color: $facebook;
+		&:hover {
+			background: darken($facebook, 5%);
+		}
+	}
+
+	&.indicator-googlemas {
+		background-color: $googlemas;
+
+		border-color: $googlemas;
+		&:hover {
+			background: darken($googlemas, 5%);
+		}
+	}
+}

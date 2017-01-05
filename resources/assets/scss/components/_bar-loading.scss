@@ -1,0 +1,13 @@
+.loading {
+	height: 3px;
+
+	display: none;
+
+	background: $alice-blue;
+
+	margin: 1em auto;
+
+	width: 0;
+
+	transition: all .3s ease;
+}
