@@ -52,6 +52,16 @@
         }
     }
 
+    &.button-error {
+	    color: #FFF;
+        background: lighten($color-error, 5%);
+
+        &:hover {
+            background: darken($color-error, 5%);
+            color: #FFF;
+        }
+    }
+
     // icons
     .icon {
         top: 3px;

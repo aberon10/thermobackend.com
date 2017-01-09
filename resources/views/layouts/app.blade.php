@@ -61,6 +61,7 @@
     @yield('content') {{-- Contenido principal --}}
     @yield('menuapp') {{-- Menu vertical --}}
     @yield('footerapp') {{-- Pie de página --}}
+    @yield('footerlist') {{-- Pie de página de los listados--}}
 
     @yield('scripts') {{-- Scripts JS --}}
 </body>

@@ -25,4 +25,9 @@ Route::get('/dashboard', 'DashboardController@index');
 Route::get('/genres', 'GenresController@index');
 Route::get('/genres/add', 'GenresController@showFormAddGenre');
 Route::post('/genres/add', 'GenresController@add');
+Route::get('/genres/edit/{id}', 'GenresController@edit');
+Route::post('/genres/update/{id}', 'GenresController@update');
+Route::post('/genres/delete', 'GenresController@delete');
+
+
 

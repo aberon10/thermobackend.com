@@ -31,6 +31,12 @@
 
 	tbody {
 		display: table-row-group;
+
+		tr {
+			&:hover {
+				background: $bg-table-striped;
+			}
+		}
 	}
 
 	thead {

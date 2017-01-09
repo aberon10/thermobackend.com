@@ -15,7 +15,11 @@ Utilities.checkColorHEX = function(color) {
 	}
 };
 
-
+/**
+ * checkNameEntities
+ * @param  {String} nameEntity
+ * @return {Boolean}
+ */
 Utilities.checkNameEntities = function(nameEntity) {
 	if (/^[A-Za-z-ÁÉÍÓÚÑáéíóúñ0-9\_\&\-\.\s]{2,60}$/.test(nameEntity)) {
 		return true;
@@ -24,15 +28,4 @@ Utilities.checkNameEntities = function(nameEntity) {
 	}
 };
 
-/**
- * messageForm
- *
- * Objeto con los mensajes utilizados en los formularios.
- * @type {Object}
- */
-var messageForm = {
-	error_form   : "Por favor, Comprueba los errores",
-	success_form : "Enviado con exito.",
-	required     : "El campo es requerido.",
-	error_name   : "El nombre ingresado no es valido.",
-};
+

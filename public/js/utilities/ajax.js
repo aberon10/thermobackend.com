@@ -9,8 +9,8 @@ var Ajax = {};
  * @type {Object}
  */
 Ajax.headers = {
-	form     : "application/x-www-form-urlencoded",
-	form_data: "multipart/form-data"
+	form : "application/x-www-form-urlencoded",
+	json : "application/json"
 };
 
 /**
@@ -49,15 +49,13 @@ Ajax.init = function() {
  * @param  {String}   			responseType
  * @param  {Function} 			callback
  * @param  {String || Object}   data
- * @param  {Boolean}   		    file
+ * @param  {String}   			typeData
  * @return {undefined}
  */
-Ajax.send = function(url, method, responseType, callback, data, file) {
+Ajax.send = function(url, method, responseType, callback, data, typeData) {
 
 	// create new object XMLHttpRequest
 	var http = Ajax.init();
-
-	console.log("UNSET: " + http.readyState);
 
 	try {
 		// check url
@@ -70,13 +68,6 @@ Ajax.send = function(url, method, responseType, callback, data, file) {
 			method = 'GET';
 		} else if ((typeof data === 'object' && data.constructor === 'FormData') || (typeof data !== 'string')) {
            	method = 'POST';
-
-           	// send file
-           	if (file) {
-           		http.setRequestHeader('Content-Type', Ajax.FormData);
-			} else if (typeof data !== 'string') {
-				http.setRequestHeader('Content-Type', Ajax.form);
-			}
         }
 
 		// check callback
@@ -84,63 +75,52 @@ Ajax.send = function(url, method, responseType, callback, data, file) {
             throw 'La función no es valida';
 		}
 
-		// check data
-		if (!data || (typeof data !== 'string' && data.constructor !== FormData)) {
-			data = null;
-		}
-
 		// create request
 		http.open(method, url, true);
 		http.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 
-        console.log("OPENED: " + this.readyState);
+		if (typeData) {
+			switch (typeData) {
+				case "json":
+					http.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+					break;
+				default:
+			}
+		} else {
+			throw "No se indico el tipo de dato a enviar";
+		}
 
-
-		if (!responseType) {
-			responseType = "text";
-		} else if (responseType !== "arraybuffer" && responseType !== "blob" && responseType !== "document" && responseType !== "json") {
+		if (responseType !== "arraybuffer" &&
+			responseType !== "blob" &&
+			responseType !== "document" &&
+			responseType !== "json" &&
+			responseType !== "text") {
 			throw "El tipo de respuesta indicado no es valido.";
 		}
 
-		http.responseType = "text"; // set a responseType
+		http.responseType = responseType; // set a responseType
 
         // An EventHandler that is called whenever the readyState attribute changes
         http.onreadystatechange = function() {
-        	if (this.readyState === this.HEADERS_RECEIVED) {
-        		console.log("HEADERS: " + this.getAllResponseHeaders());
-        	} else if (this.readyState.DONE && this.status === 200) {
-
-        		console.log("DONE: " + this.readyState);
-        		console.log("RESPONSE: " + this.response);
-        		console.log("RESPONSE TEXT: " + this.responseText);
-
-
-        	} else if (this.readyState.DONE && this.status !== 200) {
-        		console.log("RESPONSE: " + this.responseText);
-        		console.log("STATUS: " + this.status);
-        		console.log("STATUS TEXT: " + this.statusText);
+        	if (this.status === 422 || (this.readyState === this.DONE && this.status === 200)) {
+        		callback(this.response);
         	}
         };
 
-        //
+    	//
         http.onprogress = function() {
-        	console.log("LOADING: " + this.readyState);
+        	// console.log("LOADING: " + this.readyState);
         };
 
         //
-        http.onabort = function() {
-
-        };
+        http.onabort = function() {};
 
         //
-        http.onerror = function() {
-
-        };
+        http.onerror = function() {};
 
         http.send(data);
 
 	} catch(error) {
-		// statements
 		console.log(error);
 	}
 };

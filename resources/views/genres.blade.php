@@ -7,7 +7,6 @@
     <div class="ed-container">
         <div class="ed-item">
             <div class="main-container">
-
 				{{-- Table of Genres --}}
 				<div class="panel">
 					<div class="panel__heading">
@@ -18,27 +17,25 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Nombre Genero</th>
-									<th>Fecha he creacion</th>
-									<th>Ultima actualizacion</th>
-									<th>#</th>
+									<th>Nombre Género</th>
+									<th>Fecha he creación</th>
+									<th>Ultima actualización</th>
+									<th class="center">
+										<input type="checkbox" name="" value="" class="hide" id="delete-all">
+										<label for="delete-all"><span class="icon-trash error"></span></label>
+									</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>Metal</td>
-									<td>{{date('d/m/Y')}}</td>
-									<td>{{date('d/m/Y')}}</td>
-									<td><span class="icon-trash"></span></td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>Cumbia</td>
-									<td>{{date('d/m/Y')}}</td>
-									<td>{{date('d/m/Y')}}</td>
-									<td><span class="icon-trash"></span></td>
-								</tr>
+								@foreach($genres as $genre)
+									<tr>
+										<td>{{$loop->index + 1}}</td>
+										<td><a href="{{url('/genres/edit/'.$genre->id_genero)}}">{{$genre->nombre_genero}}</a></td>
+										<td>{{DateFormat::format($genre->updated_at)}}</td>
+										<td>{{DateFormat::format($genre->updated_at)}}</td>
+										<td class="center"><input type="checkbox" name="{{$genre->nombre_genero}}" data-genre="genre" value="{{$genre->id_genero}}"></td>
+									</tr>
+								@endforeach
 							</tbody>
 						</table>
 					</div>
@@ -50,12 +47,12 @@
 @endsection
 
 {{-- Footer --}}
-@extends('layouts.footerapp')
+@extends('layouts.footerlist')
+{{-- URL button add --}}
+@section('url-add', url('genres/add'))
 
-@section('footerapp')
-	<footer class="main-footer">
-		<div class="float-right main-footer__buttons">
-			<a href="{{url('genres/add')}}" class="button button-alice">Añadir nuevo</a>
-		</div>
-	</footer>
+{{-- Scripts --}}
+@section('scripts')
+	<script src="{{url('/js/utilities/ajax.js')}}"></script>
+	<script src="{{url('/js/genres.js')}}"></script>
 @endsection

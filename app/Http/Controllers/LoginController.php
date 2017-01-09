@@ -30,7 +30,7 @@ class LoginController extends Controller
         // valido que se envien los datos
         $this->validate($request, [
             'usuario' => 'required',
-            'pass'    => 'required',
+            'pass'    => 'required'
         ], [
             'usuario.required' => 'Ingresa tu nombre de usuario',
             'pass.required'    => 'Ingresa tu contraseña'

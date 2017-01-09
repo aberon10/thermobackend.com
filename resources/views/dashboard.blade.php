@@ -3,9 +3,6 @@
 {{-- Menu Vertical --}}
 @extends('layouts.menuapp')
 
-{{-- Footer --}}
-@extends('layouts.footerapp')
-
 @section('content')
     <div class="ed-container">
         <div class="ed-item">
@@ -52,4 +49,9 @@
     </div>
 @endsection
 
-
+{{-- Footer --}}
+@extends('layouts.footerapp')
+@section('id_button_cancel', '')
+@section('url_button_cancel', url('/dashboard/'))
+@section('id_button_accept', 'add_dashboard')
+@section('text_button_accept', 'Guardar Cambios')

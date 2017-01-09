@@ -32,6 +32,8 @@
 
 		color: $input-color;
 
+		cursor: pointer;
+
 		border: 1px solid darken($border-color, 10%);
 
 		outline: none;
@@ -82,6 +84,10 @@
 	}
 }
 
+input {
+	cursor: pointer;
+}
+
 label.checkbox {
 	cursor: pointer;
 	input {
@@ -97,5 +103,6 @@ label.checkbox {
 .message {
 	margin: 5px 0;
 
-	color: $color-info;
+	color: #888;
 }
+

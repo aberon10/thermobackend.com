@@ -28,7 +28,7 @@ Validations.file.MAX_FILE_SIZE = 2;
  *
  * @type {String}
  */
-Validations.file.BORDER_COLOR = '#333';
+Validations.file.BORDER_COLOR = '#00f0ff';
 
 /**
  * mimeType
@@ -62,7 +62,7 @@ Validations.file.mimeType = {
  * @type {Object}
  */
 Validations.file.message = {
-	"require"		   : "Por favor, selecciona un archivo.",
+	"require"		   : "El campo es requerido.",
 	"max_size"		   : "El archivo no debe superara los " + Validations.file.BYTE + " bytes.",
 	"invalid_type_file": "Tipo de archivo no permitido.",
 	"API_nosupport"    : "No se pudo generar la vista previa. La API  no esta soportada por tu navegador."
@@ -114,6 +114,7 @@ Validations.file.createElements = function(dropZone) {
 	var loadingBar = document.createElement('DIV');
 	loadingBar.classList.add('loading');
 
+	// Append elements
 	dropZone.appendChild(buttonFile);
 	dropZone.appendChild(inputFile);
 	dropZone.appendChild(errorUploadFile);
@@ -130,30 +131,32 @@ Validations.file.createElements = function(dropZone) {
  * Por ultimo ejecuta una vista previa del archivo.
  *
  * @param {Object} element Lugar donde se soltaran los archivos. Si se indica null Default es "drop-zone".
- * @param {String} Tipo de archivo. Ej image, audio, video. Si se indica null por Default es "image".
- *
+ * @param {String} mime    Tipo de archivo. Ej image, audio, video. Si se indica null por Default es "image".
+ * @param {Boolean} create Indica si se deben crear los elementos de la drop zone.
  * @return {Boolean || undefined}
  */
-Validations.file.upload = function(element, mime) {
+Validations.file.upload = function(element, mime, create) {
 
 	element = element || Validations.file.drop_zone;
-
-	var dropZone        = document.getElementById(element);
-	var bcolorDropZone  = dropZone.style.borderColor;
-	var errorInput      = true;
-	var droppedFiles    = false;
-	var fileList        = null;
+	var dropZone = document.getElementById(element);
 
 	/********************************************************
-	* 				Creo los elementos
+	* 				CREO LOS ELEMENTOS                      *
 	*********************************************************/
-	Validations.file.createElements(dropZone);
+	if (create) {
+		Validations.file.createElements(dropZone);
+	 }
 
 	var buttonFile      = document.getElementById('button-file');
 	var inputFile       = document.getElementById('file');
 	var loadingBar      = document.querySelector('.loading');
 	var nameFile        = document.querySelector('.name_file');
 	var errorUploadFile = document.querySelector('.error-uploaded');
+	var previewIcon     = document.querySelector('.preview__icon');
+	var bcolorDropZone  = dropZone.style.borderColor;
+	var errorInput      = true;
+	var droppedFiles    = false;
+	var fileList        = null;
 
 	/**
 	 * borderColor
@@ -207,11 +210,11 @@ Validations.file.upload = function(element, mime) {
      * animateLoadingFile
      *
      * @param  {Object}  event
-     * @param  {Object}  fileList   archivos
+     * @param  {Object}  fileList archivos
      * @return {undefined}
      */
     var animateLoadingFile = function(event, fileList) {
-    	// reset drop zone and Validations.file.messages
+    	// reset drop zone and messages
     	reset();
 
         var width = 0; // ancho de la barra
@@ -221,13 +224,21 @@ Validations.file.upload = function(element, mime) {
         	preview.remove();
         }
 
+        // icon cloud
+        if (!previewIcon.classList.contains('zoom', 'alice')) {
+        	previewIcon.classList.add('alice', 'zoom');
+        }
+
         function loading()  {
         	width += 10;
         	loadingBar.style.width = width + "%";
         	if (width >= 100) {
-        		clearInterval(setInt);
+        		// icon cloud
+        		previewIcon.classList.remove('alice', 'zoom');
+
         		// llamo a la funcion encargada de validar el archivo
         		upload(event, fileList);
+        		clearInterval(setInt);
         	}
         }
 
@@ -303,9 +314,7 @@ Validations.file.upload = function(element, mime) {
      * @return {undefined}
      */
     var upload = function(event, files) {
-    	// oculto la barra
     	loadingBar.style.display = "none";
-
 	    dropZone.style.borderColor = bcolorDropZone;
 
         // comprueba si el archivo fue subido via Drag & Drop o el boton file
@@ -316,11 +325,8 @@ Validations.file.upload = function(element, mime) {
         }
 
         if (fileList.length === 0 || fileList.length > 1) {
-
             errorUploadFile.innerHTML = Validations.file.message.require;
-            return false;
         } else if(checkFile(fileList)) {
-
 
             // Guardo los archivos a subir
             Validations.file.FILES = fileList[0];
@@ -330,6 +336,11 @@ Validations.file.upload = function(element, mime) {
 	            // creo un objeto lector
 				var objectReader = new FileReader();
 				var preview      = null;
+
+		        // elimino la vista previa anterior
+		        if (document.getElementById('preview-element')) {
+		        	dropZone.removeChild(document.getElementById('preview-element'));
+		        }
 
 				// dependiendo del tipo de archivo creo el elemento para la vista previa
 				if (mime === "audio" || Validations.file.mimeType.audio.hasOwnProperty(mime)) {
@@ -359,7 +370,6 @@ Validations.file.upload = function(element, mime) {
 		        	}
 
 			        dropZone.appendChild(preview);
-			        return true;
 	            });
 
 	            // El metodo readAsDataURL, comienza la lectura del contenido del objeto Blob,
@@ -375,14 +385,11 @@ Validations.file.upload = function(element, mime) {
 	            // Si la API no es soportada por el navegador muestro el nombre del archivo
 	            nameFile.innerHTML = fileList[0].name;
 	        }
-        } else {
-
-            return false;
         }
     };
 
    	/********************************************************************
-   	 * 							DRAG & DROP
+   	 * 							DRAG & DROP                             *
    	 ********************************************************************/
 
    	 /**
@@ -422,16 +429,15 @@ Validations.file.upload = function(element, mime) {
         event.dataTransfer.dropEffect = 'copy';
 
         this.style.borderColor = borderColor;
-        document.querySelector('.preview__icon').classList.add('alice');
-        document.querySelector('.preview__icon').classList.add('zoom');
+        previewIcon.classList.add('alice', 'zoom');
     };
 
     var handleDragLeave = function(event) {
     	event.stopPropagation();
     	event.preventDefault();
+
     	this.style.borderColor = bcolorDropZone;
-    	document.querySelector('.preview__icon').classList.add('alice');
-        document.querySelector('.preview__icon').classList.add('zoom');
+    	previewIcon.classList.remove('alice', 'zoom');
     };
 
 	// Listeners para el dragover & drop de imágenes
@@ -440,7 +446,7 @@ Validations.file.upload = function(element, mime) {
 	dropZone.addEventListener('dragleave', handleDragLeave, false);
 
    	/********************************************************************
-   	 * 						 EVENT LISTENERS
+   	 * 						 EVENT LISTENERS                            *
    	 ********************************************************************/
 
     // Trigger
