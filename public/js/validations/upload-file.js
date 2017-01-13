@@ -235,7 +235,6 @@ Validations.file.upload = function(element, mime, create) {
         	if (width >= 100) {
         		// icon cloud
         		previewIcon.classList.remove('alice', 'zoom');
-
         		// llamo a la funcion encargada de validar el archivo
         		upload(event, fileList);
         		clearInterval(setInt);
@@ -370,6 +369,7 @@ Validations.file.upload = function(element, mime, create) {
 		        	}
 
 			        dropZone.appendChild(preview);
+        			window.document.body.scrollTop = window.document.body.scrollHeight;
 	            });
 
 	            // El metodo readAsDataURL, comienza la lectura del contenido del objeto Blob,

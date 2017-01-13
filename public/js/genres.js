@@ -16,7 +16,7 @@ Genre.paths = {
  */
 Genre.Fields = {
 	form_add   : document.getElementById('form-addgenre')   || null,
-	delete     : document.getElementById('delete')  		|| null,
+	delete     : document.getElementById('delete-genre')  	|| null,
 	deleteAll  : document.getElementById('delete-all')      || null,
 	name_genre : document.getElementById('nombre_genero')   || null,
 	description: document.getElementById('descripcion')     || null,
@@ -55,7 +55,7 @@ Genre.responseServerAdd = function(response) {
 			if (response.hasOwnProperty('messages')) {
 				// name genre
 				if (response.messages.hasOwnProperty('nombre_genero')) {
-					console.log("asd");
+
 					Genre.Fields.name_genre.parentNode.classList.add('error');
 					Genre.Fields.name_genre.nextElementSibling.innerHTML = response.messages.nombre_genero[0];
 				}

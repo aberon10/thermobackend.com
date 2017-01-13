@@ -39,6 +39,9 @@
 		outline: none;
 
 		box-shadow: inset 0 1px 1px rgba(#fff, .5);
+
+		background: #FFF;
+
 		&:focus {
 			border-color: lighten($color-primary, 15%);
 

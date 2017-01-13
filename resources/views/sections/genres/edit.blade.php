@@ -8,14 +8,14 @@
 		<div class="ed-item">
 			<div class="main-container">
 				<div class="panel panel-middle">
-					<div class="panel__heading">Actualizar Genero</div>
+					<div class="panel__heading">{{$panel_title}}</div>
 					<div class="panel__body">
-						<form action="{{url('/genres/update/'.$data_genre[0]->id_genero)}}" method="POST" class="form" id="form-addgenre" enctype="multipart/form-data">
+						<form action="{{url('/genres/update/'.$data_genre[0]->id_genero)}}" method="POST" class="form" id="form-add" enctype="multipart/form-data">
 							{{csrf_field()}}
 							<div class="form-group">
-								<label for="nombre_genero" class="label">Nombre</label>
-								<input type="text" class="input" name="nombre_genero" id="nombre_genero" placeholder="Nombre"
-								value="{{(old('nombre_genero')) ? old('nombre_genero') : $data_genre[0]->nombre_genero }}">
+								<label for="nombre" class="label">Nombre</label>
+								<input type="text" class="input" name="nombre" id="nombre" placeholder="Nombre"
+								value="{{(old('nombre')) ? old('nombre') : $data_genre[0]->nombre_genero }}">
 								<p class="message">Utiliza sólo: letras, números, guiones, puntos, espacios y el signo &.</p>
 							</div>
 							<div class="form-group">
@@ -35,7 +35,7 @@
 								<h4 class="name_file hide"></h4>
 							</div>
 							<div class="loading"></div>
-							<input type="submit" class="hide" id="button-addgenre">
+							<input type="submit" class="hide" id="button-form">
 						</form>
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 {{-- Defino los id de los botones --}}
 @section('id_button_cancel', '')
 @section('url_button_cancel', url('/genres/'))
-@section('id_button_accept', 'add_genere')
+@section('id_button_accept', 'add')
 @section('text_button_accept', 'Guardar Cambios')
 
 {{-- Scripts --}}
@@ -58,6 +58,8 @@
 	<script src="{{url('/js/utilities/ajax.js')}}"></script>
 	<script src="{{url('/js/utilities/utilities.js')}}"></script>
 	<script src="{{url('/js/validations/validations.js')}}"></script>
-	<script src="{{url('/js/validations/uploadFile.js')}}"></script>
-	<script src="{{url('/js/genres.js')}}"></script>
+	<script src="{{url('/js/validations/upload-file.js')}}"></script>
+	<script src="{{url('/js/music-config.js')}}"></script>
+	<script src="{{url('/js/music-add-edit.js')}}"></script>
+	<script src="{{url('/js/music-init.js')}}"></script>
 @endsection

@@ -21,11 +21,9 @@ Utilities.checkColorHEX = function(color) {
  * @return {Boolean}
  */
 Utilities.checkNameEntities = function(nameEntity) {
-	if (/^[A-Za-z-ÁÉÍÓÚÑáéíóúñ0-9\_\&\-\.\s]{2,60}$/.test(nameEntity)) {
+	if (/^[A-Za-z-ÁÉÍÓÚÑáéíóúñ0-9\_\&\-\.\'\"\s]{2,60}$/.test(nameEntity)) {
 		return true;
 	} else {
 		return false;
 	}
 };
-
-

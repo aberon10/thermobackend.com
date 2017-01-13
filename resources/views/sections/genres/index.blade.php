@@ -10,7 +10,7 @@
 				{{-- Table of Genres --}}
 				<div class="panel">
 					<div class="panel__heading">
-						Listado de Generos
+						Generos
 					</div>
 					<div class="panel__body">
 						<table class="table table-striped">
@@ -33,7 +33,7 @@
 										<td><a href="{{url('/genres/edit/'.$genre->id_genero)}}">{{$genre->nombre_genero}}</a></td>
 										<td>{{DateFormat::format($genre->updated_at)}}</td>
 										<td>{{DateFormat::format($genre->updated_at)}}</td>
-										<td class="center"><input type="checkbox" name="{{$genre->nombre_genero}}" data-genre="genre" value="{{$genre->id_genero}}"></td>
+										<td class="center"><input type="checkbox" name="{{$genre->nombre_genero}}" data-music="true" value="{{$genre->id_genero}}"></td>
 									</tr>
 								@endforeach
 							</tbody>
@@ -48,11 +48,17 @@
 
 {{-- Footer --}}
 @extends('layouts.footerlist')
+
 {{-- URL button add --}}
 @section('url-add', url('genres/add'))
+
+{{-- ID button delete --}}
+@section('id_button_delete', 'delete')
 
 {{-- Scripts --}}
 @section('scripts')
 	<script src="{{url('/js/utilities/ajax.js')}}"></script>
-	<script src="{{url('/js/genres.js')}}"></script>
+	<script src="{{url('/js/music-config.js')}}"></script>
+	<script src="{{url('/js/music-delete.js')}}"></script>
+	<script src="{{url('/js/music-init.js')}}"></script>
 @endsection

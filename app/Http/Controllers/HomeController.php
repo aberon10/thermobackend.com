@@ -11,7 +11,7 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        return view('home', compact('users'));
+        return view('sections.home', compact('users'));
     }
 
 }

@@ -32,7 +32,7 @@
                         </a>
                         <ul class="menu-vertical__submenu">
                             <li><a href="{{url('/genres')}}" class="menu-vertical__link">Generos</a></li>
-                            <li><a href="#" class="menu-vertical__link">Artistas</a></li>
+                            <li><a href="{{url('/artists')}}" class="menu-vertical__link">Artistas</a></li>
                             <li><a href="#" class="menu-vertical__link">Albums</a></li>
                             <li><a href="#" class="menu-vertical__link">Pistas</a></li>
                         </ul>

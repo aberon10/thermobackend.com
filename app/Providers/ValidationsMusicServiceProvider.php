@@ -5,7 +5,7 @@ namespace App\Providers;
 use App;
 use Illuminate\Support\ServiceProvider;
 
-class DateFormatServiceProvider extends ServiceProvider
+class ValidationsMusicServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -14,9 +14,10 @@ class DateFormatServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-    	//
+     	App::bind('validations_music', function() {
+     		return new \App\ValidationsMusic;
+     	});
     }
-
 
     /**
      * Register the application services.
@@ -25,8 +26,6 @@ class DateFormatServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        App::bind('dateformat',function() {
-        	return new \App\DateFormat;
-      	});
+        //
     }
 }
