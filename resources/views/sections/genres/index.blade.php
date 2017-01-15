@@ -31,7 +31,7 @@
 									<tr>
 										<td>{{$loop->index + 1}}</td>
 										<td><a href="{{url('/genres/edit/'.$genre->id_genero)}}">{{$genre->nombre_genero}}</a></td>
-										<td>{{DateFormat::format($genre->updated_at)}}</td>
+										<td>{{DateFormat::format($genre->created_at)}}</td>
 										<td>{{DateFormat::format($genre->updated_at)}}</td>
 										<td class="center"><input type="checkbox" name="{{$genre->nombre_genero}}" data-music="true" value="{{$genre->id_genero}}"></td>
 									</tr>

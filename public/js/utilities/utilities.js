@@ -27,3 +27,16 @@ Utilities.checkNameEntities = function(nameEntity) {
 		return false;
 	}
 };
+
+/**
+ * checkNameEntities
+ * @param  {Number} number
+ * @return {Boolean}
+ */
+Utilities.checkNumber = function(number) {
+	if (/^\d+$/.test(parseInt(number))) {
+		return true;
+	} else {
+		return false;
+	}
+};

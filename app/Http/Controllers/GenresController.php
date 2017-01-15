@@ -27,17 +27,17 @@ class GenresController extends Controller implements Crud
 		$genres = Genero::orderBy('nombre_genero')->get();
 
 		if (count($genres) === 0) {
-			return redirect()->action('GenresController@showFormAddGenre');
+			return redirect()->action('GenresController@showForm');
 		}
 
 		return view('sections.genres.index', compact('genres'));
 	}
 
 	/**
-	 * showFormAddGenre
+	 * showForm
 	 * @return Illuminate\Http\Response
 	 */
-	public function showFormAddGenre()
+	public function showForm()
 	{
 		$panel_title = 'Agregar Nuevo Genero';
 		return view('sections.genres.add', compact('panel_title'));
@@ -211,7 +211,12 @@ class GenresController extends Controller implements Crud
 						$img_genre = ImagenGenero::find($genre->id_genero);
 
 						// borro la imagen vieja
-						Storage::delete(storage_path('app/public/').$img_genre->src_img);
+						if (NULL != ($error = File::removeFiles([storage_path().'/app/public/'.$img_genre->src_img])))	{
+							return response()->json([
+								'success' => false,
+								'error'   => $error
+							]);
+						}
 
 						// ruta nueva y nombre del archivo
 						$path = "uploads/music/".$new_name_genre;
@@ -296,7 +301,7 @@ class GenresController extends Controller implements Crud
 				// elimino el directorio
 				$count_src_img = count($source_img);
 				for ($i=0; $i < $count_src_img; $i++) {
-					File::removeDir(storage_path('app/public/').dirname($source_img[$i]));
+					File::removeDir(storage_path().'/app/public/'.dirname($source_img[$i]));
 				}
 
 				// elimino el/los genero/s de la DB
@@ -306,7 +311,7 @@ class GenresController extends Controller implements Crud
 
 				return response()->json([
 					"success" => true,
-					"message" => "Género eliminado con éxito."
+					"message" => (count($count_genres) > 1) ? 'Géneros eliminados con éxito.' : 'Género eliminado con éxito.'
 				]);
 			}
 		}

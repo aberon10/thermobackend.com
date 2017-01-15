@@ -5,10 +5,17 @@
  */
 Music.responseServerAdd = function(response) {
 	var messageFooter = document.getElementById('help-block');
+
 	if (response) {
 		if (response.hasOwnProperty('success') && !response.success) {
 
 			messageFooter.classList.add('error');
+
+			// exist
+			if (response.hasOwnProperty('error')) {
+				messageFooter.classList.add('error');
+				messageFooter.innerHTML = response.error;
+			}
 
 			// exist
 			if (response.hasOwnProperty('message') && response.hasOwnProperty('exist') && response.exist) {
@@ -85,6 +92,8 @@ Music.uploadToServer = function() {
 	formData.append("descripcion", (Music.Fields.description !== null) ? Music.Fields.description.value : '');
 	formData.append("select", (Music.Fields.select !== null) ? Music.Fields.select.value : '');
 	formData.append("file", Validations.file.FILES);
+	formData.append("cant_pistas", (Music.Fields.quantity_tracks) ? Music.Fields.quantity_tracks.value : '');
+	formData.append("anio", (Music.Fields.year) ? Music.Fields.year.value : '');
 
 	if (Music.paths.edit.test(Music.PATHNAME)) {
 		url = url.replace("edit", "update");
@@ -102,6 +111,8 @@ Music.resetForm = function(all) {
 	var name = Music.Fields.name;
 	var description = Music.Fields.description;
 	var select = Music.Fields.select;
+	var quantityTracks = Music.Fields.quantity_tracks;
+	var year = Music.Fields.year;
 	var messageFooter = document.getElementById('help-block');
 
 	Music.Fields.drop_zone.classList.remove('error');
@@ -117,6 +128,16 @@ Music.resetForm = function(all) {
 
 	if (description) {
 		description.parentNode.classList.remove('error');
+	}
+
+	if (quantityTracks) {
+		quantityTracks.parentNode.classList.remove('error');
+		quantityTracks.nextElementSibling.innerHTML = "";
+	}
+
+	if (year) {
+		year.parentNode.classList.remove('error');
+		year.nextElementSibling.innerHTML = "";
 	}
 
 	messageFooter.innerHTML = "";
@@ -157,6 +178,8 @@ Music.add = function(e) {
 	var select = Music.Fields.select;
 	var form = Music.Fields.form;
 	var messageFooter = document.getElementById('help-block');
+	var quantityTracks = Music.Fields.quantity_tracks;
+	var year = Music.Fields.year;
 
 	name.value = name.value.trim();
 
@@ -184,11 +207,34 @@ Music.add = function(e) {
 		}
 	}
 
+	// description
 	if (description !== null) {
 		if (description.value.length > 250) {
 			isValid = false;
 			description.parentNode.classList.add('error');
 			description.nextElementSibling.innerHTML = Validations.messageForm.error_description;
+		}
+	}
+
+	// quantity tracks
+	if (quantityTracks !== null) {
+		if (quantityTracks.value === "") {
+			isValid = false;
+			quantityTracks.parentNode.classList.add('error');
+			quantityTracks.nextElementSibling.innerHTML = Validations.messageForm.required;
+		} else if (!Utilities.checkNumber(quantityTracks.value)) {
+			isValid = false;
+			quantityTracks.parentNode.classList.add('error');
+			quantityTracks.nextElementSibling.innerHTML = Validations.messageForm.quantity_tracks;
+		}
+	}
+
+	// year
+	if (year !== null) {
+		if (year.value === "") {
+			isValid = false;
+			year.parentNode.classList.add('error');
+			year.nextElementSibling.innerHTML = Validations.messageForm.required;
 		}
 	}
 

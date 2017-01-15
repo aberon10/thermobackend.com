@@ -28,7 +28,7 @@ class ArtistsController extends Controller implements Crud
 		// recuperar los artistas
 		$artists = Artista::orderBy('nombre_artista')->get();
 		if (count($artists) == 0) {
-			return redirect()->action('ArtistsController@showFormAddArtist');
+			return redirect()->action('ArtistsController@showForm');
 		} else {
 			$genres = [];
 
@@ -42,19 +42,20 @@ class ArtistsController extends Controller implements Crud
 	}
 
 	/**
-	 * showFormAddArtist
+	 * showForm
 	 * @return Illuminate\Http\Response
 	 */
-	public function showFormAddArtist()
+	public function showForm()
 	{
 		$genres = Genero::all();
-		$panel_title = 'Agregar Nuevo Artista';
+		$panel_title = 'Agregar un Nuevo Artista';
+		$label_select = 'Genero';
 
-		return view('sections.artists.add', compact('genres', 'panel_title'));
+		return view('sections.artists.add', compact('genres', 'panel_title', 'label_select'));
 	}
 
 	/**
-	 * update
+	 * add
 	 * @param  Request $request
 	 * @return Illuminate\Http\Response
 	 */
@@ -91,7 +92,7 @@ class ArtistsController extends Controller implements Crud
 				// extension file
 				$file_extension = $request->file('file')->guessClientExtension();
 
-				$filename = $request->nombre.".".$file_extension;
+				$filename = ucfirst($request->nombre).".".$file_extension;
 
 				// Move Upload File
 				$path_DB = $request->file('file')->storeAs(
@@ -101,7 +102,7 @@ class ArtistsController extends Controller implements Crud
 				// save img
 				$img_artist = new ImagenArtista;
 				$img_artist->id_artista = $artist->id_artista;
-				$img_artist->src_img = $path_DB;
+				$img_artist->src_img = $path.'/'.$filename;
 				$img_artist->save();
 
 				return response()->json([
@@ -150,7 +151,9 @@ class ArtistsController extends Controller implements Crud
 				// get all genres
 				$genres = Genero::all();
 
-				return view('sections.artists.edit', compact('artist', 'genre', 'genres', 'img_artist', 'panel_title'));
+				$label_select = 'Genero';
+
+				return view('sections.artists.edit', compact('artist', 'genre', 'genres', 'img_artist', 'panel_title', 'label_select'));
 			} else {
 				abort(404);
 			}
@@ -162,7 +165,7 @@ class ArtistsController extends Controller implements Crud
 	/**
 	 * update
 	 * @param  Request $request
-	 * @param  integer  $id ID del artista.
+	 * @param  integer $id ID del artista.
 	 * @return Illuminate\Http\Response
 	 */
 	public function update(Request $request, $id)
@@ -263,7 +266,12 @@ class ArtistsController extends Controller implements Crud
 						$img_artist = ImagenArtista::find($artist->id_artista);
 
 						// borro la imagen vieja
-						Storage::delete(storage_path('app/public/').''.$img_artist->src_img);
+						if (NULL != ($error = File::removeFiles([storage_path().'/app/public/'.$img_artist->src_img])))	{
+							return response()->json([
+								'success' => false,
+								'error'   => $error
+							]);
+						}
 
 						// ruta nueva y nombre del archivo
 						$path = dirname($img_artist->src_img);
@@ -344,7 +352,7 @@ class ArtistsController extends Controller implements Crud
 
 				return response()->json([
 					"success" => true,
-					"message" => "Artista eliminado con éxito."
+					"message" => (count($count_artists) > 1) ? 'Artistas eliminados con éxito.' : 'Artista eliminado con éxito.'
 				]);
 			}
 		}

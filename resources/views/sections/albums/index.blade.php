@@ -4,16 +4,16 @@
 <div class="ed-container">
 	<div class="ed-item">
 		<div class="main-container">
-			@if (isset($artists) && $artists)
+			@if (isset($albums) && $albums)
 			<div class="panel">
-				<div class="panel__heading">Artistas</div>
+				<div class="panel__heading">Albums</div>
 				<div class="panel__body">
 					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th>#</th>
+								<th>Album</th>
 								<th>Artista</th>
-								<th>Género</th>
 								<th>Fecha he creación</th>
 								<th>Ultima actualización</th>
 								<th class="center">
@@ -23,14 +23,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($artists as $artist)
+							@foreach($albums as $album)
 							<tr>
 								<td>{{$loop->index + 1}}</td>
-								<td><a href="{{url('/artists/edit/'.$artist->id_artista)}}">{{$artist->nombre_artista}}</a></td>
-								<td><a href="{{url('/genres/edit/'.$genres[$loop->index]->id_genero)}}">{{$genres[$loop->index]->nombre_genero}}</a></td>
-								<td>{{DateFormat::format($artist->created_at)}}</td>
-								<td>{{DateFormat::format($artist->updated_at)}}</td>
-								<td class="center"><input type="checkbox" name="{{$artist->nombre_artista}}" data-music="true" value="{{$artist->id_artista}}"></td>
+								<td><a href="{{url('/albums/edit/'.$album->id_album)}}">{{$album->nombre}}</a></td>
+								<td><a href="{{url('/artists/edit/'.$artists[$loop->index]->id_artista)}}">{{$artists[$loop->index]->nombre_artista}}</a></td>
+								<td>{{DateFormat::format($album->created_at)}}</td>
+								<td>{{DateFormat::format($album->updated_at)}}</td>
+								<td class="center"><input type="checkbox" name="{{$album->nombre}}" data-music="true" value="{{$album->id_album}}"></td>
 							</tr>
 							@endforeach
 						</tbody>
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 			@else
-			<h1 class="center">No hay artistas disponibles</h1>
+				<h1 class="center">No hay albums disponibles</h1>
 			@endif
 		</div>
 	</div>
@@ -49,7 +49,7 @@
 @extends('layouts.footerlist')
 
 {{-- URL button add --}}
-@section('url-add', url('artists/add'))
+@section('url-add', url('albums/add'))
 
 {{-- ID button delete --}}
 @section('id_button_delete', 'delete')

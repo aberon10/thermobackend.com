@@ -20,7 +20,6 @@ class ValidationsMusic
 	 */
     public static function validateFields(array $fields) :array
     {
-
     	$main_errors = []; // guarda los mensajes de error
 
 		// Valido el nombre

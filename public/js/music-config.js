@@ -40,6 +40,8 @@ Music.Fields = {
 	name: document.getElementById('nombre') || null,
 	description: document.getElementById('descripcion') || null,
 	select: document.getElementById('select-item') || null,
+	quantity_tracks: document.getElementById('cantidad_pistas') || null,
+	year: document.getElementById('anio') || null,
 	file: document.getElementById('file') || null,
 	btn_add: document.getElementById('add') || null,
 	btn_frm: document.getElementById('button-form') || null,
