@@ -35,6 +35,11 @@
 
 	transition: all .3s;
 
+	p {
+		margin: 0;
+		font-size: 1.1em;
+	}
+
 	@include to(m) {
 		margin-bottom: 1em;
 	}
@@ -47,20 +52,24 @@
 		font-size: 3em;
 	}
 
+	.percentage {
+		font-size: 1.4em;
+	}
+
 	// indicators colors
 	&.indicator-alice-blue {
-		background: $alice-blue !important;
+		background: $alice-dark !important;
 
-		border-color: $alice-blue;
+		border-color: $alice-dark;
 		&:hover {
-			background: darken($alice-blue, 5%);
+			background: darken($alice-dark, 5%);
 		}
 	}
 
 	&.indicator-default {
-		background: $panel-default-border;
+		background: darken($panel-default-border, 5%);
 		&:hover {
-			background: darken($panel-default-border, 5%);
+			background: darken($panel-default-border, 8%);
 		}
 	}
 

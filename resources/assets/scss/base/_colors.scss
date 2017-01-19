@@ -41,8 +41,8 @@ $input-color            : lighten($text-color, 15%);
 $panel-default-heading-bg: #FFF;
 
 // Sidebar - Menu vertical
-$sidebar-bg-color: #4e5665;
-$submenu-bg-color: #39414e;
+$sidebar-bg-color: #2A3F54;
+$submenu-bg-color: darken($sidebar-bg-color, 5%);
 
 // Facebook - Google +
 $facebook  : #3A5795;

@@ -8,8 +8,8 @@ class File
 	 * fullCopy
 	 * Copia el contenido de un directorios a otro.
 	 *
-	 * @param {String}  $source
-	 * @param {String}  $target
+	 * @param string  $source
+	 * @param string  $target
 	 */
 	public static function fullCopy($source, $target)
 	{
@@ -59,6 +59,15 @@ class File
 		return ($delete_root) ? rmdir($dir) : true;
 	}
 
+	public static function move($source, $target)
+	{
+		// copy
+		self::fullCopy($source, $target);
+
+		// delete
+		return self::removeFiles([$source]);
+	}
+
 	/**
 	 * removeFiles
 	 * Elimina archivos.
@@ -86,6 +95,41 @@ class File
 		clearstatcache();
 
 		return $error;
+	}
+
+	/**
+	 * analyzeFile
+	 * Analiza archivos, utlizando la clase getID3.
+	 * Devuelve un array con el formato y la duracion:
+	 * Ejemplo:
+	 * $data = [0 => ['filename' => 'example.mp3', 'duration' => 02:20, 'fileformat' => 'mp3']]
+	 *
+	 * @param  array $files
+	 * @return array $data
+	 */
+	public static function analyzeFile($files)
+	{
+		$getID3 = new \getID3;
+		$data = [];
+
+		if ($files) {
+			$count_files = count($files);
+
+			for ($i = 0; $i < $count_files; $i++) {
+				$info       = $getID3->analyze($files[$i]);
+				$fileformat = $info['fileformat'];
+				$duration   = explode(":", $info['playtime_string']);
+
+			    if (count($duration) == 2) {
+					if ($duration[0] < 10) {
+						$duration = '0'.$duration[0].":".$duration[1];
+					}
+				}
+				$data[$i] = ['filename' => $info['filename'], 'duration' => $duration, 'fileformat' => $fileformat];
+			}
+		}
+
+		return $data;
 	}
 
 }

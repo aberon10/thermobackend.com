@@ -25,19 +25,20 @@ class ArtistsController extends Controller implements Crud
 	 */
 	public function index()
 	{
-		// recuperar los artistas
-		$artists = Artista::orderBy('nombre_artista')->get();
-		if (count($artists) == 0) {
-			return redirect()->action('ArtistsController@showForm');
+		$total_artists = count(Artista::all());
+
+		$artists = \DB::table('artista')
+					->join('genero', 'artista.id_genero', '=', 'genero.id_genero')
+					->orderBy('genero.nombre_genero', 'desc')
+					->orderBy('artista.nombre_artista', 'desc')
+					->paginate(config('config_app.MAX_ARTISTS_PAGE'));
+
+		$index = ($artists->currentPage() == 1) ? 1 : (($artists->currentPage() - 1) * config('config_app.MAX_ARTISTS_PAGE')) + 1;
+
+		if ($total_artists == 0) {
+			$this->showForm();
 		} else {
-			$genres = [];
-
-			// recupero el genero de los artistas
-			foreach ($artists as $key => $artist) {
-				array_push($genres, Genero::find($artist->id_genero));
-			}
-
-			return view('sections.artists.index', compact('artists', 'genres'));
+			return view('sections.artists.index', compact('artists', 'total_artists', 'index'));
 		}
 	}
 
@@ -137,23 +138,24 @@ class ArtistsController extends Controller implements Crud
 	 */
 	public function edit(Request $request, $id)
 	{
-		if (isset($id)) {
-			$artist = Artista::find($id);
+		if (isset($id) && preg_match('/^[0-9]$/', $id)) {
+			$main_data = Artista::find($id);
 
-			if (!empty($artist)) {
+			if (!empty($main_data)) {
+				$name = $main_data->nombre_artista;
+
 				// get image
-				$img_artist = ImagenArtista::find($id);
-				$panel_title = 'Actualizar Artista';
+				$img = ImagenArtista::find($id);
 
 				// get genre
-				$genre = Genero::find($artist->id_genero);
+				$genre = Genero::find($main_data->id_genero);
 
 				// get all genres
 				$genres = Genero::all();
 
 				$label_select = 'Genero';
 
-				return view('sections.artists.edit', compact('artist', 'genre', 'genres', 'img_artist', 'panel_title', 'label_select'));
+				return view('sections.artists.edit', compact('main_data', 'name', 'genre', 'genres', 'img', 'label_select'));
 			} else {
 				abort(404);
 			}

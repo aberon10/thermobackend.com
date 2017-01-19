@@ -4,11 +4,21 @@ $devMode: false;
 
 $max-width: 1600px;
 
+// Breakpoints
+  $breakpoints : (
+    s  : 0,
+    m  : 768px,
+    l  : 1024px,
+    xl : 1440px
+  );
+
 @import 'providers/ed-grid';
 
 @import 'base/_base';
 @import 'utilities/_utilities';
+@import 'utilities/_hacks';
 
+@import 'components/_pages';
 @import 'components/_panel';
 @import 'components/_form';
 @import 'components/_buttons';
@@ -16,8 +26,11 @@ $max-width: 1600px;
 @import 'components/_indicators.scss';
 @import 'components/_table.scss';
 @import 'components/_bar-loading';
+@import 'components/_pagination';
+@import 'components/_todo-list';
 
 @import 'layouts/_header';
 @import 'layouts/_footer';
 @import 'layouts/_menu-vertical';
 @import 'layouts/_preview';
+@import 'layouts/_home';

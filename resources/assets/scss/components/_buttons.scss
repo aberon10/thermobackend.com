@@ -44,10 +44,10 @@
 
     &.button-alice {
 	    color: #FFF;
-        background: $alice-blue;
+        background: $alice-dark;
 
         &:hover {
-            background: darken($alice-blue, 20%);
+            background: darken($alice-dark, 5%);
             color: #FFF;
         }
     }

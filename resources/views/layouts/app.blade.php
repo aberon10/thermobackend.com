@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'ThermoBackend') }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Styles -->
     <link href="{{url('css/styles.css')}}" rel="stylesheet">
@@ -22,47 +22,52 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+
 </head>
 <body>
 
-    {{-- Header --}}
-    @section('header')
-        <header class="main-header">
-            <div class="">ThermoBackend</div>
-            @if (session('user'))
-                {{-- Submenu preferences --}}
-                 <nav class="main-nav">
-                    <ul class="main-menu">
-                        <li>
-                            <img src="{{asset('storage/avatars/user.jpg')}}" alt="" class="avatar">
-                            <a href="#" class="dropdown">
-                                {{session('user')}} <span class="icon icon-sort-desc"></span>
-                            </a>
-                            <ul class="main-submenu">
-                                <li><a href="#">Mi Perfil</a></li>
-                                <li><a href="#">Ayuda</a></li>
-                                <li><div class="divider"></div></li>
-                                <li><a href="#">Cerrar sesion</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            @else
-                <nav class="main-nav">
-                    <ul class="main-menu">
-                        <li><a href="{{url('/login')}}">Login</a></li>
-                    </ul>
-                </nav>
-            @endif
+	@include('layouts.header') {{-- Header --}}
 
-        </header>
-    @show
-
-    @yield('content') {{-- Contenido principal --}}
     @yield('menuapp') {{-- Menu vertical --}}
+
+    {{-- Contenido principal --}}
+    @section('main_content')
+	    <div class="ed-container">
+			<div class="ed-item">
+				<div class="page">
+					<div class="page__title">
+						@section('page_title')
+							<div class="title-left">
+								<h2>@yield('title_left')</h2>
+							</div>
+							<div class="title-right">
+								@yield('title_right')
+							</div>
+						@show
+					</div>
+					<div class="page__content">
+	   					@yield('page_content') {{-- Contenido principal --}}
+					</div>
+				</div>
+			</div>
+		</div>
+	@show
+
     @yield('footerapp') {{-- Pie de página --}}
     @yield('footerlist') {{-- Pie de página de los listados--}}
 
-    @yield('scripts') {{-- Scripts JS --}}
+    @yield('scripts') {{-- Scripts --}}
+
+{{--     <script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function(e) {
+			var match = navigator.userAgent.match(/Chrome\/(\d+)/);
+		  	if (match && parseInt(match[1]) >= 55) {
+		  		var m = document.querySelector('.mask');
+		  		if (m !== null) {
+		   			m.style.display = 'block';
+		  		}
+		  	}
+		});
+	</script> --}}
 </body>
 </html>

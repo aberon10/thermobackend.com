@@ -23,6 +23,6 @@ class Album extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'id_artista', 'cant_pistas', 'anio'];
+    protected $fillable = ['nombre', 'id_artista', 'cant_pistas', 'anio', 'id_album'];
 
 }

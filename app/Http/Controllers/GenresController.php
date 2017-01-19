@@ -2,9 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\Interfaces\Crud;
 use App\Models\Genero;
 use App\Models\ImagenGenero;
-use App\Interfaces\Crud;
 use App\Procedures\ChangeRoutesProcedure;
 use App\ValidationsMusic;
 use Illuminate\Http\Request;
@@ -24,13 +24,15 @@ class GenresController extends Controller implements Crud
 	 */
 	public function index()
 	{
-		$genres = Genero::orderBy('nombre_genero')->get();
+		$total_genres = count(Genero::all());
+		$genres = Genero::orderBy('nombre_genero')->paginate(config('config_app.MAX_GENRES_PAGE'));
+		$index = ($genres->currentPage() == 1) ? 1 : (($genres->currentPage() - 1) * config('config_app.MAX_GENRES_PAGE')) + 1;
 
 		if (count($genres) === 0) {
-			return redirect()->action('GenresController@showForm');
+			$this->showForm();
+		} else {
+			return view('sections.genres.index', compact('genres', 'total_genres', 'index'));
 		}
-
-		return view('sections.genres.index', compact('genres'));
 	}
 
 	/**
@@ -39,8 +41,7 @@ class GenresController extends Controller implements Crud
 	 */
 	public function showForm()
 	{
-		$panel_title = 'Agregar Nuevo Genero';
-		return view('sections.genres.add', compact('panel_title'));
+		return view('sections.genres.add');
 	}
 
 	/**
@@ -116,18 +117,17 @@ class GenresController extends Controller implements Crud
      */
 	public function edit(Request $request, $id)
 	{
-		if (isset($id)) {
+		if (isset($id) && preg_match('/^[0-9]$/', $id)) {
 			// get data genre
-			$data_genre = Genero::where('id_genero', $id)->get();
+			$main_data = Genero::find($id);
 
-			if (!empty($data_genre[0])) {
+			if (!empty($main_data)) {
+				$name = $main_data->nombre_genero;
 				// get image genre
-				$img_genre = ImagenGenero::where('id_genero', $id)->get();
-				$panel_title = 'Actualizar Genero';
-
-				return view('sections.genres.edit', compact('data_genre', 'img_genre', 'panel_title'));
+				$img = ImagenGenero::find($id);
+				return view('sections.genres.edit', compact('main_data', 'name', 'img'));
 			} else {
-				abort(404);
+				$this->showForm();
 			}
 
 		} else {

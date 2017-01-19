@@ -26,19 +26,22 @@ class AlbumsController extends Controller implements Crud
 	 */
 	public function index()
 	{
-		$albums = Album::orderBy('nombre')->get();
+		$total_albums = count(Album::all());
+
+		$albums = \DB::table('album')
+					->join('artista', 'album.id_artista', '=', 'artista.id_artista')
+					->join('genero', 'artista.id_genero', '=', 'genero.id_genero')
+					->orderBy('genero.nombre_genero')
+					->orderBy('artista.nombre_artista')
+					->orderBy('album.nombre')
+					->paginate(config('config_app.MAX_ALBUMS_PAGE'));
+
+		$index = ($albums->currentPage() == 1) ? 1 : (($albums->currentPage() - 1) * config('config_app.MAX_ALBUMS_PAGE')) + 1;
 
 		if (count($albums) == 0) {
-			return redirect()->action('AlbumsController@showForm');
+			$this->showForm();
 		} else {
-			$artists = [];
-
-			// recupero los artistas
-			foreach ($albums as $key => $album) {
-				array_push($artists, Artista::find($album->id_artista));
-			}
-
-			return view('sections.albums.index', compact('albums', 'artists'));
+			return view('sections.albums.index', compact('albums', 'index', 'total_albums'));
 		}
 	}
 
@@ -127,7 +130,7 @@ class AlbumsController extends Controller implements Crud
 				], 422);
 			}
 		} else {
-			// genre exist
+			// artist exist
 			return response()->json([
 				'success'       => false,
 				'message'       => 'Por favor, Comprueba los errores.',
@@ -145,23 +148,24 @@ class AlbumsController extends Controller implements Crud
 	 */
 	public function edit(Request $request, $id)
 	{
-		if (isset($id)) {
-			$album = Album::find($id);
+		if (isset($id) && preg_match('/^[0-9]$/', $id)) {
+			$main_data = Album::find($id);
 
-			if (!empty($album)) {
+			if (!empty($main_data)) {
+				$name = $main_data->nombre;
+
 				// get image
-				$img_album = ImagenAlbum::find($id);
-				$panel_title = 'Actualizar Album';
+				$img = ImagenAlbum::find($id);
 
 				// get genre
-				$artist = Artista::find($album->id_artista);
+				$artist = Artista::find($main_data->id_artista);
 
 				// get all genres
 				$artists = Artista::all();
 
 				$label_select = 'Artista';
 
-				return view('sections.albums.edit', compact('album', 'artist', 'artists', 'img_album', 'panel_title', 'label_select'));
+				return view('sections.albums.edit', compact('main_data', 'name', 'artist', 'artists', 'img', 'label_select'));
 			} else {
 				abort(404);
 			}
@@ -201,112 +205,119 @@ class AlbumsController extends Controller implements Crud
 				$img = ImagenAlbum::find($album->id_album);
 				$base_dir = dirname(dirname($img->src_img)); // uploads/music/Cumbia/Marama
 
-				if ($exist_album == null) {
+				if ($exist_album == NULL) {
 
 					// nuevo artista
 					$artist = Artista::find($request->select);
 
-					// CASO 1
-					// Cambia el nombre del album por lo tanto cambia el nombre de la carpeta y de la imagen
-					if ($old_name_album != $new_name_album) {
-						// ruta nueva y vieja
-						$new_directory = storage_path('app/public/').$base_dir.'/'.$new_name_album;
-						$old_directory = storage_path('app/public/').$base_dir.'/'.$old_name_album;
+					if ($artist != NULL) {
+						// CASO 1 - Cambia el nombre del album
+						if ($old_name_album != $new_name_album) {
+							// ruta nueva y vieja
+							$new_directory = storage_path('app/public/').$base_dir.'/'.$new_name_album;
+							$old_directory = storage_path('app/public/').$base_dir.'/'.$old_name_album;
 
-						// nombre de la imagen
-						$old_name_img = basename($img->src_img);
-						$extension = explode('.', $old_name_img)[1];
+							// nombre de la imagen
+							$old_name_img = basename($img->src_img);
+							$extension = explode('.', $old_name_img)[1];
 
-						$new_img = $new_directory.'/'.$new_name_album.".".$extension;
-						$path_DB = explode('public/', $new_img)[1];
+							$new_img = $new_directory.'/'.$new_name_album.".".$extension;
+							$path_DB = explode('public/', $new_img)[1];
 
-						$old_img = $new_directory.'/'.$old_name_img;
+							$old_img = $new_directory.'/'.$old_name_img;
 
-						// renombro el directorio y la imagen
-						if (rename($old_directory, $new_directory)) {
-							if (rename($old_img, $new_img)) {
-								// actualizo los datos en la DB
-								$album->nombre = $new_name_album;
-								$img->src_img = $path_DB;
-								$album->save();
-								$img->save();
+							// renombro el directorio y la imagen
+							if (rename($old_directory, $new_directory)) {
+								if (rename($old_img, $new_img)) {
+									// actualizo los datos en la DB
+									$album->nombre = $new_name_album;
+									$img->src_img = $path_DB;
+									$album->save();
+									$img->save();
 
-								// PROCEDURE CHANGE_ROUTES_2
-								$old_route = $base_dir.'/'.$old_name_album.'/';
-								$new_route = $base_dir.'/'.$new_name_album.'/';
-								$procedure = ChangeRoutesProcedure::updateRouteAlbum($old_route, $new_route);
+									// PROCEDURE CHANGE_ROUTES_2
+									$old_route = $base_dir.'/'.$old_name_album.'/';
+									$new_route = $base_dir.'/'.$new_name_album.'/';
+									$procedure = ChangeRoutesProcedure::updateRouteAlbum($old_route, $new_route);
+								}
 							}
 						}
-					}
 
-					// CASO 2 Cambia el artista
-					if ($artist->id_artista != $album->id_artista) {
-						// ruta base del artista uploads/music/Genero/Artista
-						$base_dir_artist = dirname(ImagenArtista::find($artist->id_artista)->src_img);
+						// CASO 2 - Cambia el artista
+						if ($artist->id_artista != $album->id_artista) {
+							// ruta base del artista uploads/music/Genero/Artista
+							$base_dir_artist = dirname(ImagenArtista::find($artist->id_artista)->src_img);
 
-						$old_src = dirname($base_dir).'/'.basename($base_dir).'/'.$album->nombre;
-						$new_src = $base_dir_artist.'/'.$new_name_album;
+							$old_src = dirname($base_dir).'/'.basename($base_dir).'/'.$album->nombre;
+							$new_src = $base_dir_artist.'/'.$new_name_album;
 
-						// copia a el nuevo directorio y elimina el viejo
-						File::fullCopy(storage_path().'/app/public/'.$old_src, storage_path().'/app/public/'.$new_src);
+							// copia a el nuevo directorio y elimina el viejo
+							File::fullCopy(storage_path().'/app/public/'.$old_src, storage_path().'/app/public/'.$new_src);
 
-						if (File::removeDir(storage_path().'/app/public/'.$old_src)) {
-							$album->id_artista = $artist->id_artista;
+							if (File::removeDir(storage_path().'/app/public/'.$old_src)) {
+								$album->id_artista = $artist->id_artista;
+								$album->save();
+
+								// PROCEDURE CHANGE_ROUTES_1
+								$procedure = ChangeRoutesProcedure::updateRouteAlbum($old_src.'/', $new_src.'/');
+							}
+						}
+
+						// CASO 3 - Cambia la imagen
+						if ($request->file('file')) {
+							// Valido el archivo
+							if ($errors = ValidationsMusic::validateFields($request->only('file'))) {
+								return response()->json([
+									'success'  => false,
+									'messages' => $errors,
+									'message'  => 'Por favor, Comprueba los errores.'
+							    ], 422);
+							}
+
+							// recupero la ruta de la imagen
+							$img_album = ImagenAlbum::find($album->id_album);
+
+							// borro la imagen vieja
+							if (NULL != ($error = File::removeFiles([storage_path().'/app/public/'.$img_album->src_img])))	{
+								return response()->json([
+									'success' => false,
+									'error'   => $error
+								]);
+							}
+
+							// ruta nueva y nombre del archivo
+							$path = dirname($img_album->src_img);
+							$filename = $new_name_album.".".$request->file('file')->guessClientExtension();
+
+							// subo la nueva imagen
+							$path_DB = $request->file('file')->storeAs(
+							    $path, $filename, 'public'
+							);
+
+							$img_album->src_img = $path.'/'.$filename;
+							$img_album->save();
+						}
+
+						// CASO 4 - Cambia el año
+						if ($album->anio != $request->anio) {
+							$album->anio = $request->anio;
 							$album->save();
-
-							// PROCEDURE CHANGE_ROUTES_1
-							$procedure = ChangeRoutesProcedure::updateRouteAlbum($old_src.'/', $new_src.'/');
-						}
-					}
-
-
-					// CASO 3 Cambia la imagen
-					if ($request->file('file')) {
-						// Valido el archivo
-						if ($errors = ValidationsMusic::validateFields($request->only('file'))) {
-							return response()->json([
-								'success'  => false,
-								'messages' => $errors,
-								'message'  => 'Por favor, Comprueba los errores.'
-						    ], 422);
 						}
 
-						// recupero la ruta de la imagen
-						$img_album = ImagenAlbum::find($album->id_album);
-
-						// borro la imagen vieja
-						if (NULL != ($error = File::removeFiles([storage_path().'/app/public/'.$img_album->src_img])))	{
-							return response()->json([
-								'success' => false,
-								'error'   => $error
-							]);
+						// CASO 5 - Cambia la cantidad de pistas
+						if ($album->cant_pistas != $request->cant_pistas) {
+							$album->cant_pistas = $request->cant_pistas;
+							$album->save();
 						}
-
-						// ruta nueva y nombre del archivo
-						$path = dirname($img_album->src_img);
-						$filename = $new_name_album.".".$request->file('file')->guessClientExtension();
-
-						// subo la nueva imagen
-						$path_DB = $request->file('file')->storeAs(
-						    $path, $filename, 'public'
-						);
-
-						$img_album->src_img = $path.'/'.$filename;
-						$img_album->save();
+					} else {
+						// artist not exist
+						return response()->json([
+							'success'       => false,
+							'message'       => 'Por favor, Comprueba los errores.',
+							'message_exist' => 'El artista seleccionado no existe.',
+							'exist'         => false
+						], 422);
 					}
-
-					// CASO 4 cambia el año
-					if ($album->anio != $request->anio) {
-						$album->anio = $request->anio;
-						$album->save();
-					}
-
-					// CASO 5 cambia la cantidad de pistas
-					if ($album->cant_pistas != $request->cant_pistas) {
-						$album->cant_pistas = $request->cant_pistas;
-						$album->save();
-					}
-
 					return response()->json([
 						'success' => true,
 						'message' => 'Actualizado con exito.',
@@ -314,6 +325,14 @@ class AlbumsController extends Controller implements Crud
 						'name'    => $new_name_album ?? '',
 						'select'  => $request->select ?? ''
 					]);
+				} else {
+					// album exist
+					return response()->json([
+						'success'       => false,
+						'message'       => 'Por favor, Comprueba los errores.',
+						'message_exist' => 'El album, ya existe.',
+						'exist'         => true
+					], 422);
 				}
 			} else {
 				abort(404);
@@ -372,7 +391,7 @@ class AlbumsController extends Controller implements Crud
 
 				return response()->json([
 					"success" => true,
-					"message" => (count($count_albums) > 1) ? 'Albums eliminados con éxito.' : 'Album eliminado con éxito.'
+					"message" => ($count_albums > 1) ? 'Albums eliminados con éxito.' : 'Album eliminado con éxito.'
 				]);
 			}
 		}

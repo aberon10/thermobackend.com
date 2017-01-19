@@ -1,3 +1,17 @@
+// Tamaños de los iconos
+.icon-large	{
+	font-size: 1.6em;
+}
+
+.icon-middle {
+	font-size: 1.1em;
+}
+
+.icon-small {
+	font-size: 0.8em;
+}
+
+
 // Colors class
 .primary {
 	color: $color-primary !important;
@@ -83,4 +97,25 @@
 
 .zoom {
 	transform: scale(1.2);
+}
+
+.radius {
+	border-radius: 50%;
+}
+
+a {
+	&.underline {
+		text-decoration: underline;
+	}
+
+	&.nodecoration {
+		text-decoration: none;
+	}
+
+	&:hover,
+	&:active {
+		&.nodecoration {
+			text-decoration: none;
+		}
+	}
 }

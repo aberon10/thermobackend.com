@@ -1,0 +1,42 @@
+.pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    margin: 1.5em 0;
+    border-radius: 4px;
+	list-style: none;
+
+	li {
+		&.active {
+			span, a {
+				color: #FFF;
+				background: darken($link-color, 10%);
+			}
+			&:hover {
+				span, a {
+					color: #FFF;
+					background: darken($link-color, 15%);
+				}
+			}
+		}
+
+		&:hover {
+			a {
+				background: #EEE;
+				color: darken($link-color, 5%);
+			}
+		}
+	}
+
+	span, a {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: 1px solid #DDD;
+		padding: 8px 14px;
+		background: #FFF;
+		line-height: 1.5;
+		font-size: 1.1em;
+	}
+
+}

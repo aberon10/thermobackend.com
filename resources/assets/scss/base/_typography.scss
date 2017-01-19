@@ -9,7 +9,6 @@
 */
 
 // Importación de fuentes desde Google Fonts
-@import url('https://fonts.googleapis.com/css?family=Raleway:100,600');
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
 // Typography
@@ -25,8 +24,8 @@ $line-height-base      : 1.6;
  $extra-bold : 800;
 
 // ESTILOS DE ENCABEZADOS
- $header--font-family    : 'Raleway', sans-serif;  // Fuente para los headers (h1,h2,h3,h4,h5,h6)
- $header--font-weight    : $normal;               // Grosor de fuente para los headers
+ $header--font-family    : 'Source Sans Pro', sans-serif;  // Fuente para los headers (h1,h2,h3,h4,h5,h6)
+ $header--font-weight    : $semi-bold;               // Grosor de fuente para los headers
  $header--text-transform : normal;                // normal, uppercase, lowercase, capitalize
  $header--color          : #444444;               // Color predeterminado de los header
 
@@ -39,7 +38,7 @@ $line-height-base      : 1.6;
  $h6--font-size : 0.8em;
 
 // ESTIILOS DE ENLACES
- $link--color 	  : lighten($color-primary, 15%);  // Color para los enlaces
+ $link-color 	  : lighten($color-primary, 15%);  // Color para los enlaces
  $text-decoration : none;    // Decoración de los enlaces
 
 // ESTILOS DE PÁRRAFOS

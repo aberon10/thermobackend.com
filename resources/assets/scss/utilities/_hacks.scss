@@ -1,0 +1,16 @@
+// Hack for button player Chrome
+.player {
+    position: relative;
+    width: 300px;
+}
+
+.mask {
+	display: block;
+    background-color: #FFF;
+    position: absolute;
+    width: 34px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10
+}

@@ -14,10 +14,58 @@ body {
 
 a {
 	text-decoration: none;
-	color: $link--color;
+	color: $link-color;
 
 	&:hover {
 		text-decoration: underline;
-		color: darken($link--color, 6%);
+		color: darken($link-color, 6%);
 	}
+}
+
+// ESTILOS BÁSICOS DE LOS ENCABEZADOS
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform : $header--text-transform;
+
+  color          : $header--color;
+
+  font-family    : $header--font-family;
+  font-weight    : $header--font-weight;
+}
+
+// TAMAÑOS Y ESTILOS DE LOS ENCAEBZADOS
+h1 {
+  font-size : $h1--font-size;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size : $h2--font-size;
+  line-height: 1.1;
+}
+
+h3 {
+  font-size : $h3--font-size;
+}
+
+h4 {
+  font-size : $h4--font-size;
+}
+
+h5 {
+  font-size : $h5--font-size;
+}
+
+h6 {
+  font-size : $h6--font-size;
+}
+
+// Imágenes responsive
+img {
+  max-width: 100%;
+  height: auto;
 }

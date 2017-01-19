@@ -11,7 +11,7 @@ class ValidationsMusic
 	 * Reglas de validación para el nombre de la entidad: Género, Artista, Album y Pista.
 	 * @var array
 	 */
-	private static $validation_name =  array("required", "min:2", "max:60", "regex:/^[A-Za-z-ÁÉÍÓÚÑáéíóúñ0-9\_\&\-\.\'\"\s]+$/");
+	private static $validation_name =  array('required', 'min:2', 'max:60', 'regex:/^[A-Za-z-ÁÉÍÓÚÑáéíóúñ0-9\_\&\-\.\'\"\s]+$/');
 
 	/**
 	 * validateFields
@@ -58,7 +58,7 @@ class ValidationsMusic
 		// Valido la descripcion
 		if (array_key_exists('descripcion', $fields)) {
 			$validation = Validator::make($fields,
-				['descripcion' => 'max:250'],
+				['descripcion'     => 'max:250'],
 				['descripcion.max' => 'Utiliza como maximo 250 caracteres.']
 			);
 
@@ -80,5 +80,44 @@ class ValidationsMusic
 		}
 
 		return $main_errors;
+    }
+
+    /**
+     * validateFileAudio
+     * @param  array $files
+     * @return array|NULL $error
+     */
+    public static function validateFileAudio($files)
+    {
+    	$error = NULL;
+
+    	$validation = Validator::make($files,
+			['file' => 'required|max:20480'],
+			[
+				'file.required' => 'El campo es requerido.',
+				'file.max'      => 'El archivo no debe superar los 20MB.'
+			]
+		);
+
+		if ($validation->fails()) {
+			$error = [];
+			$error['file'] = $validation->errors()->first('file');
+		}
+
+		return $error;
+    }
+
+    /**
+     * checkExtensionAudio
+     * @param  resource $file
+     * @return NULL|array
+     */
+    public static function checkExtensionAudio($file)
+    {
+		if ($file->getClientOriginalExtension() != 'mp3' && $request->file('file')->getClientOriginalExtension() != 'ogg') {
+			return $error = ['file' => 'Tipo de archivo no permitido.'];
+		}
+
+		return NULL;
     }
 }

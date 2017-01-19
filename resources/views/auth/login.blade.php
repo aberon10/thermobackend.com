@@ -1,12 +1,11 @@
 @extends('layouts.app')
 
-@section('content')
+@section('main_content')
 	<div class="ed-container">
 		<div class="ed-item">
-			<div class="panel panel-small">
-				<div class="panel__heading">
-					Login
-				</div>
+
+			<div class="panel panel-small" style="margin-top: 4em;">
+				<div class="panel__heading">Iniciar Sesión <img src="{{url('images/logo.png')}}"></div>
 				<div class="panel__body">
 					<form action="{{url('/login')}}" method="POST" name="form-login" class="form">
 
@@ -46,3 +45,4 @@
 		</div>
 	</div>
 @endsection
+

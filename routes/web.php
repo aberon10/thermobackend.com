@@ -44,3 +44,14 @@ Route::post('/albums/add', 'AlbumsController@add');
 Route::get('/albums/edit/{id}', 'AlbumsController@edit');
 Route::post('/albums/update/{id}', 'AlbumsController@update');
 Route::post('/albums/delete', 'AlbumsController@delete');
+
+// Pistas
+Route::get('/tracks/add', 'TracksController@showForm');
+Route::post('/tracks/add', 'TracksController@add');
+Route::get('/tracks/{id}', 'TracksController@index');
+Route::get('/tracks/edit/{id}', 'TracksController@edit');
+Route::post('/tracks/update/{id}', 'TracksController@update');
+Route::post('/tracks/{id}/delete', 'TracksController@delete');
+
+// Tareas
+Route::get('/task', 'TaskController@index');

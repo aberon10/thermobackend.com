@@ -1,5 +1,6 @@
 (function(window, document) {
 	var create = false;
+	var mime = "image";
 
 	if (Music.Fields.form) {
 		Music.Fields.form.addEventListener('submit', function(e) {
@@ -11,7 +12,11 @@
 	// add or edit
 	if (Music.paths.add.test(Music.PATHNAME) || Music.paths.edit.test(Music.PATHNAME)) {
 		// mimetype
-		var mime = (Music.paths.add_track.test(Music.PATHNAME) || Music.paths.edit_track.test(Music.PATHNAME)) ? "audio" : "image";
+		if (Music.paths.add_track.test(Music.PATHNAME) ||
+			Music.paths.edit_track.test(Music.PATHNAME)) {
+			Validations.file.MAX_FILE_SIZE = 20;
+			mime = "audio";
+		}
 
 		if (Music.paths.add.test(Music.PATHNAME)) {
 			create = true;
@@ -35,5 +40,4 @@
 			Music.Fields.delete.addEventListener('click', Music.delete);
 		}
 	}
-
 }(window, document));

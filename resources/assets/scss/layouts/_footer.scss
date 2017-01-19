@@ -4,26 +4,33 @@
 	border-top: 1px solid #d7d8db;
 
 	bottom: 0;
-
-	left: 230px;
-
+	width: 100%;
 	padding: 14px;
 
 	position: fixed;
 
-	right: 0;
+	z-index: 200;
 
-	z-index: 2;
+	@include from(m) {
+		padding-left: 230px;
+	}
 
 	.help-block {
 		font-size: 1.2em;
 
-		font-weight: $bold;
+		text-align: center;
 
-		margin-top: 1em;
+
+		font-weight: $bold;
 
 		position: relative;
 
-		top: 8px;
+		top: .5em;
+		left: .5em;
+
+		@include to(640px) {
+			margin: 0 auto 1em;
+			display: block;
+		}
 	}
 }

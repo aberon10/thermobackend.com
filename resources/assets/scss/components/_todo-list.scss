@@ -1,0 +1,48 @@
+.todo-list {
+	list-style: none;
+	padding: 0;
+
+	&__item {
+		background: #F3F3F3;
+		padding: .5em;
+		margin-bottom: .5em;
+		height: 40px;
+
+		&:hover {
+			background: darken(#F3F3F3, 2%);
+		}
+
+		&.active {
+			span {
+				color: #FFF;
+				background: $alice-blue;
+			}
+		}
+	}
+
+	a {
+		text-decoration: none;
+		color: #73879C;
+		display: flex;
+		transition: all 0.3s;
+
+		&:active {
+			span {
+				color: #FFF;
+				background: $alice-blue;
+			}
+		}
+	}
+
+	span {
+		background: darken(#F3F3F3, 10%);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: .4em;
+		border-radius: 3px;
+		margin-right: .5em;
+		color: darken(#F3F3F3, 10%);
+		transition: all 0.3s;
+	}
+}

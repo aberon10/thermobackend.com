@@ -1,6 +1,4 @@
 .form {
-	padding: 15px;
-
 	.form-group {
 		margin: 0 0 1.2em;
 
@@ -109,3 +107,27 @@ label.checkbox {
 	color: #888;
 }
 
+// SEARCH
+.form.form-search {
+	padding: 0;
+
+	display: flex;
+    justify-content: center;
+    align-items: center;
+
+	.button, .input {
+    	border: 1px solid #ccd1d8;
+    	border-radius: 0;
+    }
+
+    .button {
+    	border-left: none;
+	    height: 36px;
+		background: #FFF;
+		color: $input-color-placeholder;
+	    &:hover {
+	    	background: $alice-blue;
+	    	color: #FFF;
+	    }
+    }
+}

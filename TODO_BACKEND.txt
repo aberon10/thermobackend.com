@@ -1,0 +1,47 @@
+########################################
+  ORDEN DEL DíA PARA APP THERMOBACKEND
+########################################
+
+1) DashBoard - Lista de Tareas
+			 - Graficas
+			 - Indicadores
+2) Música (CRUD)
+	- Generos
+		- Alta		 OK
+		- Modificar	 OK
+		- Listar     OK
+		- Eliminar   OK
+	- Artistas
+		- Alta		  OK
+		- Modificar	  OK
+		- Listar      OK
+		- Eliminar    OK
+	- Albums
+		- Alta		  OK
+		- Modificar	  OK
+		- Listar      OK
+		- Eliminar    OK
+	- Pistas
+		- Alta		  OK
+		- Modificar	  OK
+		- Listar	  OK
+		- Eliminar    OK
+
+3) Usuarios - Nuevo
+			- Eliminar
+			- Historial
+			- Listado
+4) Buscador
+5) Preferencias - Edición de perfil
+				- Cambio de imágen
+				- Cambiar contraseña
+6) PERFIL MARKETING - Subir publicidad (audios - banners)
+					- Graficas
+					- Reportes
+PLUS
+8) CHAT
+
+
+
+
+

@@ -7,38 +7,61 @@
             <div class="app-logo">
                 <img src="{{url('/images/logo.png')}}" alt="Logo" class="app-logo__img">
                 <div class="app-logo__name">
-                    <h3>ThermoBackend <span class="icon icon-sort-desc"></span></h3>
+                    <h3>ThermoBackend</h3>
                 </div>
             </div>
         </div>
 
         <div class="sidebar__body">
 
-            {{-- Nueva Nota --}}
-            <a href="#" class="button button-alice button-center">
-                <span class="icon icon-plus"></span> Crear una nueva nota
-            </a>
-            <a href="#" class="button button-center">Ver todas las notas</a>
+            {{--Menu Secundario - Opciones ocultas --}}
+            <div class="menu-secondary hide">
+	            <a href="#" class="button button-alice button-center">
+	                <span class="icon icon-plus"></span> Crear una nueva tarea
+	            </a>
+	            <a href="{{url('/task')}}" class="button button-center">Ver todas las tareas</a>
+            </div>
+
+			<div class="info-user-container">
+	            <div class="info-user">
+	            	<div class="info-user__avatar">
+						<img src="{{asset('storage/avatars/user.jpg')}}" alt="" class="radius">
+	            	</div>
+	            	<div class="info-user__name">
+	                	<span>Bienvenido,</span>
+	                	<h4>{{session('user')}}</h4>
+	            	</div>
+	            </div>
+			</div>
 
             {{-- Menu --}}
             <nav class="menu-vertical__nav">
                 <ul class="menu-vertical">
-                    <li class="menu-vertical__item"><a href="{{url('/dashboard')}}" class="menu-vertical__link">Dashboard</a></li>
-                    <li class="menu-vertical__item"><a href="#" class="menu-vertical__link">Usuarios</a></li>
-                    <li class="menu-vertical__item">
-                        <a href="#" class="menu-vertical__link item-selected">
+                    <li class="menu-vertical__item"><a href="{{url('/dashboard')}}" class="menu-vertical__link"><span class="icon-home"></span> Dashboard</a></li>
+                    <li class="menu-vertical__item"><a href="#" class="menu-vertical__link"><span class="icon-users"></span> Usuarios</a></li>
+                    <li class="menu-vertical__item item-submenu open">
+                        <a href="#" class="menu-vertical__link">
                             Música
-                            <span class="divider"></span>
+                            <span class="icon-chevron-down"></span>
                         </a>
+                        {{-- SubMenu --}}
                         <ul class="menu-vertical__submenu">
                             <li><a href="{{url('/genres')}}" class="menu-vertical__link">Generos</a></li>
                             <li><a href="{{url('/artists')}}" class="menu-vertical__link">Artistas</a></li>
                             <li><a href="{{url('/albums')}}" class="menu-vertical__link">Albums</a></li>
-                            <li><a href="{{url('/tracks')}}" class="menu-vertical__link">Pistas</a></li>
+                            <li><a href="{{url('/tracks/add')}}" class="menu-vertical__link">Pistas</a></li>
                         </ul>
                     </li>
                 </ul>
             </nav>
+        </div>
+
+        <div class="sidebar__footer">
+            <a href="#" data-toggle="main-menu"><span class="icon-chevron-left"></span></a>
+        	<a href="#" id="toggle-secondary-menu"><span class="icon-configuration"></span></a>
+        	<a href="#"><span class="icon-help"></span></a>
+        	<a href="#"><span class="icon-bubble-comment-streamline-talk"></span></a>
+        	<a href="#"><span class="icon-sign-out"></span></a>
         </div>
 
     </aside>

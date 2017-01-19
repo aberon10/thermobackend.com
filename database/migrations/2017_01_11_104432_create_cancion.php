@@ -22,9 +22,9 @@ class CreateCancion extends Migration
             $table->string('formato', 5);
             $table->string('duracion', 11);
             $table->string('src_audio');
-            $table->string('anio', 11);
+            $table->string('anio', 11)->nullable();
             $table->string('idioma')->default('Español');
-            $table->integer('contador');
+            $table->integer('contador')->default(0);
             $table->timestamps(); // created_at updated_at
 
             $table->foreign('id_album')

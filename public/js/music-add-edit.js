@@ -6,6 +6,8 @@
 Music.responseServerAdd = function(response) {
 	var messageFooter = document.getElementById('help-block');
 
+	console.log(response);
+
 	if (response) {
 		if (response.hasOwnProperty('success') && !response.success) {
 
@@ -23,7 +25,7 @@ Music.responseServerAdd = function(response) {
 				Music.Fields.name.nextElementSibling.innerHTML = response.message_exist;
 			}
 
-			if (response.hasOwnProperty('message')) {
+			if (response.hasOwnProperty('messages')) {
 				// nombre
 				if (response.messages.hasOwnProperty('nombre')) {
 					Music.Fields.name.parentNode.classList.add('error');
@@ -71,7 +73,8 @@ Music.responseServerAdd = function(response) {
 				}
 
 				if (response.src !== "") {
-					document.getElementById('preview-element').src = "http://thermobackend.com/storage/" + response.src + "?r=" + Math.floor(Math.random() * 1000);
+					document.getElementById('preview-element').firstElementChild.src = "http://thermobackend.com/storage/" + response.src + "?r=" +
+						Math.floor(Math.random() * 1000);
 				}
 			}
 		}
@@ -158,6 +161,7 @@ Music.resetForm = function(all) {
 			} else {
 				preview.src = "";
 			}
+			preview.parentNode.removeChild(preview);
 		}
 
 		// name file

@@ -8,7 +8,6 @@ Music.checkAll = function() {
 
 	var allItems = Array.prototype.slice.call(document.querySelectorAll('input[data-music="true"]'));
 	var itemsSelectes = Array.prototype.slice.call(document.querySelectorAll('input[data-music="true"]:checked'));
-
 	var count = 0;
 	var i = 0;
 

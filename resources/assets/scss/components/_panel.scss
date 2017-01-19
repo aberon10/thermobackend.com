@@ -1,26 +1,22 @@
-.main-container {
-    margin-left: 230px;
-	margin-bottom: 100px;
-}
-
+// Panels
 .panel-container {
-    @include from(m) {
-        @include grid(div, 3);
+    &.panel-column-2 {
+	     @include from(l) {
+	        @include grid(div, 2);
+	    }
+    }
+
+    &.panel-column-3 {
+	    @include from(m) {
+	        @include grid(div, 3);
+	    }
     }
 }
 
 .panel {
     margin-bottom: 22px;
 
-    border: 1px solid $panel-default-border;
-
     border-radius: 3px;
-
-    background-color: #fff;
-
-    box-shadow: 0 1px 1px rgba(#fff, .5);
-
-    min-width: 320px;
 
     overflow: hidden;
 
@@ -44,8 +40,8 @@
         font-size: 1.1em;
 
         border-color: $panel-default-border;
-
-        border-bottom: 1px solid $panel-default-border;
+		border: 1px solid #E6E9ED;
+		border-bottom: none;
 
         border-top-left-radius: 3px;
 
@@ -53,13 +49,28 @@
 
         background-color: #fff;
 
-        // Colores de la cabezera
-        &.heading-green {
-        }
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+		.title {}
+		.panel-buttons {
+			color: $input-border;
+			cursor: pointer;
+		}
     }
 
-    &__body {
+    &__body,
+    &__footer {
         padding: 20px;
+    	background-color: #fff;
+    	border: 1px solid #E6E9ED;
+
+    }
+
+    &__footer {
+    	box-shadow: 0 1px 1px rgba(#fff, .5);
+    	padding: .5em 1em;
     }
 
     // Paneles de colores
@@ -71,9 +82,10 @@
             background: lighten($color-success, 30%);
 
             color: $color-success;
-
-            font-weight: $bold;
         }
+        .panel-buttons {
+			color: darken($color-success, 8%);
+		}
     }
 
     &.panel-blue {
@@ -85,5 +97,22 @@
 
             color: $color-primary;
         }
+
+        .panel-buttons {
+			color: darken($color-primary, 8%);
+		}
     }
+}
+
+.panel-options {
+	width: 100%;
+	height: 50px;
+	margin-bottom: .5em;
+	justify-content: center;
+
+	@include from(m) {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 }

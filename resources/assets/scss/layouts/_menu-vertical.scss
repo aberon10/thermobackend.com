@@ -1,4 +1,4 @@
-// Sidebar 
+// Sidebar
 .sidebar {
 	position: fixed;
 
@@ -11,15 +11,28 @@
 	min-height: 100vh;
 
 	background: $sidebar-bg-color;
+	z-index: 10000;
+
+	transition: all 0.3s;
+
+	@include to(m) {
+		left: -100%;
+
+		&.open {
+			left: 0;
+			width: 100%;
+
+		}
+	}
 
 	&__header {
 		padding: .5em;
 
-		height: 60px;
-
-		border-bottom: 1px solid rgba(#fff, .1);
+		height: 55px;
 
 		cursor: pointer;
+		background: rgba(#fff, .2);
+
 		.app-logo {
 			height: 100%;
 
@@ -55,11 +68,64 @@
 	}
 
 	.menu-vertical {
-		&__item {}
+		span[class^="icon-"] {
+			font-size: 1.2em;
+			margin-right: .5em;
+		}
+
+		&__item {
+
+			&.item-submenu {
+				position: relative;
+				span {
+					position: absolute;
+					top: 1em;
+					right: 1.3em;
+					font-size: .8em;
+				}
+
+				&::after {
+					content: '';
+					height: 0;
+					position: absolute;
+					right: 0;
+					top: 0;
+					width: 5px;
+					background: $alice-dark;
+					transition: all 0.3s;
+				}
+			}
+
+			// submenu abierto
+			&.open {
+				color: $alice-blue;
+				background: $submenu-bg-color;
+				> a {
+					border-bottom: 1px solid rgba(#FFF, 0.1);
+				}
+
+				ul {
+					display: block;
+				}
+
+				&::after {
+					height: 100%;
+				}
+
+				&:hover {
+					background: $submenu-bg-color;
+				}
+			}
+
+			&.active,
+			&:hover {
+				background: rgba(#FFF, .1);
+			}
+		}
 
 		&__link {
 			color: #fff;
-
+			position: relative;
 			padding: .5em .9em;
 
 			text-decoration: none;
@@ -67,36 +133,109 @@
 			display: block;
 
 			width: 100%;
-
-			&:hover {
-				background: rgba(#fff, .1);
-			}
 		}
 
 		&__submenu {
+			display: none;
 			position: relative;
 			background: $submenu-bg-color;
+
+			li {
+				padding-left: 36px;
+			}
 			a {
+				position: relative;
 				padding-left: 2.5em;
 				color: rgba(#FFF, 0.6);
+
 				&:hover {
 					background: transparent;
 					color: #FFF;
+
+					&::after {
+						background: $alice-dark;
+					}
 				}
+
+				// line
+				&::before {
+					content: '';
+					position: absolute;
+					left: 0;
+					top: 0;
+					background: $border-color;
+					width: 1px;
+					height: 100%;
+				}
+
+				// ball
+				&::after {
+					content: '';
+					position: absolute;
+					left: -3px;
+					top: 1.1em;
+					background: $border-color;
+					width: 8px;
+					height: 8px;
+					border-radius: 50%;
+					z-index: 100;
+				}
+
+			}
+		}
+	}
+
+	&__footer {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background: darken($sidebar-bg-color, 5%);
+		height: 40px;
+		padding: .5em 0;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+
+		a {
+			color: #FFF;
+			font-size: 1.3em;
+			cursor: pointer;
+			text-decoration: none;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			&:hover {
+				color: rgba(#FFF, 0.75);
 			}
 		}
 
-		.item-selected {
-			color: $alice-blue;
-			background: $submenu-bg-color;
-			font-size: 1.1em;
-			.divider {
-				background: rgba(#FFF, 0.1);
+		a[data-toggle] {
+			@include from(m) {
+				display: none;
 			}
+		}
+	}
+}
 
-			&:hover {
-				background: $submenu-bg-color;
-			}
+.info-user {
+	padding: 1em 0;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+
+	&__name {
+	    position: relative;
+	    left: -2em;
+
+		h4 {
+			color: #FFF;
+			margin: 0;
+			font-weight: $light;
+		}
+
+		span {
+			color: #ECECEC;
 		}
 	}
 }
