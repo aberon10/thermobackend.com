@@ -18,6 +18,6 @@
 			</div>
 		</div>
 		<footer class="home-footer">
-			<p class="center">ThermoBackend - Todos los derechos reservados &copy {{date('Y')}}</p>
+			<p class="center">ThermoBackend - {{date('Y')}}</p>
 		</footer>
 @endsection

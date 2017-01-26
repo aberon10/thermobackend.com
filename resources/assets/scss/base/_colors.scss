@@ -2,7 +2,7 @@
 $blue       : #0F7CFF;
 $alice-dark	: lighten(#1287A8, 5%);
 $alice-blue	: lighten(#00f0ff, 5%);
-
+$green		: #4CAF50;
 
 // Background Body
 $body-bg: #e9ebee;
@@ -43,6 +43,9 @@ $panel-default-heading-bg: #FFF;
 // Sidebar - Menu vertical
 $sidebar-bg-color: #2A3F54;
 $submenu-bg-color: darken($sidebar-bg-color, 5%);
+
+// Tooltip info color
+$tooltip-bg-color: darken($sidebar-bg-color, 8%);
 
 // Facebook - Google +
 $facebook  : #3A5795;

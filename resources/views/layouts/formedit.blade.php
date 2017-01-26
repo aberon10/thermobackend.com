@@ -27,22 +27,32 @@
 							@endforeach
 						@elseif (isset($artists))
 							<option value="">Selecciona un artista...</option>
-							@foreach($artists as $a)
-								@if ($a->id_artista == $main_data->id_artista)
-									<option value="{{$a->id_artista}}" selected>{{$a->nombre_artista}}</option>
+							<?php $old_genre = null; ?>
+							@foreach($artists as $artist)
+								@if($old_genre == $artist->nombre_genero)
+									<option value="{{$artist->id_artista}}" <?php echo ($artist->id_artista == $main_data->id_artista) ? 'selected' : ''; ?>>{{$artist->nombre_artista}}</option>
 								@else
-									<option value="{{$a->id_artista}}">{{$a->nombre_artista}}</option>
+									</optgroup>
+									<optgroup label="{{$artist->nombre_genero}}">
+										<option value="{{$artist->id_artista}}" <?php echo ($artist->id_artista == $main_data->id_artista) ? 'selected' : ''; ?>>{{$artist->nombre_artista}}</option>
 								@endif
+							<?php $old_genre = $artist->nombre_genero; ?>
 							@endforeach
+							</optgroup>
 						@elseif (isset($albums))
 							<option value="">Selecciona un album...</option>
-							@foreach($albums as $a)
-								@if ($a->id_album == $main_data->id_album)
-									<option value="{{$a->id_album}}" selected>{{$a->nombre}}</option>
+							<?php $old_artist = null; ?>
+							@foreach($albums as $album)
+								@if($old_artist == $album->nombre_artista)
+									<option value="{{$album->id_album}}" <?php echo ($album->id_album == $main_data->id_album) ? 'selected' : ''; ?>>{{$album->nombre}}</option>
 								@else
-									<option value="{{$a->id_album}}">{{$a->nombre}}</option>
+									</optgroup>
+									<optgroup label="{{$album->nombre_artista}}">
+										<option value="{{$album->id_album}}" <?php echo ($album->id_album == $main_data->id_album) ? 'selected' : ''; ?>>{{$album->nombre}}</option>
 								@endif
+							<?php $old_artist = $album->nombre_artista; ?>
 							@endforeach
+							</optgroup>
 						@endif
 					</select>
 					<p class="message"></p>

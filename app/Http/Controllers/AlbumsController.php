@@ -17,7 +17,36 @@ class AlbumsController extends Controller implements Crud
 {
     public function __construct()
 	{
-		$this->middleware('admin');
+		$this->middleware(['admin', 'account_type']);
+	}
+
+	/**
+	 * index
+	 * @param string $id Id del artista
+	 * @return Illuminate\Http\Response
+	 */
+	public function list(Request $request, $id)
+	{
+		if (isset($id) && preg_match('/^[0-9]{1,}$/', $id)) {
+			$data = \DB::table('album')
+					->where('artista.id_artista', '=', $id)
+					->join('img_album', 'album.id_album', '=', 'img_album.id_album')
+					->join('artista', 'album.id_artista', '=', 'artista.id_artista')
+					->join('genero', 'artista.id_genero', '=', 'genero.id_genero')
+					->orderBy('genero.nombre_genero', 'asc')
+					->orderBy('artista.nombre_artista', 'asc')
+					->orderBy('album.nombre')
+					->get();
+
+			if (count($data) > 0) {
+				return view('sections.albums.list', compact('data', 'img'));
+			} else if (count($data) == 0){
+				return redirect('/albums/add');
+			}
+
+		} else {
+			abort(404);
+		}
 	}
 
 	/**
@@ -28,21 +57,74 @@ class AlbumsController extends Controller implements Crud
 	{
 		$total_albums = count(Album::all());
 
+		$filter = $_GET['filter'] ?? '';
+		$limit  = $_GET['limit'] ?? config('config_app.MAX_ALBUMS_PAGE');
+
+		if (!in_array($limit, config('config_app.LIMITS'))) {
+			abort(404);
+		}
+
+		if ($filter) {
+			$filter = str_replace('%', '\\%', trim($filter));
+			$filter = $filter."%";
+		} else if(!$filter) {
+			$filter = '%';
+		}
+
 		$albums = \DB::table('album')
+					->where('nombre', 'LIKE', $filter)
 					->join('artista', 'album.id_artista', '=', 'artista.id_artista')
 					->join('genero', 'artista.id_genero', '=', 'genero.id_genero')
-					->orderBy('genero.nombre_genero')
-					->orderBy('artista.nombre_artista')
+					->orderBy('genero.nombre_genero', 'asc')
+					->orderBy('artista.nombre_artista', 'asc')
 					->orderBy('album.nombre')
-					->paginate(config('config_app.MAX_ALBUMS_PAGE'));
+					->paginate($limit);
 
-		$index = ($albums->currentPage() == 1) ? 1 : (($albums->currentPage() - 1) * config('config_app.MAX_ALBUMS_PAGE')) + 1;
+		$index = ($albums->currentPage() == 1) ? 1 : (($albums->currentPage() - 1) * $limit) + 1;
 
-		if (count($albums) == 0) {
-			$this->showForm();
+		if (count($albums) == 0 && $total_albums == 0) {
+			return redirect('albums/add');
+		} else if (count($albums) == 0 && $total_albums > 0) {
+			abort(404);
 		} else {
-			return view('sections.albums.index', compact('albums', 'index', 'total_albums'));
+			return view('sections.albums.index', compact('albums', 'index', 'total_albums', 'limit'));
 		}
+	}
+
+	/**
+	 * search
+	 * @param  Request $request
+	 * @return JSON
+	 */
+	public function search(Request $request)
+	{
+		$total_data = count(Album::all());
+
+		$limit = ($request->limit && in_array($request->limit, config('config_app.LIMITS'))) ? $request->limit : config('config_app.MAX_ALBUMS_PAGE');
+
+		$filter = str_replace('%', '\\%', trim($request->filter));
+		$filter = $filter."%";
+
+		$data = \DB::table('album')
+					->where('nombre', 'LIKE', $filter)
+					->join('artista', 'album.id_artista', '=', 'artista.id_artista')
+					->join('genero', 'artista.id_genero', '=', 'genero.id_genero')
+					->orderBy('genero.nombre_genero', 'asc')
+					->orderBy('artista.nombre_artista', 'asc')
+					->orderBy('album.nombre')
+					->paginate($limit);
+
+		$index = ($data->currentPage() == 1) ? 1 : (($data->currentPage() - 1) * $limit) + 1;
+
+		return response()->json([
+			'entitie'       => 'album',
+			'filter'        => $request->filter,
+			'limit'			=> $limit,
+			'data'          => $data,
+			'total_data'    => $total_data,
+			'pagination'    => (string) $data->links(),
+			'message_panel' => 'Visualizando '.$data->currentPage().' de '.$data->lastPage().' paginas de '.$total_data.' albums.'
+		]);
 	}
 
 	/**
@@ -51,7 +133,11 @@ class AlbumsController extends Controller implements Crud
 	 */
 	public function showForm()
 	{
-		$artists      = Artista::all();
+		$artists = \DB::table('artista')
+				->join('genero', 'artista.id_genero', '=', 'genero.id_genero')
+				->orderBy('nombre_genero', 'asc')
+				->orderBy('nombre_artista', 'asc')
+				->get();
 		$panel_title  = 'Agregar un Nuevo Album';
 		$label_select = 'Artista';
 
@@ -148,7 +234,7 @@ class AlbumsController extends Controller implements Crud
 	 */
 	public function edit(Request $request, $id)
 	{
-		if (isset($id) && preg_match('/^[0-9]$/', $id)) {
+		if (isset($id) && preg_match('/^[0-9]{1,}$/', $id)) {
 			$main_data = Album::find($id);
 
 			if (!empty($main_data)) {
@@ -157,11 +243,15 @@ class AlbumsController extends Controller implements Crud
 				// get image
 				$img = ImagenAlbum::find($id);
 
-				// get genre
+				// get artist
 				$artist = Artista::find($main_data->id_artista);
 
-				// get all genres
-				$artists = Artista::all();
+				// get all artists
+				$artists = \DB::table('artista')
+						->join('genero', 'artista.id_genero', '=', 'genero.id_genero')
+						->orderBy('nombre_genero', 'asc')
+						->orderBy('nombre_artista', 'asc')
+						->get();
 
 				$label_select = 'Artista';
 

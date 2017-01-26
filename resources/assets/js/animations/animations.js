@@ -1,5 +1,13 @@
+/**
+ * Animations
+ * @type Object
+ */
 var Animations = {};
 
+/**
+ * tooglePreferencesMenu
+ * @return undefined
+ */
 Animations.tooglePreferencesMenu = function() {
 	var btnToggle = document.getElementById('dropdown-toggle');
 
@@ -24,6 +32,11 @@ Animations.tooglePreferencesMenu = function() {
 
 };
 
+/**
+ * toggleSubmenu
+ * @param  Object e
+ * @return undefined
+ */
 Animations.toggleSubmenu = function(e) {
 	var btnsToggle = Array.prototype.slice.call(document.querySelectorAll('li.item-submenu > a'));
 
@@ -38,14 +51,21 @@ Animations.toggleSubmenu = function(e) {
 	}
 };
 
+/**
+ * toggleMenuSecondary
+ * @param  Object e
+ * @return undefined
+ */
 Animations.toggleMenuSecondary = function(e) {
 	var btnToggle = document.getElementById('toggle-secondary-menu');
-	var iconArrow = btnToggle.firstElementChild.lastElementChild;
-	var menuSecondary = document.querySelector('.menu-secondary');
-	var infoUser = document.querySelector('.info-user-container');
-	var mainMenu = document.querySelector('.menu-vertical__nav');
 
 	if (btnToggle) {
+
+		var iconArrow = btnToggle.firstElementChild.lastElementChild;
+		var menuSecondary = document.querySelector('.menu-secondary');
+		var infoUser = document.querySelector('.info-user-container');
+		var mainMenu = document.querySelector('.menu-vertical__nav');
+
 		btnToggle.addEventListener('click', function(e) {
 			e.preventDefault();
 			menuSecondary.classList.toggle('hide');
@@ -63,6 +83,11 @@ Animations.toggleMenuSecondary = function(e) {
 	}
 };
 
+/**
+ * togglePanel
+ * @param  Object e
+ * @return undefined
+ */
 Animations.togglePanel = function(e) {
 	var btnsToggle = document.querySelectorAll('span[data-toggle="panel"]');
 
@@ -84,28 +109,51 @@ Animations.togglePanel = function(e) {
 	}
 };
 
+/**
+ * toggleMainMenu
+ * @param  Object e
+ * @return undefined
+ */
 Animations.toggleMainMenu = function(e) {
 	var btnsToggle = Array.prototype.slice.call(document.querySelectorAll('a[data-toggle="main-menu"]'));
 	var sidebar = document.querySelector('.sidebar');
-	btnsToggle.forEach(function(element, index) {
-		element.addEventListener('click', function(e) {
-			e.preventDefault();
-			sidebar.classList.toggle('open');
 
-			if (document.body.style.overflow === "hidden") {
-				document.body.style.overflow = "";
-			} else {
-				document.body.style.overflow = "hidden";
-			}
+	if (btnsToggle.length > 0) {
+		btnsToggle.forEach(function(element, index) {
+			element.addEventListener('click', function(e) {
+				e.preventDefault();
+				sidebar.classList.toggle('open');
 
+				if (document.body.style.overflow === "hidden") {
+					document.body.style.overflow = "";
+				} else {
+					document.body.style.overflow = "hidden";
+				}
+
+			});
 		});
-	});
+	}
 
 	window.addEventListener('resize', function() {
 		if (this.innerWidth >= 768) {
 			document.body.style.overflow = "auto";
 		}
 	});
+};
+
+Animations.loader = document.querySelector('.loader');
+Animations.loaderMessage = document.querySelector('.loader-message');
+
+/**
+ * showHideLoader
+ * @return undefined
+ */
+Animations.showHideLoader = function() {
+	if (Animations.loader.classList.contains('show')) {
+		Animations.loader.classList.remove('show');
+	} else {
+		Animations.loader.classList.add('show');
+	}
 };
 
 Animations.toggleMenuSecondary();

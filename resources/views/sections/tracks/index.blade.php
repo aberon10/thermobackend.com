@@ -7,6 +7,7 @@
 @section('title_right')
 	<input type="checkbox" class="hide" id="delete-all">
 	<label for="delete-all"><span class="icon-trash icon-large error"></span></label>
+	<a href="#" class="nodecoration" target="_blanck"><span class="icon-help icon-large info"></span></a>
 @endsection
 
 {{-- Menu Vertical --}}
@@ -20,7 +21,7 @@
 					<a href="{{url('/tracks/edit/'.$track->id_cancion)}}">{{$track->nombre_cancion}}</a>
 					<div class="panel-buttons">
 						<input type="checkbox" id="{{$track->nombre_cancion}}" name="{{$track->nombre_cancion}}" data-music="true" value="{{$track->id_cancion}}">
-						<span class="icon-chevron-down"></span>
+						<span class="icon-chevron-down" data-toggle="panel"></span>
 						<span class="icon-close"></span>
 					</div>
 				</div>
@@ -51,11 +52,4 @@
 
 {{-- URL button add --}}
 @section('url_add', url('tracks/add'))
-
-{{-- Scripts --}}
-@section('scripts')
-<script src="{{url('/js/utilities/ajax.js')}}"></script>
-<script src="{{url('/js/music-config.js')}}"></script>
-<script src="{{url('/js/music-delete.js')}}"></script>
-<script src="{{url('/js/music-init.js')}}"></script>
-@endsection
+@section('id_button_delete', 'delete-music')

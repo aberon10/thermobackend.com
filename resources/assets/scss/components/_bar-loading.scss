@@ -11,3 +11,28 @@
 
 	transition: all .3s ease;
 }
+
+.loader {
+	border: 5px solid #DDD;
+	border-radius: 50%;
+	border-top: 5px solid $alice-dark;
+	width: 38px;
+	height: 38px;
+	display: none;
+	margin-left: 1em;
+	animation: spin 2s linear infinite;
+
+	&.show {
+		display: inline-block;
+	}
+}
+
+.loader-message {
+	display: inline-block;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+

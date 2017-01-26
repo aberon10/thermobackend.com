@@ -18,14 +18,5 @@
 {{-- Footer --}}
 @extends('layouts.footerapp')
 @section('url_button_cancel', url('/artists/'))
+@section('id_button_add', 'music-add')
 
-{{-- Scripts --}}
-@section('scripts')
-	<script src="{{url('/js/utilities/ajax.js')}}"></script>
-	<script src="{{url('/js/utilities/utilities.js')}}"></script>
-	<script src="{{url('/js/validations/validations.js')}}"></script>
-	<script src="{{url('/js/validations/upload-file.js')}}"></script>
-	<script src="{{url('/js/music-config.js')}}"></script>
-	<script src="{{url('/js/music-add-edit.js')}}"></script>
-	<script src="{{url('/js/music-init.js')}}"></script>
-@endsection

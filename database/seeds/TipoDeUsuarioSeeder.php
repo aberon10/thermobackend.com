@@ -13,11 +13,27 @@ class TipoDeUsuarioSeeder extends Seeder
     public function run()
     {
         DB::table('tipo_usuario')->insert(
-        	['nombre_tipo' => 'Administrador'],
-        	['nombre_tipo' => 'Business Intelligence'],
-        	['nombre_tipo' => 'Premium'],
-        	['nombre_tipo' => 'Gratis'],
+        	['nombre_tipo' => 'Administrador']
+        );
+
+        DB::table('tipo_usuario')->insert(
+        	['nombre_tipo' => 'Business Intelligence']
+        );
+
+        DB::table('tipo_usuario')->insert(
+        	['nombre_tipo' => 'Premium']
+        );
+
+        DB::table('tipo_usuario')->insert(
+        	['nombre_tipo' => 'Gratis']
+        );
+
+        DB::table('tipo_usuario')->insert(
         	['nombre_tipo' => 'No Registrado']
         );
     }
 }
+
+
+
+

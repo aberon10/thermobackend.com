@@ -1,22 +1,14 @@
 /**
  * responseServerAdd
- * @param  {String | Object} response
- * @return {undefined}
+ * @param  String | Object response
+ * @return undefined
  */
 Music.responseServerAdd = function(response) {
-	var messageFooter = document.getElementById('help-block');
-
-	console.log(response);
-
 	if (response) {
 		if (response.hasOwnProperty('success') && !response.success) {
-
-			messageFooter.classList.add('error');
-
 			// exist
 			if (response.hasOwnProperty('error')) {
-				messageFooter.classList.add('error');
-				messageFooter.innerHTML = response.error;
+				Utilities.Snackbar(response.error, 'error');
 			}
 
 			// exist
@@ -54,11 +46,12 @@ Music.responseServerAdd = function(response) {
 			if (Music.paths.add.test(Music.PATHNAME)) {
 				Music.resetForm(true);
 			}
-			messageFooter.classList.add('success');
 		}
 
 		if (response.hasOwnProperty('message')) {
-			messageFooter.innerHTML = response.message;
+			Utilities.Snackbar(response.message);
+			Animations.loaderMessage.innerHTML = '';
+			Animations.showHideLoader();
 
 			// update
 			if (Music.paths.edit.test(location.pathname)) {
@@ -102,13 +95,15 @@ Music.uploadToServer = function() {
 		url = url.replace("edit", "update");
 	}
 
+	Animations.loaderMessage.innerHTML = 'Procesando solicitud...';
+	Animations.showHideLoader();
 	Ajax.send(url, "POST", "json", Music.responseServerAdd, formData, "FormData");
 };
 
 /**
  * resetFormAdd
- * @param {Boolean} all
- * @return {undefined}
+ * @param Boolean all
+ * @return undefined
  */
 Music.resetForm = function(all) {
 	var name = Music.Fields.name;
@@ -116,7 +111,6 @@ Music.resetForm = function(all) {
 	var select = Music.Fields.select;
 	var quantityTracks = Music.Fields.quantity_tracks;
 	var year = Music.Fields.year;
-	var messageFooter = document.getElementById('help-block');
 
 	Music.Fields.drop_zone.classList.remove('error');
 	Music.Fields.drop_zone.classList.remove('success');
@@ -143,10 +137,6 @@ Music.resetForm = function(all) {
 		year.nextElementSibling.innerHTML = "";
 	}
 
-	messageFooter.innerHTML = "";
-	messageFooter.classList.remove('error');
-	messageFooter.classList.remove('success');
-
 	if (all) {
 		var preview = document.getElementById('preview-element');
 		var nameFile = document.querySelector('.name_file');
@@ -171,6 +161,11 @@ Music.resetForm = function(all) {
 	}
 };
 
+/**
+ * add
+ * @param Object e
+ * @return undefined
+ */
 Music.add = function(e) {
 	e.preventDefault();
 
@@ -181,7 +176,6 @@ Music.add = function(e) {
 	var description = Music.Fields.description;
 	var select = Music.Fields.select;
 	var form = Music.Fields.form;
-	var messageFooter = document.getElementById('help-block');
 	var quantityTracks = Music.Fields.quantity_tracks;
 	var year = Music.Fields.year;
 
@@ -252,7 +246,30 @@ Music.add = function(e) {
 		// send form
 		Music.uploadToServer();
 	} else {
-		messageFooter.classList.add('error');
-		messageFooter.innerHTML = Validations.messageForm.error_form;
+		Utilities.Snackbar(Validations.messageForm.error_form, 'error');
 	}
+};
+
+/**
+ * addEvent
+ * @return undefined
+ */
+Music.addEvent = function() {
+	var create = false;
+	var mime = "image";
+
+	// mimetype
+	if (Music.paths.add_track.test(Music.PATHNAME) ||
+		Music.paths.edit_track.test(Music.PATHNAME)) {
+		Validations.file.MAX_FILE_SIZE = 20;
+		mime = "audio";
+	}
+
+	if (Music.paths.add.test(Music.PATHNAME)) {
+		create = true;
+	}
+
+	// validat upload file
+	Validations.file.upload("drop-zone", mime, create);
+	Music.Fields.btn_add.addEventListener('click', Music.add);
 };

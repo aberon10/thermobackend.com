@@ -4,6 +4,7 @@ $devMode: false;
 
 $max-width: 1600px;
 
+@import 'utilities/_utilities';
 // Breakpoints
   $breakpoints : (
     s  : 0,
@@ -22,12 +23,13 @@ $max-width: 1600px;
 @import 'components/_panel';
 @import 'components/_form';
 @import 'components/_buttons';
-@import 'components/_buttons';
 @import 'components/_indicators.scss';
 @import 'components/_table.scss';
 @import 'components/_bar-loading';
 @import 'components/_pagination';
 @import 'components/_todo-list';
+@import 'components/_tooltip';
+@import 'components/_snackbar';
 
 @import 'layouts/_header';
 @import 'layouts/_footer';

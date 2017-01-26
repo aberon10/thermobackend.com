@@ -21,14 +21,32 @@
 							@endforeach
 						@elseif (isset($artists))
 							<option value="">Selecciona un artista...</option>
+							<?php $old_genre = null; ?>
 							@foreach($artists as $artist)
-							<option value="{{$artist->id_artista}}">{{$artist->nombre_artista}}</option>
+								@if($old_genre == $artist->nombre_genero)
+									<option value="{{$artist->id_artista}}">{{$artist->nombre_artista}}</option>
+								@else
+									</optgroup>
+									<optgroup label="{{$artist->nombre_genero}}">
+										<option value="{{$artist->id_artista}}">{{$artist->nombre_artista}}</option>
+								@endif
+							<?php $old_genre = $artist->nombre_genero; ?>
 							@endforeach
+							</optgroup>
 						@elseif (isset($albums))
 							<option value="">Selecciona un album...</option>
+							<?php $old_artist = null; ?>
 							@foreach($albums as $album)
-							<option value="{{$album->id_album}}">{{$album->nombre}}</option>
+								@if($old_artist == $album->nombre_artista)
+									<option value="{{$album->id_album}}">{{$album->nombre}}</option>
+								@else
+									</optgroup>
+									<optgroup label="{{$album->nombre_artista}}">
+										<option value="{{$album->id_album}}">{{$album->nombre}}</option>
+								@endif
+							<?php $old_artist = $album->nombre_artista; ?>
 							@endforeach
+							</optgroup>
 						@endif
 					</select>
 					<p class="message"></p>

@@ -15,6 +15,7 @@ class AdminSeeder extends Seeder
         DB::table('usuario')->insert([
 			'id_tipo_usuario' => 1,
 			'usuario'         => 'admin',
+			'nombre'		  => 'Administrador',
 			'pass'            => bcrypt('admin'),
 			'sexo'            => 'M',
 			'correo'          => 'admin01@thermobackend.com'

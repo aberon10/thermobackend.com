@@ -47,7 +47,7 @@
 @endsection
 
 @section('panel_footer')
-	<div class="panel-options">
+	<div class="panel-options" id="panel-options">
 		<div class="panel-options__left">
 			<p>Visualizando {{$albums->currentPage()}} de {{$albums->lastPage()}} paginas de {{$total_albums}} albums</p>
 		</div>
@@ -63,11 +63,5 @@
 
 {{-- URL button add --}}
 @section('url_add', url('albums/add'))
+@section('id_button_delete', 'delete-music')
 
-{{-- Scripts --}}
-@section('scripts')
-<script src="{{url('/js/utilities/ajax.js')}}"></script>
-<script src="{{url('/js/music-config.js')}}"></script>
-<script src="{{url('/js/music-delete.js')}}"></script>
-<script src="{{url('/js/music-init.js')}}"></script>
-@endsection

@@ -9,8 +9,8 @@ var Ajax = {};
  * @type {Object}
  */
 Ajax.headers = {
-	form : "application/x-www-form-urlencoded",
-	json : "application/json"
+	form: "application/x-www-form-urlencoded",
+	json: "application/json"
 };
 
 /**
@@ -19,11 +19,11 @@ Ajax.headers = {
  * @type {Object}
  */
 Ajax.State = {
-	UNSET           : 0, //	The object has been constructed.
-	OPENED          : 1, // The open() method has been successfully invoked.
+	UNSET: 0, //	The object has been constructed.
+	OPENED: 1, // The open() method has been successfully invoked.
 	HEADERS_RECEIVED: 2, // All redirects (if any) have been followed and all HTTP headers of the response have been received.
-	LOADING         : 3, // The response's body is being received.
-	DONE            : 4 // The data transfer has been completed or something went wrong during the transfer (e.g. infinite redirects).
+	LOADING: 3, // The response's body is being received.
+	DONE: 4 // The data transfer has been completed or something went wrong during the transfer (e.g. infinite redirects).
 };
 
 /**
@@ -33,11 +33,11 @@ Ajax.State = {
  * @return {object}
  */
 Ajax.init = function() {
-    if (window.XMLHttpRequest) {
-        return new XMLHttpRequest();
-    } else {
-        return new ActiveXObject('Microsoft.XMLHTTP');
-    }
+	if (window.XMLHttpRequest) {
+		return new XMLHttpRequest();
+	} else {
+		return new ActiveXObject('Microsoft.XMLHTTP');
+	}
 };
 
 /**
@@ -67,12 +67,12 @@ Ajax.send = function(url, method, responseType, callback, data, typeData) {
 		if (!method || method === null || (method.toString() !== 'POST' && method.toString() !== 'GET')) {
 			method = 'GET';
 		} else if ((typeof data === 'object' && data.constructor === 'FormData') || (typeof data !== 'string')) {
-           	method = 'POST';
-        }
+			method = 'POST';
+		}
 
 		// check callback
 		if (!callback || callback.constructor !== Function) {
-            throw 'La función no es valida';
+			throw 'La función no es valida';
 		}
 
 		// create request
@@ -100,27 +100,27 @@ Ajax.send = function(url, method, responseType, callback, data, typeData) {
 
 		http.responseType = responseType; // set a responseType
 
-        // An EventHandler that is called whenever the readyState attribute changes
-        http.onreadystatechange = function() {
-        	if (this.status === 422 || (this.readyState === this.DONE && this.status === 200)) {
-        		callback(this.response);
-        	}
-        };
+		// An EventHandler that is called whenever the readyState attribute changes
+		http.onreadystatechange = function() {
+			if (this.status === 422 || (this.readyState === this.DONE && this.status === 200)) {
+				callback(this.response);
+			}
+		};
 
-    	//
-        http.onprogress = function() {
-        	// console.log("LOADING: " + this.readyState);
-        };
+		//
+		http.onprogress = function() {
+			// console.log("LOADING: " + this.readyState);
+		};
 
-        //
-        http.onabort = function() {};
+		//
+		http.onabort = function() {};
 
-        //
-        http.onerror = function() {};
+		//
+		http.onerror = function() {};
 
-        http.send(data);
+		http.send(data);
 
-	} catch(error) {
+	} catch (error) {
 		console.log(error);
 	}
 };

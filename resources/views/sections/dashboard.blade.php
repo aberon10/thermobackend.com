@@ -164,8 +164,4 @@
 
 {{-- Footer --}}
 @extends('layouts.footerapp')
-@section('url_button_cancel', url('/dashboard/'))
 
-@section('scripts')
-<script type="text/javascript" src="{{url('/js/animations/animations.js')}}"></script>
-@endsection

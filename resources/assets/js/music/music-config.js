@@ -8,13 +8,13 @@ var Music = {};
 /**
  * PATHNAME
  * Current route.
- * @type {String}
+ * @type String
  */
 Music.PATHNAME = window.location.pathname;
 
 /**
  * paths - Routes
- * @type {Object}
+ * @type Object
  */
 Music.paths = {
 	add: /^(\/(genres|artists|albums|tracks)\/add)$/,
@@ -31,11 +31,11 @@ Music.paths = {
 
 /**
  * Fields
- * @type {Object}
+ * @type Object
  */
 Music.Fields = {
 	form: document.getElementById('form-add') || null,
-	delete: document.getElementById('delete') || null,
+	delete: document.getElementById('delete-music') || null,
 	deleteAll: document.getElementById('delete-all') || null,
 	name: document.getElementById('nombre') || null,
 	description: document.getElementById('descripcion') || null,
@@ -43,7 +43,7 @@ Music.Fields = {
 	quantity_tracks: document.getElementById('cantidad_pistas') || null,
 	year: document.getElementById('anio') || null,
 	file: document.getElementById('file') || null,
-	btn_add: document.getElementById('add') || null,
+	btn_add: document.getElementById('music-add') || null,
 	btn_frm: document.getElementById('button-form') || null,
 	drop_zone: document.getElementById('drop-zone') || null,
 	file_error: document.querySelector('p.error-uploaded') || null,
@@ -51,7 +51,7 @@ Music.Fields = {
 
 /**
  * HelpBlocks
- * @type {Object}
+ * @type Object
  */
 Music.HelpBlocks = {
 	name: "Utiliza sólo caracteres alfanumericos, guiones, puntos, espacios, comillas y el signo &."

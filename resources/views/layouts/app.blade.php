@@ -56,7 +56,10 @@
     @yield('footerapp') {{-- Pie de página --}}
     @yield('footerlist') {{-- Pie de página de los listados--}}
 
-    @yield('scripts') {{-- Scripts --}}
+	{{-- Scripts --}}
+    @section('scripts')
+		<script src="{{url('/js/app.min.js')}}"></script>
+	@show
 
 {{--     <script type="text/javascript">
 		document.addEventListener("DOMContentLoaded", function(e) {
@@ -69,5 +72,6 @@
 		  	}
 		});
 	</script> --}}
+
 </body>
 </html>

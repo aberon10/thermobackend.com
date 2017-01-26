@@ -13,7 +13,7 @@
 		<nav class="main-nav">
 			<ul class="main-menu">
 				<li class="" id="dropdown-toggle">
-					<img src="{{asset('storage/avatars/user.jpg')}}" alt="" class="avatar">
+					<img src="{{'/storage/'.session('src_img')}}" alt="" class="avatar">
 					<a href="#" class="dropdown">
 						{{session('user')}} <span class="icon icon-chevron-down"></span>
 					</a>

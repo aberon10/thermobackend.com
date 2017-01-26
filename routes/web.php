@@ -23,6 +23,7 @@ Route::get('/dashboard', 'DashboardController@index');
 
 // Genres
 Route::get('/genres', 'GenresController@index');
+Route::post('/genres/search', 'GenresController@search');
 Route::get('/genres/add', 'GenresController@showForm');
 Route::post('/genres/add', 'GenresController@add');
 Route::get('/genres/edit/{id}', 'GenresController@edit');
@@ -31,6 +32,7 @@ Route::post('/genres/delete', 'GenresController@delete');
 
 // Artist
 Route::get('/artists', 'ArtistsController@index');
+Route::post('/artists/search', 'ArtistsController@search');
 Route::get('/artists/add', 'ArtistsController@showForm');
 Route::post('/artists/add', 'ArtistsController@add');
 Route::get('/artists/edit/{id}', 'ArtistsController@edit');
@@ -39,6 +41,8 @@ Route::post('/artists/delete', 'ArtistsController@delete');
 
 // Album
 Route::get('/albums', 'AlbumsController@index');
+Route::get('/albums/list/{id}', 'AlbumsController@list');
+Route::post('/albums/search', 'AlbumsController@search');
 Route::get('/albums/add', 'AlbumsController@showForm');
 Route::post('/albums/add', 'AlbumsController@add');
 Route::get('/albums/edit/{id}', 'AlbumsController@edit');
@@ -55,3 +59,13 @@ Route::post('/tracks/{id}/delete', 'TracksController@delete');
 
 // Tareas
 Route::get('/task', 'TaskController@index');
+
+// Usuarios
+Route::get('/users', 'UserController@index');
+Route::post('/users/search', 'UserController@search');
+Route::get('/users/add', 'UserController@showForm');
+Route::post('/users/add', 'UserController@add');
+Route::get('/users/edit/{id}', 'UserController@edit');
+Route::post('/users/update/{id}', 'UserController@update');
+Route::post('/users/delete', 'UserController@delete');
+

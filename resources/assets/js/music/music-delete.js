@@ -2,10 +2,9 @@
  * checkAll
  * Selecciona todos los elementos de la lista.
  *
- * @return {undefined}
+ * @return undefined
  */
 Music.checkAll = function() {
-
 	var allItems = Array.prototype.slice.call(document.querySelectorAll('input[data-music="true"]'));
 	var itemsSelectes = Array.prototype.slice.call(document.querySelectorAll('input[data-music="true"]:checked'));
 	var count = 0;
@@ -52,7 +51,7 @@ Music.checkAll = function() {
  * Cuando se marca/desmarca de a un genero, esta funcion comprueba
  * si existen otros generos marcados para mostrar o ocultar el boton de eliminar.
  *
- * @return {undefined}
+ * @return undefined
  */
 Music.selectItemDelete = function() {
 	var allItems = Array.prototype.slice.call(document.querySelectorAll('input[data-music="true"]'));
@@ -77,30 +76,37 @@ Music.selectItemDelete = function() {
 	}
 };
 
+/**
+ * responseServerDelete
+ * @param  Object response
+ * @return undefined
+ */
 Music.responseServerDelete = function(response) {
-	var messageFooter = document.getElementById('help-block');
-
 	if (response.hasOwnProperty('success')) {
 		if (response.success) {
 			window.location.reload();
 		} else {
-			messageFooter.innerHTML = response.message;
-			messageFooter.classList.add('error');
+			Utilities.Snackbar(response.message, 'error');
+			Animations.showHideLoader();
+			Animations.loaderMessage.innerHTML = '';
 		}
 	}
 };
 
+/**
+ * delete
+ * @param  Object e
+ * @return undefined
+ */
 Music.delete = function(e) {
 	e.preventDefault();
 
 	var itemsSelectes = Array.prototype.slice.call(document.querySelectorAll('input[data-music="true"]:checked'));
 	var count = itemsSelectes.length;
-	var messageFooter = document.getElementById('help-block');
 
 	if (count === 0) {
 		this.classList.add('hide');
-		messageFooter.innerHTML = "Por favor, Selecciona un género";
-		messageFooter.classList.add('error');
+		Utilities.Snackbar('Por favor, Selecciona un elemento de la lista.', 'error');
 	} else {
 
 		var json = {};
@@ -110,6 +116,28 @@ Music.delete = function(e) {
 			json.items.push(e.value);
 		});
 
-		Ajax.send(location.href + "/delete", "POST", "json", Music.responseServerDelete, JSON.stringify(json), "json");
+		Animations.loaderMessage.innerHTML = 'Procesando solicitud...';
+		Animations.showHideLoader();
+
+		Ajax.send(location.pathname + "/delete", "POST", "json", Music.responseServerDelete, JSON.stringify(json), "json");
+	}
+};
+
+/**
+ * addEventDelete
+ * @return undefined
+ */
+Music.addEventDelete = function() {
+	// delete
+	[].slice.call(document.querySelectorAll('input[data-music="true"]')).forEach(function(element, index) {
+		element.addEventListener('click', Music.selectItemDelete);
+	});
+
+	if (Music.Fields.deleteAll && Music.Fields.delete) {
+		// checkbox delete
+		Music.Fields.deleteAll.addEventListener('change', Music.checkAll);
+
+		// button delete
+		Music.Fields.delete.addEventListener('click', Music.delete);
 	}
 };

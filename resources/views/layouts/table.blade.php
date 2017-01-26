@@ -8,19 +8,21 @@
 				<div class="panel-options">
 					<div class="panel-options__left">
 						<form class="form form-search">
-							<select class="input">
-								<option value="">Limite de Registros...</option>
-								<option>10</option>
-								<option>25</option>
-								<option>50</option>
-								<option>100</option>
+							<select class="input" id="limit">
+								 @foreach (config('config_app.LIMITS') as $l)
+								 	@if ($l == $limit)
+										<option value="{{$l}}" selected>{{$l}}</option>
+									@else
+										<option value="{{$l}}">{{$l}}</option>
+									@endif
+								 @endforeach
 							</select>
 						</form>
 					</div>
 					<div class="panel-options__right">
-						<form class="form form-search">
-							<input type="text" name="" class="input" placeholder="Search...">
-							<button class="button"><span class="icon-search"></span></button>
+						<form class="form form-search" id="form-search">
+							<input type="text" name="" class="input" name="filter" id="filter" placeholder="Search...">
+							<button type="submit" class="button"><span class="icon-search"></span></button>
 						</form>
 					</div>
 				</div>
@@ -31,7 +33,7 @@
 				<thead>
 					@yield('table_head')
 				</thead>
-				<tbody>
+				<tbody id="tbody">
 					@yield('table_body')
 				</tbody>
 			</table>

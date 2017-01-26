@@ -44,5 +44,8 @@
 			</div>
 		</div>
 	</div>
+	<footer class="home-footer">
+		<p class="center">ThermoBackend - {{date('Y')}}</p>
+	</footer>
 @endsection
 
