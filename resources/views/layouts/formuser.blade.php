@@ -56,13 +56,7 @@
 						<option value="M">Masculino</option>
 					</select>
 				</div>
-{{-- 				<div class="form-group inline tooltip">
-	  				<span class="tooltiptext left red"></span>
-					<input class="input" type="password" name="pass" id="pass" placeholder="Contraseña">
-	  				<span class="tooltiptext right red"></span>
-	  				<input class="input" type="password" name="confirm_password" id="confirm_password" placeholder="Confirmar Contraseña">
-				</div>
- --}}				<input type="submit" class="hide">
+				<input type="submit" class="hide">
 			</form>
 		</div>
 	</div>

@@ -8,10 +8,13 @@ use App\Models\Usuario;
 
 class HomeController extends Controller
 {
-
     public function index(Request $request)
     {
         return view('sections.home', compact('users'));
     }
 
+    public function help(Request $request)
+    {
+        return view('sections.help');
+    }
 }

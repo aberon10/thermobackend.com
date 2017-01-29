@@ -60,14 +60,7 @@
 											<span class="icon-close"></span>
 										</div>
 									</div>
-									<div class="panel__body">
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-										proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-									</div>
+									<div class="panel__body" id="first_chart"></div>
 								</div>
 								<div class="panel">
 									<div class="panel__heading">
@@ -77,13 +70,7 @@
 											<span class="icon-close"></span>
 										</div>
 									</div>
-									<div class="panel__body">
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-										proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+									<div class="panel__body" id="second_chart">
 									</div>
 								</div>
 								<div class="panel">
@@ -105,8 +92,9 @@
 								</div>
 							</div> {{-- Fin del panel-container --}}
 						</div>
+
+						{{-- TODO LIST --}}
 						<div class="ed-item m-100 xl-30">
-							{{-- TODO LIST --}}
 							<div class="panel">
 								<div class="panel__heading">
 									Tareas Pendientes
@@ -165,3 +153,12 @@
 {{-- Footer --}}
 @extends('layouts.footerapp')
 
+{{-- Scripts --}}
+@section('scripts')
+	<script src="{{url('/js/libs/jquery.min.js')}}"></script>
+	<script src="{{url('/js/libs/jquery-ui.min.js')}}"></script>
+	<script src="{{url('/js/highcharts.js')}}"></script>
+	<script src="{{url('/js/exporting.js')}}"></script>
+	<script src="{{url('/js/app.min.js')}}"></script>
+	<script src="{{url('/js/dashboard.js')}}"></script>
+@endsection

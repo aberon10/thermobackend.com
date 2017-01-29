@@ -76,5 +76,5 @@ gulp.task('sw', () =>
 
 gulp.task('default', () => {
 	// gulp.watch('./resources/assets/scss/**/**.scss', ['styles']);
-	gulp.watch('./resources/assets/js/**/**.js', ['scripts']);
+	gulp.watch('./resources/assets/js/**/*.js', ['scripts']);
 });

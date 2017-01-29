@@ -11,23 +11,17 @@ var Animations = {};
 Animations.tooglePreferencesMenu = function() {
 	var btnToggle = document.getElementById('dropdown-toggle');
 
-	var toggleDocument = function(e) {
-		btnToggle.click();
-	};
-
 	if (btnToggle) {
 		btnToggle.addEventListener('click', function(e) {
 			e.preventDefault();
-			if (this.lastElementChild.classList.contains('hide')) {
-				this.lastElementChild.classList.remove('hide');
+			if (this.nextElementSibling.classList.contains('hide')) {
+				this.nextElementSibling.classList.remove('hide');
 				this.classList.add('dropdown-toggle');
 			} else {
-				this.lastElementChild.classList.add('hide');
+				this.nextElementSibling.classList.add('hide');
 				this.classList.remove('dropdown-toggle');
 			}
 		}, false);
-
-		// document.addEventListener('click', toggleDocument, false);
 	}
 
 };
@@ -156,8 +150,27 @@ Animations.showHideLoader = function() {
 	}
 };
 
+Animations.tabs = function() {
+	var tabsLink = [].slice.call(document.querySelectorAll('a.tab-link'));
+
+	tabsLink.forEach(function(element, index) {
+		element.addEventListener('click', function(e) {
+			e.preventDefault();
+			if (!this.classList.contains('active')) {
+				var tabCurrent = document.querySelector('a.tab-link.active');
+				document.getElementById(tabCurrent.getAttribute('data-tab')).classList.remove('active');
+				tabCurrent.classList.remove('active');
+
+				document.getElementById(this.getAttribute('data-tab')).classList.add('active');
+				this.classList.add('active');
+			}
+		});
+	});
+};
+
 Animations.toggleMenuSecondary();
 Animations.toggleMainMenu();
 Animations.toggleSubmenu();
 Animations.togglePanel();
 Animations.tooglePreferencesMenu();
+Animations.tabs();

@@ -25,7 +25,7 @@
 			<div class="info-user-container">
 	            <div class="info-user">
 	            	<div class="info-user__avatar">
-						<img src="{{'/storage/'.session('src_img')}}" alt="" class="radius">
+						<img src="{{'/storage/'.session('src_img')}}" alt="" class="radius" style="max-width: 64px;">
 	            	</div>
 	            	<div class="info-user__name">
 	                	<span>Bienvenid@,</span>

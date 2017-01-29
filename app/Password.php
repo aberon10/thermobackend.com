@@ -13,7 +13,7 @@ class Password
      * CHARACTERS carcateres utilizados para generar contraseñas.
      * @var string
      */
-    const CHARACTERS = "1234567890abcdefghijklmnopqrstuvwxyz";
+    const CHARACTERS = "1234567890abcdefghijklmnopqrstuvwxyz%_-*+-&/#%";
 
 	/**
 	  * passwordGenerate

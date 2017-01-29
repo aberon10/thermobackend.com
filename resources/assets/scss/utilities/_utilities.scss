@@ -1,3 +1,5 @@
+@import 'base/_colors';
+@import 'base/_typography';
 // Tamaños de los iconos
 .icon-large	{
 	font-size: 1.6em;
@@ -10,7 +12,6 @@
 .icon-small {
 	font-size: 0.8em;
 }
-
 
 // Colors class
 .primary {
@@ -54,6 +55,10 @@
 
 .center {
 	text-align: center;
+}
+
+.no-border {
+	border: none;
 }
 
 .divider {

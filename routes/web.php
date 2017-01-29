@@ -11,8 +11,10 @@
 |
 */
 
+// Home - Help
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
+Route::get('/help', 'HomeController@help');
 
 // Login
 Route::get('/login', 'LoginController@showLoginForm');
@@ -61,11 +63,13 @@ Route::post('/tracks/{id}/delete', 'TracksController@delete');
 Route::get('/task', 'TaskController@index');
 
 // Usuarios
-Route::get('/users', 'UserController@index');
-Route::post('/users/search', 'UserController@search');
-Route::get('/users/add', 'UserController@showForm');
-Route::post('/users/add', 'UserController@add');
-Route::get('/users/edit/{id}', 'UserController@edit');
-Route::post('/users/update/{id}', 'UserController@update');
-Route::post('/users/delete', 'UserController@delete');
-
+Route::get('/users', 'UserController@index')->middleware(['account_type']);
+Route::post('/users/search', 'UserController@search')->middleware(['account_type']);
+Route::get('/users/add', 'UserController@showForm')->middleware(['account_type']);
+Route::post('/users/add', 'UserController@add')->middleware(['account_type']);
+Route::post('/users/update/{id}', 'UserController@update')->middleware(['account_type']);
+Route::post('/users/delete', 'UserController@delete')->middleware(['account_type']);
+Route::get('/users/edit', 'UserController@edit');
+Route::post('/users/update', 'UserController@update');
+Route::post('/users/updateimage', 'UserController@updateimage');
+Route::post('/users/changepassword', 'UserController@changepassword');

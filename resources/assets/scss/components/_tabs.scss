@@ -1,0 +1,79 @@
+.tab {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	background: transparent;
+
+	display: flex;
+	list-style: none;
+	&-item {margin-right: 2px;}
+
+	&-link {
+		border: 1px solid $border-color;
+		border-bottom: none;
+		width: 100%;
+		color: $text-color;
+		padding: 1em;
+		transition: all .3s;
+
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		&__icon {
+			margin-right: 3px;
+			font-size: 1.5em;
+			text-align: center;
+			padding: .5em;
+			@include from(m) {
+				display: inline;
+				padding: 0;
+			}
+		}
+
+		&__text {
+			display: none;
+			@include from(m) {
+				display: inline;
+			}
+		}
+
+		&:last-child {
+			border-right: 1px solid $border-color;
+		}
+
+		&:hover {
+			color: $alice-dark;
+			text-decoration: none;
+		}
+
+		&:active {
+		    transform : scale(.95);
+		}
+
+		&.active {
+			color: $alice-dark;
+			background: darken(#EEE, 5%);
+		}
+	}
+
+	&-content {
+		position: relative;
+		width: 100%;
+		background: #FFF;
+		border: 1px solid $border-color;
+		h2 {
+			margin: 0;
+			padding: .5em 1em;
+		}
+
+		&__item {
+			display: none;
+			&.active {
+				display: block;
+			}
+		}
+	}
+}
+
+

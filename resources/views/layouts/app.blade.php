@@ -10,6 +10,10 @@
 
     <title>{{ config('app.name') }}</title>
 
+    @if ($_SERVER['REQUEST_URI'] == '/dashboard')
+   		<link href="{{url('css/providers/jquery-ui.min.css')}}" rel="stylesheet">
+	@endif
+
     <!-- Styles -->
     <link href="{{url('css/styles.css')}}" rel="stylesheet">
 
@@ -22,7 +26,6 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
-
 </head>
 <body>
 

@@ -6,20 +6,22 @@ use App\Interfaces\Crud;
 use App\Mail;
 use App\Models\ImagenUsuario;
 use App\Models\Usuario;
-use App\Password;
 use App\ValidationsUser;
+use App\Password;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller implements Crud
+class UserController extends Controller
 {
     public function __construct()
 	{
-		$this->middleware(['admin', 'account_type']);
+		$this->middleware(['admin']);
 	}
 
 	/**
 	 * index
-	 * @return Illuminate\Http\Response
+	 * @return \Illuminate\Http\Response
 	 */
 	public function index()
 	{
@@ -43,6 +45,7 @@ class UserController extends Controller implements Crud
 				->select('id_usuario', 'usuario', 'nombre', 'apellido', 'fecha_nac', 'sexo', 'correo',
 					'usuario.created_at', 'usuario.updated_at', 'tipo_usuario.nombre_tipo')
 				->where('usuario', 'LIKE', $filter)
+				->where('usuario', '!=', session('user'))
 				->join('tipo_usuario', 'usuario.id_tipo_usuario', '=', 'tipo_usuario.id_tipo_usr')
 				->orderBy('tipo_usuario.id_tipo_usr', 'asc')
 				->orderBy('usuario', 'asc')
@@ -62,7 +65,7 @@ class UserController extends Controller implements Crud
 	/**
 	 * search
 	 * @param  Request $request
-	 * @return JSON
+	 * @return \Illuminate\Http\Response
 	 */
 	public function search(Request $request)
 	{
@@ -75,6 +78,7 @@ class UserController extends Controller implements Crud
 				->select('id_usuario', 'usuario', 'nombre', 'apellido', 'fecha_nac', 'sexo', 'correo',
 					'usuario.created_at', 'usuario.updated_at', 'tipo_usuario.nombre_tipo')
 				->where('usuario', 'LIKE', $filter)
+				->where('usuario', '!=', session('user'))
 				->join('tipo_usuario', 'usuario.id_tipo_usuario', '=', 'tipo_usuario.id_tipo_usr')
 				->orderBy('tipo_usuario.id_tipo_usr', 'asc')
 				->orderBy('usuario', 'asc')
@@ -95,7 +99,7 @@ class UserController extends Controller implements Crud
 
 	/**
 	 * showForm
-	 * @return Illuminate\Http\Response
+	 * @return \Illuminate\Http\Response
 	 */
 	public function showForm()
 	{
@@ -105,7 +109,7 @@ class UserController extends Controller implements Crud
 	/**
 	 * add
 	 * @param Request $request
-	 * @return Illuminate\Http\Response
+	 * @return \Illuminate\Http\Response
 	 */
 	public function add(Request $request)
 	{
@@ -159,7 +163,7 @@ class UserController extends Controller implements Crud
 			$subject     = 'Bienvenid@ al Sistema ThermoBackend';
 			$alt_message = 'Bienvenid@ al Sistema ThermoBackend';
 
-			if (Mail::send($to, $data, $subject, null, $alt_message)) {
+			if (Mail::send($to, $data, $subject, 1, $alt_message)) {
 				return response()->json([
 					'success'  => true,
 					'mail'     => true
@@ -179,7 +183,7 @@ class UserController extends Controller implements Crud
 	/**
 	 * delete
 	 * @param  Request $request
-	 * @return Illuminate\Http\Response
+	 * @return \Illuminate\Http\Response
 	 */
 	public function delete(Request $request)
 	{
@@ -230,13 +234,185 @@ class UserController extends Controller implements Crud
 		}
 	}
 
-	public function edit(Request $request, $id)
+	/**
+	 * edit
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit()
 	{
-		# code ...
+		$data = Usuario::where('usuario', '=', session('user'))->get();
+		return view('sections.users.edit', compact('data', 'birthdate'));
 	}
 
-	public function update(Request $request, $id)
+	/**
+	 * update
+	 * @param  Request $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request)
 	{
-		# code ...
+		// validations fields
+		if ($errors = ValidationsUser::validateFields(
+			$request->only('nombre', 'apellido', 'day', 'month', 'year', 'correo', 'sexo'))) {
+			return response()->json([
+				'success'  => false,
+				'messages' => $errors,
+				'message'  => 'Por favor, Comprueba los errores.'
+		    ], 422);
+		}
+
+		$user = Usuario::where('usuario', '=', session('user'))->get();
+		$user[0]->nombre    = $request->nombre;
+		$user[0]->apellido  = $request->apellido;
+		$user[0]->correo    = $request->correo;
+		$user[0]->sexo      = $request->sexo;
+		$user[0]->fecha_nac = $request->year.'-'.$request->month.'-'.$request->day;
+		$user[0]->save();
+
+		// Envio el correo al usuario informando del cambio en los datos personales
+		$to   = $user[0]->correo;
+		$data = [
+			'username' => session('user'),
+			'name'     => $user[0]->nombre,
+			'email'    => $user[0]->correo,
+			'message'  => 'Solo queremos informarte, que tu cuenta ha sido actualizada con exito'
+		];
+		$subject     = 'Cuenta actualizada';
+		$alt_message = 'Cuenta actualizada';
+
+		if (Mail::send($to, $data, $subject, 2, $alt_message)) {
+			return response()->json([
+				'success'  => true,
+				'mail'     => true
+		    ], 200);
+		}
+	}
+
+	/**
+	 * updateimage
+	 * @param  Request $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function updateimage(Request $request)
+	{
+		$validation = Validator::make($request->only('file'),
+			['file' => 'required|mimes:jpg,jpeg,png,gif|max:8192'],
+			[
+				'file.required' => 'El campo es requerido.',
+				'file.mimes'    => 'Tipo de archivo no permitido.',
+				'file.max'      => 'El archivo no debe superar los 8192kb.'
+			]
+		);
+
+		if ($validation->fails()) {
+			return response()->json([
+				'success'  => false,
+				'message' => $validation->errors()->first('file'),
+		    ], 422);
+		}
+
+		$user = Usuario::where('usuario', '=', session('user'))->get();
+		$img_user = ImagenUsuario::find($user[0]->id_usuario);
+
+		// Elimino la imagen vieja
+		if (NULL != ($error = File::removeFiles([storage_path().'/app/public/'.$img_user->src_img]))) {
+			return response()->json([
+				'success' => false,
+				'message' => $error
+			], 422);
+		}
+
+		// Subo la nueva imagen
+		$filename = session('user').'.'.$request->file('file')->guessClientExtension();
+
+		$path = $request->file('file')->storeAs(
+			'avatars/', $filename, 'public'
+		);
+
+		$img_user->src_img = 'avatars/'.$filename;
+		$img_user->updated_at = date('Y-m-d H:i:s');
+		$img_user->save();
+
+		$request->session()->put('src_img', $img_user->src_img);
+
+
+		return response()->json(['success' => true, 'src' => 'thermobackend.com/storage/'.$img_user->src_img], 200);
+	}
+
+	/**
+	 * changepassword
+	 * @param  Request $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function changepassword(Request $request)
+	{
+		$validation = Validator::make($request->only('current_password', 'new_password', 'confirm_password'),
+			[
+				'current_password' => 'required',
+				'new_password'     => 'required',
+				'confirm_password' => 'required',
+			],
+			[
+				'current_password.required' => 'El campo es requerido.',
+				'new_password.required'     => 'El campo es requerido.',
+				'confirm_password.required' => 'El campo es requerido.',
+			]
+		);
+
+		if ($validation->fails()) {
+			return response()->json([
+				'success'  => false,
+				'messages' => $validation->errors(),
+			]);
+		}
+
+		// comparo que las contraseña ingresada sea valida
+		$userdata = Usuario::where('usuario', session('user'))->first();
+
+        if (Hash::check($request->current_password, $userdata->pass)) {
+        	// Compruebo que la nueva contraseña cumpla los requisitos
+        	if (!preg_match('/([A-Za-z\_\.\-]+\d+\W+)/', $request->new_password) && (strlen($request->new_password) < 8 || strlen($request->new_password) > 30)) {
+        		return response()->json([
+					'success'  => false,
+					'messages' => ['new_password' => ['Utiliza entre 8 y 30 caracteres, incluyendo letras, números y signos de puntuación (ejemplo & y -).']],
+				]);
+        	}
+
+        	if ($request->new_password != $request->confirm_password) {
+        		return response()->json([
+					'success'  => false,
+					'messages' => ['confirm_password' => ['La contraseña no coincide.']],
+				]);
+        	}
+
+        	// actualizo la contraseña
+        	$userdata->pass = bcrypt($request->new_password);
+        	$userdata->updated_at = date('Y-m-d H:i:s');
+        	$userdata->save();
+
+			// Envio el correo al usuario informando del cambio de contraseña
+			$to   = $userdata->correo;
+			$data = [
+				'username' => session('user'),
+				'name' => $userdata->nombre,
+				'email' => $userdata->correo,
+				'message' => 'Solo queremos informarte, que tu contraseña fue cambiada con éxito.'
+			];
+			$subject     = 'Contraseña cambiada con éxito.';
+			$alt_message = 'Contraseña cambiada con éxito.';
+
+			if (Mail::send($to, $data, $subject, 2, $alt_message)) {
+				return response()->json([
+					'success'  => true,
+					'message'  => 'Contraseña cambiada con éxito.'
+			    ], 200);
+			}
+        } else {
+        	$errors = array('current_password' => ['La contraseña ingresada no es valida']);
+			return response()->json([
+				'success'  => false,
+				'messages' => $errors,
+			]);
+        }
 	}
 }

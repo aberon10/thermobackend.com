@@ -2,13 +2,13 @@
  * file
  * Namespace utilizado para manejo de archivos.
  *
- * @type {Object}
+ * @type Object
  */
 Validations.file = {};
 
 /**
  * BYTE
- * @type {Number}
+ * @type Number
  */
 Validations.file.BYTE = 1048576;
 
@@ -17,7 +17,7 @@ Validations.file.BYTE = 1048576;
  * Tamaño máximo del archivo, en MegaBytes.
  * Default 2MB.
  *
- * @type {Number}
+ * @type Number
  */
 Validations.file.MAX_FILE_SIZE = 2;
 
@@ -26,7 +26,7 @@ Validations.file.MAX_FILE_SIZE = 2;
  * Color del borde de la zona donde se sueltan los archivos
  * en caso de usar la API Drag & Drop.
  *
- * @type {String}
+ * @type String
  */
 Validations.file.BORDER_COLOR = '#00f0ff';
 
@@ -34,7 +34,7 @@ Validations.file.BORDER_COLOR = '#00f0ff';
  * mimeType
  * Objetos con los mimetypes soportados por la app.
  *
- * @type {Object}
+ * @type Object
  */
 Validations.file.mimeType = {
 	"text": "text/plain",
@@ -59,7 +59,7 @@ Validations.file.mimeType = {
  * message
  * Objeto con los mensajes de error utilizados durante la validacion.
  *
- * @type {Object}
+ * @type Object
  */
 Validations.file.message = {
 	"require": "El campo es requerido.",
@@ -72,7 +72,7 @@ Validations.file.message = {
  * elements
  * Elementos por defecto utilizados en el upload.
  *
- * @type {Object}
+ * @type Object
  */
 Validations.file.drop_zone = "drop-zone";
 
@@ -130,10 +130,10 @@ Validations.file.createElements = function(dropZone) {
  * Comprobando tamaño, tipo de archivo, entre otros.
  * Por ultimo ejecuta una vista previa del archivo.
  *
- * @param {Object} element Lugar donde se soltaran los archivos. Si se indica null Default es "drop-zone".
- * @param {String} mime    Tipo de archivo. Ej image, audio, video. Si se indica null por Default es "image".
- * @param {Boolean} create Indica si se deben crear los elementos de la drop zone.
- * @return {Boolean || undefined}
+ * @param  Object  element Lugar donde se soltaran los archivos. Si se indica null Default es "drop-zone".
+ * @param  String  mime    Tipo de archivo. Ej image, audio, video. Si se indica null por Default es "image".
+ * @param  Boolean create  Indica si se deben crear los elementos de la drop zone.
+ * @return Boolean || undefined}
  */
 Validations.file.upload = function(element, mime, create) {
 
@@ -142,7 +142,7 @@ Validations.file.upload = function(element, mime, create) {
 
 	/********************************************************
 	 * 				CREO LOS ELEMENTOS                      *
-	 *********************************************************/
+	 ********************************************************/
 	if (create) {
 		Validations.file.createElements(dropZone);
 	}
@@ -164,7 +164,7 @@ Validations.file.upload = function(element, mime, create) {
 	 * Color del borde cuando el archivo es arrastrado
 	 * dentro de la drop zone.
 	 *
-	 * @type {string}
+	 * @type String
 	 */
 	var borderColor = String(Validations.file.BORDER_COLOR).toUpperCase();
 
@@ -188,7 +188,7 @@ Validations.file.upload = function(element, mime, create) {
 	 * maxFileSize
 	 * Tamaño maximo del archivo (Bytes).
 	 *
-	 * @type {Number}
+	 * @type Number
 	 */
 	var maxFileSize = Validations.file.MAX_FILE_SIZE * Validations.file.BYTE;
 
@@ -196,7 +196,7 @@ Validations.file.upload = function(element, mime, create) {
 	 * reset
 	 * Reseteo la zona donde se sueltan los archivos y los mensajes.
 	 *
-	 * @return {undefined}
+	 * @return undefined
 	 */
 	var reset = function() {
 		dropZone.classList.remove('error');
@@ -209,9 +209,9 @@ Validations.file.upload = function(element, mime, create) {
 	/**
 	 * animateLoadingFile
 	 *
-	 * @param  {Object}  event
-	 * @param  {Object}  fileList archivos
-	 * @return {undefined}
+	 * @param  Object s event
+	 * @param  Object  fileList archivos
+	 * @return undefined
 	 */
 	var animateLoadingFile = function(event, fileList) {
 		// reset drop zone and messages
@@ -248,8 +248,8 @@ Validations.file.upload = function(element, mime, create) {
 	 * checkFile
 	 * Realiza las validaciones correspondientes al archivo.
 	 *
-	 * @param  {Object} file
-	 * @return {Boolean}
+	 * @param  Object file
+	 * @return Boolean
 	 */
 	var checkFile = function(file) {
 		var isValid = true;
@@ -308,9 +308,9 @@ Validations.file.upload = function(element, mime, create) {
 	 * el metodo checkFile y por ultimo si el archivo es
 	 * valido realiza una vista previa utilizando la API FileReader.
 	 *
-	 * @param  {Object} event
-	 * @param  {Object} files archivos subidos via Drag & Drop
-	 * @return {undefined}
+	 * @param  Object event
+	 * @param  Object files archivos subidos via Drag & Drop
+	 * @return undefined
 	 */
 	var upload = function(event, files) {
 		loadingBar.style.display = "none";
@@ -396,8 +396,8 @@ Validations.file.upload = function(element, mime, create) {
 	 * handleFileSelect
 	 * Se ejecuta cuando el elemento es soltado dentro del area especificada.
 	 *
-	 * @param  {Object} event
-	 * @return {undefined}
+	 * @param  Object event
+	 * @return undefined
 	 */
 	var handleFileSelect = function(event) {
 		event.stopPropagation();
@@ -418,8 +418,8 @@ Validations.file.upload = function(element, mime, create) {
 	 * Se ejecuta cuando el elemento entra en el area determinada para soltar
 	 * dicho elemento.
 	 *
-	 * @param  {Object} event
-	 * @return {undefined}
+	 * @param  Object event
+	 * @return undefined
 	 */
 	var handleDragOver = function(event) {
 		event.stopPropagation();

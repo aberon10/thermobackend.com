@@ -1,3 +1,7 @@
+/**
+ * User
+ * @type Object
+ */
 var User = {};
 
 /**
@@ -6,6 +10,10 @@ var User = {};
  */
 User.Fields = {
 	form: document.getElementById('form-user') || null,
+	form_change_image: document.getElementById('form-change-image') || null,
+	form_change_password: document.getElementById('form-change-password') || null,
+	drop_zone: document.getElementById('drop-zone') || null,
+	error_uploaded: document.querySelector('.error-uploaded') || null,
 	username: document.getElementById('usuario') || null,
 	account: document.getElementById('cuenta') || null,
 	name: document.getElementById('nombre') || null,
@@ -21,6 +29,16 @@ User.Fields = {
 	delete: document.getElementById('delete-user') || null
 };
 
+
+/*******************************************************************
+						ADD - UPDATE
+ *******************************************************************/
+
+/**
+ * resetForm
+ * @param  Boolean all
+ * @return undefined
+ */
 User.resetForm = function(all) {
 	var inputs = [].slice.call(document.querySelectorAll('.input'));
 	document.getElementById('tooltip-date').classList.remove('show');
@@ -35,6 +53,38 @@ User.resetForm = function(all) {
 			}
 		}
 	});
+};
+
+/**
+ * responseServerAdd
+ * @param  Object response
+ * @return undefined
+ */
+User.responseServerAdd = function(response) {
+	if (response.hasOwnProperty('success')) {
+		if (!response.success) {
+			if (response.hasOwnProperty('messages')) {
+				for (var msg in response.messages) {
+					User.Fields[msg].classList.add('error');
+					User.Fields[msg].previousElementSibling.innerHTML = response.messages.username;
+					User.Fields[msg].previousElementSibling.classList.add('show');
+				}
+			}
+		} else {
+			var message = null;
+
+			if (location.pathname === '/users/add') {
+				message = "Usuario Registrado con exito. <span class='icon-check'></span>";
+			} else if (location.pathname === '/users/edit') {
+				message = "Cuenta actualizada con exito. <span class='icon-check'></span>";
+			}
+
+			Utilities.Snackbar(message);
+			User.Fields.form.reset();
+			Animations.loaderMessage.innerHTML = '';
+			Animations.showHideLoader();
+		}
+	}
 };
 
 /**
@@ -67,12 +117,14 @@ User.add = function() {
 		valid = false;
 	}
 
-	// validate account
-	if (account.value === '') {
-		account.classList.add('error');
-		account.previousElementSibling.classList.add('show');
-		account.previousElementSibling.innerHTML = Validations.messageForm.required;
-		valid = false;
+	if (account) {
+		// validate account
+		if (account.value === '') {
+			account.classList.add('error');
+			account.previousElementSibling.classList.add('show');
+			account.previousElementSibling.innerHTML = Validations.messageForm.required;
+			valid = false;
+		}
 	}
 
 	// validate name
@@ -91,17 +143,6 @@ User.add = function() {
 		lastname.previousElementSibling.classList.add('show');
 		lastname.previousElementSibling.innerHTML = response.message;
 		valid = false;
-	}
-
-	// validate birthdate
-	if (lastname.value !== '') {
-		response = Validations.name(lastname.value.trim());
-		if (!response.success) {
-			lastname.classList.add('error');
-			lastname.previousElementSibling.classList.add('show');
-			lastname.previousElementSibling.innerHTML = response.message;
-			valid = false;
-		}
 	}
 
 	// validate birthdate
@@ -136,34 +177,32 @@ User.add = function() {
 		Utilities.Snackbar('Por favor, Comprueba los errores.', 'error');
 	} else {
 		var formData = new FormData(User.Fields.form);
+		var url = (location.pathname === '/users/edit') ? location.href.replace('edit', 'update') : location.pathname;
 
 		Animations.loaderMessage.innerHTML = 'Procesando solicitud...';
 		Animations.showHideLoader();
 
-		Ajax.send(location.href, "POST", "json", User.responseServerAdd, formData, "FormData");
+		Ajax.send(url, "POST", "json", User.responseServerAdd, formData, "FormData");
 	}
 };
 
+/*******************************************************************
+							DELETE
+ *******************************************************************/
+
 /**
- * responseServerAdd
- * @param  Object response
+ * addEventDelete
  * @return undefined
  */
-User.responseServerAdd = function(response) {
-	if (response.hasOwnProperty('success')) {
-		if (!response.success) {
-			if (response.hasOwnProperty('messages')) {
-				for (var msg in response.messages) {
-					User.Fields[msg].classList.add('error');
-					User.Fields[msg].previousElementSibling.innerHTML = response.messages.username;
-					User.Fields[msg].previousElementSibling.classList.add('show');
-				}
-			}
-		} else {
-			Utilities.Snackbar("Usuario Registrado con exito. <span class='icon-check'></span>");
-			User.Fields.form.reset();
-			Animations.loaderMessage.innerHTML = '';
-			Animations.showHideLoader();
+User.addEventDelete = function() {
+	if (User.Fields.items_delete) {
+		// delete
+		[].slice.call(document.querySelectorAll('input[data-user="true"]')).forEach(function(element, index) {
+			element.addEventListener('click', User.selectItemDelete);
+		});
+
+		if (User.Fields.delete) {
+			User.Fields.delete.addEventListener('click', User.delete);
 		}
 	}
 };
@@ -241,22 +280,146 @@ User.delete = function(e) {
 	}
 };
 
+/*******************************************************************
+						CHANGE IMAGE
+ *******************************************************************/
+
 /**
- * addEventDelete
+ * responseServerUpdate
+ * @param  Object response
  * @return undefined
  */
-User.addEventDelete = function() {
-	if (User.Fields.items_delete) {
-		// delete
-		[].slice.call(document.querySelectorAll('input[data-user="true"]')).forEach(function(element, index) {
-			element.addEventListener('click', User.selectItemDelete);
-		});
-
-		if (User.Fields.delete) {
-			User.Fields.delete.addEventListener('click', User.delete);
+User.responseServerUpdate = function(response) {
+	if (response.hasOwnProperty('success')) {
+		Animations.loaderMessage.innerHTML = '';
+		Animations.showHideLoader();
+		if (response.success) {
+			Utilities.Snackbar("Imágen cambiada con éxito. <span class='icon-check'></span>");
+			// Actualizo la ruta de la imagen
+			// date = new Date();
+			// document.querySelector('.info-user__avatar img').src = response.src + '?' + date.getTime();
+			// document.querySelector('#dropdown-toggle img').src = response.src + '?' + date.getTime();
+			setTimeout(function() {
+				window.location.reload();
+			}, 2000);
+		} else {
+			if (response.hasOwnProperty('message')) {
+				User.Fields.drop_zone.classList.add('error');
+				Utilities.Snackbar(response.message, 'error');
+			}
 		}
 	}
 };
+
+/**
+ * changeImage
+ * @return undefined
+ */
+User.changeImage = function() {
+	var isValid = true;
+
+	User.Fields.drop_zone.classList.remove('error');
+
+	// check image
+	if (Validations.file.FILES === null) {
+		User.Fields.drop_zone.classList.add('error');
+		isValid = false;
+	}
+
+	if (isValid) {
+		var formData = new FormData();
+		var url = (location.pathname === '/users/edit') ? location.href.replace('edit', 'updateimage') : location.pathname;
+
+		formData.append("file", Validations.file.FILES);
+
+		Animations.loaderMessage.innerHTML = 'Procesando solicitud...';
+		Animations.showHideLoader();
+		Ajax.send(url, "POST", "json", User.responseServerUpdate, formData, "FormData");
+	} else {
+		Utilities.Snackbar(Validations.messageForm.error_form, 'error');
+	}
+};
+
+/*******************************************************************
+						CHANGE PASSWORD
+ *******************************************************************/
+
+/**
+ * responseServerChangePassword
+ * @param  Object response
+ * @return undefined
+ */
+User.responseServerChangePassword = function(response) {
+	if (response.hasOwnProperty('success')) {
+		Animations.showHideLoader();
+		if (response.success) {
+			Utilities.Snackbar(response.message + "<span class='icon-check'></span>");
+			User.Fields.form_change_password.reset();
+		} else {
+			if (response.hasOwnProperty('messages')) {
+				for (var msg in response.messages) {
+					document.getElementById(msg).classList.add('error');
+					document.getElementById(msg).nextElementSibling.innerHTML = response.messages[msg][0];
+				}
+			}
+		}
+	}
+};
+
+/**
+ * changePassword
+ * @return undefined
+ */
+User.changePassword = function() {
+	var currentPassword = document.getElementById('current_password');
+	var newPassword = document.getElementById('new_password');
+	var confirmPassword = document.getElementById('confirm_password');
+	var isValid = true;
+
+	// reset form
+	var elements = [].slice.call(document.querySelectorAll('input[type="password"]'));
+	elements.forEach(function(e, i) {
+		e.classList.remove('error');
+		e.nextElementSibling.innerHTML = '';
+	});
+
+	if (currentPassword.value === "") {
+		currentPassword.classList.add('error');
+		currentPassword.nextElementSibling.innerHTML = Validations.messageForm.required;
+		isValid = false;
+	}
+
+	if (newPassword.value === "") {
+		newPassword.classList.add('error');
+		newPassword.nextElementSibling.innerHTML = Validations.messageForm.required;
+		isValid = false;
+	} else if (!/([A-Za-z\_\.\-]+\d+\W+)/gi.test(newPassword.value) && (newPassword.value.length < 8 || newPassword.value.length > 30)) {
+		newPassword.classList.add('error');
+		newPassword.nextElementSibling.innerHTML = "Utiliza entre 8 y 30 caracteres, incluyendo letras, números y signos de puntuación (ejemplo & y -).";
+		isValid = false;
+	}
+
+	if (confirmPassword.value === "") {
+		confirmPassword.classList.add('error');
+		confirmPassword.nextElementSibling.innerHTML = Validations.messageForm.required;
+		isValid = false;
+	} else if (confirmPassword.value !== newPassword.value) {
+		confirmPassword.classList.add('error');
+		confirmPassword.nextElementSibling.innerHTML = "La contraseña no coincide.";
+		isValid = false;
+	}
+
+	if (!isValid) {
+		Utilities.Snackbar('Por favor, Comprueba los errores.', 'error');
+	} else {
+		var formData = new FormData(User.Fields.form_change_password);
+		var url = (location.pathname === '/users/edit') ? location.href.replace('edit', 'changepassword') : location.pathname;
+
+		Animations.showHideLoader();
+		Ajax.send(url, "POST", "json", User.responseServerChangePassword, formData, "FormData");
+	}
+};
+
 
 (function(d) {
 	var btnAdd = d.getElementById('add');
@@ -265,6 +428,26 @@ User.addEventDelete = function() {
 		User.Fields.form.addEventListener('submit', function(e) {
 			e.preventDefault();
 			btnAdd.click();
+		});
+	}
+
+	// change image
+	if (User.Fields.form_change_image) {
+		// validate upload file
+		Validations.file.MAX_FILE_SIZE = 8;
+		Validations.file.upload("drop-zone", "image", true);
+
+		User.Fields.form_change_image.addEventListener('submit', function(e) {
+			e.preventDefault();
+			User.changeImage();
+		});
+	}
+
+	// change password
+	if (User.Fields.form_change_password) {
+		User.Fields.form_change_password.addEventListener('submit', function(e) {
+			e.preventDefault();
+			User.changePassword();
 		});
 	}
 

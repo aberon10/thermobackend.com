@@ -76,7 +76,7 @@ Music.responseServerAdd = function(response) {
 
 /**
  * uploadToServer
- * @return {undefined}
+ * @return undefined
  */
 Music.uploadToServer = function() {
 	var formData = null;
