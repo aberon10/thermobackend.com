@@ -55,5 +55,6 @@ class Kernel extends HttpKernel
 
         'admin' => \App\Http\Middleware\SessionAdministrator::class,
         'account_type' => \App\Http\Middleware\AccoutType::class,
+        'advertising' => \App\Http\Middleware\BusinessInteligence::class,
     ];
 }

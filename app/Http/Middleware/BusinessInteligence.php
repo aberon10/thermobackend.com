@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class AccoutType
+class BusinessInteligence
 {
 	/**
 	 * Handle an incoming request.
@@ -15,9 +15,7 @@ class AccoutType
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($request->session()->has('user') &&
-			$request->session()->has('account') &&
-			session('account') == 1) {
+		if($request->session()->has('account') && session('account') == 2) {
 			return $next($request);
 		}
 

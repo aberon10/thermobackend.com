@@ -64,6 +64,7 @@ gulp.task('scripts', () =>
 		'./resources/assets/js/music/music-init.js',
 		'./resources/assets/js/search/*.js',
 		'./resources/assets/js/user/*.js',
+		'./resources/assets/js/advertising/*.js',
 	])
 	.pipe(concatJS('app.min.js'))
 	.pipe(uglify())
@@ -76,5 +77,5 @@ gulp.task('sw', () =>
 
 gulp.task('default', () => {
 	// gulp.watch('./resources/assets/scss/**/**.scss', ['styles']);
-	gulp.watch('./resources/assets/js/**/*.js', ['scripts']);
+	gulp.watch('./resources/assets/js/**/**.js', ['scripts']);
 });

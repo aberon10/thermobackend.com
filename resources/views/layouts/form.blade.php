@@ -84,9 +84,7 @@
 				</div>
 			@endif
 			{{-- DROP ZONE --}}
-			<div class="preview" id="drop-zone">
-				<span class="icon-upload-cloud preview__icon"></span>
-			</div>
+			<div class="preview" id="drop-zone"></div>
 			<input type="submit" class="hide">
 		</form>
 	</div>

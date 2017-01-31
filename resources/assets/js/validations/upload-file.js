@@ -114,12 +114,27 @@ Validations.file.createElements = function(dropZone) {
 	var loadingBar = document.createElement('DIV');
 	loadingBar.classList.add('loading');
 
+	// ICON
+	var icon = document.createElement('SPAN');
+	icon.classList.add('icon-upload-cloud');
+	icon.classList.add('preview__icon');
+
+	// PLAYER
+	var player = document.createElement('DIV');
+	player.classList.add('player');
+	// mask
+	var mask = document.createElement('DIV');
+	mask.classList.add('mask');
+
 	// Append elements
+	dropZone.appendChild(icon);
 	dropZone.appendChild(buttonFile);
 	dropZone.appendChild(inputFile);
 	dropZone.appendChild(errorUploadFile);
 	dropZone.appendChild(title);
 	dropZone.appendChild(nameFile);
+	player.appendChild(mask);
+	dropZone.appendChild(player);
 	dropZone.parentNode.appendChild(loadingBar);
 };
 
@@ -176,6 +191,17 @@ Validations.file.upload = function(element, mime, create) {
 	// Por defecto el mimetype es image
 	if (mime === null) {
 		mime = "image";
+	} else if (mime.constructor === Array) {
+
+		mime.forEach(function(e, i) {
+			if (!Validations.file.mimeType.hasOwnProperty(e) &&
+				!Validations.file.mimeType.audio.hasOwnProperty(e) &&
+				!Validations.file.mimeType.video.hasOwnProperty(e) &&
+				!Validations.file.mimeType.image.hasOwnProperty(e)) {
+				console.log("El tipo de mime " + e + " no es valido");
+			}
+		});
+
 	} else if (!Validations.file.mimeType.hasOwnProperty(mime) &&
 		!Validations.file.mimeType.audio.hasOwnProperty(mime) &&
 		!Validations.file.mimeType.video.hasOwnProperty(mime) &&
@@ -368,7 +394,11 @@ Validations.file.upload = function(element, mime, create) {
 						preview.src = this.result;
 					}
 
-					dropZone.appendChild(preview);
+					if (mime == "audio") {
+						document.querySelector('.player').appendChild(preview);
+					} else {
+						dropZone.appendChild(preview);
+					}
 					window.document.body.scrollTop = window.document.body.scrollHeight;
 				});
 

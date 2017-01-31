@@ -39,9 +39,9 @@ class LoginController extends Controller
 
         $user = strtolower($request->usuario);
 		$userdata = Usuario::where('usuario', $user)->first();
-		$id_user  = $userdata->id_usuario;
 
         if ($userdata != null) {
+			$id_user  = $userdata->id_usuario;
             // comparo el hash con el password ingresado
             if (Hash::check($request->pass, $userdata->pass)) {
 
@@ -75,5 +75,11 @@ class LoginController extends Controller
                 ->withErrors(['message_error' => 'Las credenciales no son validas.'])
                 ->withInput();
         }
+    }
+
+    public function logout(Request $request)
+    {
+    	$request->session()->flush();
+    	return redirect('/login');
     }
 }

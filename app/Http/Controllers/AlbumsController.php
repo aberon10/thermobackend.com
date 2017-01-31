@@ -486,5 +486,4 @@ class AlbumsController extends Controller implements Crud
 			}
 		}
 	}
-
 }

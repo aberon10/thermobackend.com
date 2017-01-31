@@ -25,7 +25,7 @@ class UserController extends Controller
 	 */
 	public function index()
 	{
-		$total_users = count(Usuario::all());
+		$total_users = count(Usuario::where('usuario', '!=', session('user'))->get());
 
 		$filter = $_GET['filter'] ?? '';
 		$limit  = $_GET['limit'] ?? config('config_app.MAX_USERS_PAGE');
@@ -312,7 +312,7 @@ class UserController extends Controller
 		}
 
 		$user = Usuario::where('usuario', '=', session('user'))->get();
-		$img_user = ImagenUsuario::find($user[0]->id_usuario);
+		$img_user = ImagenUsuario::where('id_usuario', '=', $user[0]->id_usuario)->first();
 
 		// Elimino la imagen vieja
 		if (NULL != ($error = File::removeFiles([storage_path().'/app/public/'.$img_user->src_img]))) {
@@ -334,7 +334,6 @@ class UserController extends Controller
 		$img_user->save();
 
 		$request->session()->put('src_img', $img_user->src_img);
-
 
 		return response()->json(['success' => true, 'src' => 'thermobackend.com/storage/'.$img_user->src_img], 200);
 	}

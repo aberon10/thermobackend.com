@@ -139,9 +139,7 @@
 					<form action="#" method="POST" class="form" id="form-change-image" enctype="multipart/form-data">
 						<div class="form-group">
 							{{-- DROP ZONE --}}
-							<div class="preview" id="drop-zone">
-								<span class="icon-upload-cloud preview__icon"></span>
-							</div>
+							<div class="preview" id="drop-zone"></div>
 						</div>
 						<input type="submit" class="button button-alice" id="btn-change-image" value="Actualizar imagen">
 					</form>

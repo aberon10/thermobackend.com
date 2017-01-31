@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImgUsuario extends Migration
+class CreatePublicidad extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,19 @@ class CreateImgUsuario extends Migration
      */
     public function up()
     {
-    	Schema::create('img_usuario', function (Blueprint $table) {
+        Schema::create('publicidad', function (Blueprint $table) {
 	        $table->engine = 'InnoDB';
 
-	        $table->increments('id_img_usuario');
-	        $table->unsignedInteger('id_usuario');
-	        $table->string('src_img');
+	        $table->increments('id_publicidad');
+	        $table->unsignedInteger('id_tipo_publicidad');
+	        $table->string('nombre_publicidad');
+	        $table->string('src');
+	        $table->string('duracion')->default('');
 	        $table->timestamps(); // create_at, update_at
 
 	        // foreign key
-	        $table->foreign('id_usuario')
-	                ->references('id_usuario')->on('usuario')
+	        $table->foreign('id_tipo_publicidad')
+	                ->references('id_tipo_publicidad')->on('tipo_publicidad')
 	                ->onDelete('cascade')
 	                ->onUpdate('cascade');
         });
@@ -36,6 +38,6 @@ class CreateImgUsuario extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('img_usuario');
+    	Schema::dropIfExists('publicidad');
     }
 }

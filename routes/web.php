@@ -19,6 +19,7 @@ Route::get('/help', 'HomeController@help');
 // Login
 Route::get('/login', 'LoginController@showLoginForm');
 Route::post('/login', 'LoginController@authenticate');
+Route::get('/login/logout', 'LoginController@logout');
 
 // Dashboard
 Route::get('/dashboard', 'DashboardController@index');
@@ -59,9 +60,6 @@ Route::get('/tracks/edit/{id}', 'TracksController@edit');
 Route::post('/tracks/update/{id}', 'TracksController@update');
 Route::post('/tracks/{id}/delete', 'TracksController@delete');
 
-// Tareas
-Route::get('/task', 'TaskController@index');
-
 // Usuarios
 Route::get('/users', 'UserController@index')->middleware(['account_type']);
 Route::post('/users/search', 'UserController@search')->middleware(['account_type']);
@@ -73,3 +71,14 @@ Route::get('/users/edit', 'UserController@edit');
 Route::post('/users/update', 'UserController@update');
 Route::post('/users/updateimage', 'UserController@updateimage');
 Route::post('/users/changepassword', 'UserController@changepassword');
+
+// Publicidad
+Route::get('/advertising', 'AdvertisingController@index');
+Route::get('/advertising/add', 'AdvertisingController@showForm');
+Route::post('/advertising/add', 'AdvertisingController@add');
+Route::get('/advertising/edit/{id}', 'AdvertisingController@edit');
+Route::post('/advertising/update/{id}', 'AdvertisingController@update');
+Route::post('/advertising/delete', 'AdvertisingController@delete');
+
+// Tareas
+Route::get('/task', 'TaskController@index');

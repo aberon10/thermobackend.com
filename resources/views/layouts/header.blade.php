@@ -20,9 +20,15 @@
 					</a>
 					<ul class="main-submenu hide">
 						<li><a href="{{url('users/edit')}}">Mi Perfil</a></li>
-						<li><a href="#">Ayuda</a></li>
+						<li><a href="{{url('/help')}}" target="_blanck">Ayuda</a></li>
 						<li><div class="divider"></div></li>
-						<li><a href="#">Cerrar sesion</a></li>
+						<li>
+							<form class="hide" method="POST" action="{{url('/login/logout')}}" id="form-logout">
+								{{csrf_field()}}
+								<input type="submit" class="hide" name="">
+							</form>
+							<a href="{{url('/login/logout')}}">Cerrar sesion</a>
+						</li>
 					</ul>
 				</li>
 			</ul>
