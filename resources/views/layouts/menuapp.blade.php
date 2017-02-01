@@ -17,9 +17,11 @@
             {{--Menu Secundario - Opciones ocultas --}}
             <div class="menu-secondary hide">
 	            <a href="#" class="button button-alice button-center">
-	                <span class="icon icon-plus"></span> Crear una nueva tarea
+	                <span class="icon icon-clock"></span> Añadir Reloj
 	            </a>
-	            <a href="{{url('/task')}}" class="button button-center">Ver todas las tareas</a>
+	            <a href="#" class="button button-alice button-center">
+	                <span class="icon icon-bubble-comment-streamline-talk"></span> Iniciar Chat
+	            </a>
             </div>
 
 			<div class="info-user-container">

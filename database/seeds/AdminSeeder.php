@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
 			'usuario'         => 'admin',
 			'nombre'		  => 'Juan',
 			'apellido'        => 'Perez',
-			'fecha_nac'       => '22-09-1985',
+			'fecha_nac'       => '1985-09-22',
 			'pass'            => bcrypt('admin'),
 			'sexo'            => 'M',
 			'correo'          => 'thermoteam2016@gmail.com'

@@ -1,7 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Tarea;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -23,6 +24,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('sections.dashboard');
+    	$user = Usuario::where('usuario', '=', session('user'))->first();
+		$tasks = Tarea::where('id_usuario', '=', $user->id_usuario)->orderBy('id_tarea', 'desc')->where('estado', '=', 'PENDIENTE')->get();
+        return view('sections.dashboard', compact('tasks'));
     }
 }

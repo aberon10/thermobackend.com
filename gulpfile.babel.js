@@ -12,6 +12,7 @@ import buffer from 'vinyl-buffer';
 import source from 'vinyl-source-stream';
 import concatJS from 'gulp-concat';
 import uglify from 'gulp-uglify';
+import babel from 'gulp-babel';
 
 const server = browserSync.create();
 
@@ -65,8 +66,24 @@ gulp.task('scripts', () =>
 		'./resources/assets/js/search/*.js',
 		'./resources/assets/js/user/*.js',
 		'./resources/assets/js/advertising/*.js',
+		'./resources/assets/js/todolist.js',
 	])
+	.pipe(babel({
+		presets: ['es2015']
+	}))
 	.pipe(concatJS('app.min.js'))
+	.pipe(uglify())
+	.pipe(gulp.dest('./public/js'))
+);
+
+gulp.task('todolist', () =>
+	gulp.src([
+		'./resources/assets/js/todolist.js',
+	])
+	.pipe(babel({
+		presets: ['es2015']
+	}))
+	.pipe(concatJS('todolist.min.js'))
 	.pipe(uglify())
 	.pipe(gulp.dest('./public/js'))
 );
@@ -76,6 +93,6 @@ gulp.task('sw', () =>
 );
 
 gulp.task('default', () => {
-	// gulp.watch('./resources/assets/scss/**/**.scss', ['styles']);
+	gulp.watch('./resources/assets/scss/**/**.scss', ['styles']);
 	gulp.watch('./resources/assets/js/**/**.js', ['scripts']);
 });

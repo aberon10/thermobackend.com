@@ -81,4 +81,5 @@ Route::post('/advertising/update/{id}', 'AdvertisingController@update');
 Route::post('/advertising/delete', 'AdvertisingController@delete');
 
 // Tareas
-Route::get('/task', 'TaskController@index');
+Route::post('/task/create', 'TaskController@create');
+Route::post('/task/delete', 'TaskController@delete');
