@@ -25,6 +25,7 @@ class CreateUsuario extends Migration
             $table->string('pass', 300)->nullable();
             $table->date('fecha_nac')->nullable();
             $table->char('sexo', 1)->nullable();
+            $table->string('access_token')->nullable();
             $table->string('cuenta_valida', 10)->nullable();
             $table->string('account_code', 10)->nullable();
             $table->integer('id_google')->nullable();

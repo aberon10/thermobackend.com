@@ -414,4 +414,43 @@ class UserController extends Controller
 			]);
         }
 	}
+
+    public static function latestRecords() {
+        $mes_anterior = 0;
+        $mes_actual = 0;
+        $diff = 0;
+
+        $prev_date = (date('m') == 0) ? date('Y-12-01') : date('m') - 1;
+        $prev_month = Usuario::where('CREATED_AT', '>=', date('Y').'-'.$prev_date.'-01')
+                    ->where('CREATED_AT', '<=', date('Y').'-'.$prev_date.'-31')
+                    ->where('id_tipo_usuario', '=', 3)
+                    ->orWhere('id_tipo_usuario', '=', 4)
+                    ->get();
+
+        // MES ACTUAL
+        $current_month = Usuario::where('CREATED_AT', '>=', date('Y-m-01'))
+                    ->where('id_tipo_usuario', '=', 3)
+                    ->orWhere('id_tipo_usuario', '=', 4)
+                    ->get();
+
+        $count_users_prev = count($prev_month);
+        $count_users_current = count($current_month);
+
+        // total de usuarios registrados en los ultimos 2 meses
+        $total_users = $count_users_prev + $count_users_current;
+
+        if ($total_users > 0) {
+            $mes_anterior = ($count_users_prev * 100) / $total_users;
+            $mes_actual = ($count_users_current * 100) / $total_users;
+            $diff = $mes_actual - $mes_anterior;
+        }
+
+        return [
+            'prev_month'    => $count_users_prev,
+            'current_month' => $count_users_current,
+            'mes_anterior'  => $mes_anterior,
+            'mes_actual'    => $mes_actual,
+            'diferencia'    => $diff
+        ];
+    }
 }

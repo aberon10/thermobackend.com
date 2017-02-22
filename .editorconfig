@@ -18,4 +18,3 @@ trim_trailing_whitespace = false
 
 [node_modules/**.js]
 codepaint = false
-

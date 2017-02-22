@@ -22,30 +22,30 @@
 						<div class="indicator indicator-facebook">
 							<div class="indicator__title">
 								<span class="icon-facebook-square indicator__logo"></span>
-								<p>Facebook <span class="percentage">10%</span></p>
+								<p>Facebook <span class="percentage">{{$indicadores['facebook'][1]}}%</span></p>
 							</div>
-							<div class="indicator__number">200</div>
+							<div class="indicator__number">{{$indicadores['facebook'][0]}}</div>
 						</div>
 						<div class="indicator indicator-googlemas">
 							<div class="indicator__title">
 								<span class="icon-google indicator__logo"></span>
-								<p>Google <span class="percentage">15%</span>	</p>
+								<p>Google <span class="percentage">{{$indicadores['google'][1]}}%</span></p>
 							</div>
-							<div class="indicator__number">300</div>
+							<div class="indicator__number">{{$indicadores['google'][0]}}</div>
 						</div>
 						<div class="indicator indicator-alice-blue">
 							<div class="indicator__title">
 								<span class="icon-users indicator__logo"></span>
-								<p>Premium <span class="percentage">70%</span></p>
+								<p>Premium <span class="percentage">{{$indicadores['premium'][1]}}%</span></p>
 							</div>
-							<div class="indicator__number">1400</div>
+							<div class="indicator__number">{{$indicadores['premium'][0]}}</div>
 						</div>
 						<div class="indicator indicator-default">
 							<div class="indicator__title">
 								<span class="icon-users indicator__logo"></span>
-								<p>Gratis <span class="percentage">5%</span></p>
+								<p>Gratis <span class="percentage">{{$indicadores['free'][1]}}%</span></p>
 							</div>
-							<div class="indicator__number">100</div>
+							<div class="indicator__number">{{$indicadores['free'][0]}}</div>
 						</div>
 					</div>
 
@@ -54,7 +54,7 @@
 							<div class="panel-container panel-column-2">
 								<div class="panel">
 									<div class="panel__heading">
-										Grafica 1
+										Generos más Populares
 										<div class="panel-buttons">
 											<span class="icon-chevron-up" data-toggle="panel"></span>
 											<span class="icon-close"></span>
@@ -64,7 +64,7 @@
 								</div>
 								<div class="panel">
 									<div class="panel__heading">
-										Grafica 2
+										Cuentas Registradas en los ultimos 2 meses
 										<div class="panel-buttons">
 											<span class="icon-chevron-up" data-toggle="panel"></span>
 											<span class="icon-close"></span>

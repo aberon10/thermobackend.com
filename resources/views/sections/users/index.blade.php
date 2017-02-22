@@ -21,7 +21,7 @@
 	<tr>
 		<th>#</th>
 		<th>Usuario</th>
-		<th>Rol</th>
+		<th>Perfil</th>
 		<th>Nombre</th>
 		<th>Apellido</th>
 		<th>Correo</th>
@@ -41,8 +41,8 @@
 			<td>{{$index++}}</td>
 			<td>{{$users[$i]->usuario}}</td>
 			<td>{{$users[$i]->nombre_tipo}}</td>
-			<td>{{$users[$i]->nombre}}</td>
-			<td>{{($users[$i]->apellido) ?? '-'}}</td>
+			<td>{{($users[$i]->nombre) ?? '-' }}</td>
+			<td>{{($users[$i]->apellido) ?? '-' }}</td>
 			<td>{{$users[$i]->correo}}</td>
 			<td>{{($users[$i]->fecha_nac) ?? '-'}}</td>
 			<td>{{$users[$i]->sexo}}</td>

@@ -135,7 +135,7 @@ Search.responseServer = function(response) {
 						// columna editar artista|album
 						if (entitie === 'artist' || entitie === 'album') {
 							if (entitie === 'artist') {
-								href = '/artist/edit/' + element[idEntitie];
+								href = '/artists/edit/' + element[idEntitie];
 							} else if (entitie === 'album') {
 								href = 'albums/edit/' + element[idEntitie];
 							}

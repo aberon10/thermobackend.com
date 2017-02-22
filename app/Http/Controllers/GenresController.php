@@ -362,4 +362,22 @@ class GenresController extends Controller implements Crud
 			}
 		}
 	}
+
+	public static function mostPopular() {
+		$total_counter = \DB::table('cancion')->sum('contador');
+		$most_popular = \DB::select('CALL most_popular_genre()');
+
+		$porcentajes = array();
+
+		if ($total_counter !== null) {
+			$count_genres = count($most_popular);
+			for ($i = 0; $i < $count_genres; $i++) {
+				$porcentajes[] = [
+					$most_popular[$i]->nombre_genero,
+					((int) $most_popular[$i]->contador == 0) ? 0 : ((int) $most_popular[$i]->contador * 100) / $total_counter
+				];
+			}
+		}
+		return $porcentajes;
+	}
 }

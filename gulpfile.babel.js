@@ -32,7 +32,7 @@ let sassOptions = {
 gulp.task('styles', () =>
 	gulp.src('./resources/assets/scss/**/**.scss')
 	.pipe(plumber({
-		errorHandler: function(err) {
+		errorHandler: function (err) {
 			console.log(err);
 			this.emit('end');
 		}

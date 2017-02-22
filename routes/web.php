@@ -23,6 +23,7 @@ Route::get('/login/logout', 'LoginController@logout');
 
 // Dashboard
 Route::get('/dashboard', 'DashboardController@index');
+Route::post('/dashboard/graphics', 'DashboardController@graphics');
 
 // Genres
 Route::get('/genres', 'GenresController@index');
