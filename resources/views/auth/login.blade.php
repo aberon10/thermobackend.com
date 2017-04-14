@@ -21,22 +21,18 @@
 						<div class="form-group {{ $errors->has('pass') ? 'error' : '' }} {{ $errors->has('message_error') ? 'error' : '' }}">
 							<label for="pass" class="label">
 								Contraseña
-								<a href="#" class="float-right">Olvidaste tu contraseña?</a>
+								<a href="{{url('http://thermobackend.com/forgotPassword')}}" class="float-right">Olvidaste tu contraseña?</a>
 							</label>
 							<input type="password" class="input" id="pass" name="pass" placeholder="Contraseña" value="{{old('pass')}}">
 							@if ($errors->has('pass'))
 								<p class="message">{{$errors->first('pass')}}</p>
 							@endif
 						</div>
-						<div class="form-group">
-							<label class="checkbox label">
-								<input type="checkbox"> Recordarme
-							</label>
-						</div>
 						<div class="form-group {{ $errors->has('message_error') ? 'error' : '' }}">
 							@if ($errors->has('message_error'))
 								<p class="message">{{$errors->first('message_error')}}</p>
 							@endif
+							<a href="{{url('/help')}}" class="float-left" style="padding: .5rem 0;">Necesitas ayuda?</a>
 							<button type="submit" class="button button-full button-blue gradient bold">Entrar</button>
 						</div>
 					</form>
@@ -44,5 +40,8 @@
 			</div>
 		</div>
 	</div>
+	<footer class="home-footer">
+		<p class="center">ThermoBackend 2016 - {{date('Y')}}</p>
+	</footer>
 @endsection
 

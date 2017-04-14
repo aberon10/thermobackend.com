@@ -1,52 +1,43 @@
 // Paleta de colores de la app
-$blue       : #0F7CFF;
-$alice-dark	: lighten(#1287A8, 5%);
-$alice-blue	: lighten(#00f0ff, 5%);
-
-
+$blue: #0F7CFF;
+$alice-dark: lighten(#1287A8, 5%);
+$alice-blue: lighten(#00f0ff, 5%);
+$green: #4CAF50;
 // Background Body
 $body-bg: #e9ebee;
-
 // Font color
 $text-color: #636b6f;
-
 // Borders
-$border-color         : darken($body-bg, 10%);
-$list-group-border    : $border-color;
+$border-color: darken($body-bg, 10%);
+$list-group-border: $border-color;
 $navbar-default-border: $border-color;
-$panel-default-border : $border-color;
-$panel-inner-border   : $border-color;
-
+$panel-default-border: $border-color;
+$panel-inner-border: $border-color;
 // Status
-$color-primary : #0F7CFF;
-$color-info    : #8EB4CB;
-$color-success : #2AB27B;
-$color-warning : #CBB956;
-$color-danger  : #BF5329;
-$color-error   : #a94442;
-
+$color-primary: #0F7CFF;
+$color-info: #8EB4CB;
+$color-success: #2AB27B;
+$color-warning: #CBB956;
+$color-danger: #BF5329;
+$color-error: #a94442;
 // Navbar
 $navbar-default-bg: #fff;
-
 // Buttons
 $btn-default-color: $text-color;
-
 // Inputs
-$input-border           : lighten($text-color, 40%);
-$input-border-focus     : lighten($color-primary, 25%);
+$input-border: lighten($text-color, 40%);
+$input-border-focus: lighten($color-primary, 25%);
 $input-color-placeholder: lighten($text-color, 30%);
-$input-color            : lighten($text-color, 15%);
-
+$input-color: lighten($text-color, 15%);
 // Panels
 $panel-default-heading-bg: #FFF;
-
 // Sidebar - Menu vertical
 $sidebar-bg-color: #2A3F54;
 $submenu-bg-color: darken($sidebar-bg-color, 5%);
-
+// Tooltip info color
+$tooltip-bg-color: darken($sidebar-bg-color, 8%);
 // Facebook - Google +
-$facebook  : #3A5795;
-$googlemas : #d73d32;
-
+$facebook: #3A5795;
+$googlemas: #d73d32;
 // Tables
 $bg-table-striped: darken(#f9f9f9, 3%);

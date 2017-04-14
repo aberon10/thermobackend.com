@@ -22,30 +22,30 @@
 						<div class="indicator indicator-facebook">
 							<div class="indicator__title">
 								<span class="icon-facebook-square indicator__logo"></span>
-								<p>Facebook <span class="percentage">10%</span></p>
+								<p>Facebook <span class="percentage">{{$indicadores['facebook'][1]}}%</span></p>
 							</div>
-							<div class="indicator__number">200</div>
+							<div class="indicator__number">{{$indicadores['facebook'][0]}}</div>
 						</div>
 						<div class="indicator indicator-googlemas">
 							<div class="indicator__title">
 								<span class="icon-google indicator__logo"></span>
-								<p>Google <span class="percentage">15%</span>	</p>
+								<p>Google+ <span class="percentage">{{$indicadores['google'][1]}}%</span></p>
 							</div>
-							<div class="indicator__number">300</div>
+							<div class="indicator__number">{{$indicadores['google'][0]}}</div>
 						</div>
 						<div class="indicator indicator-alice-blue">
 							<div class="indicator__title">
 								<span class="icon-users indicator__logo"></span>
-								<p>Premium <span class="percentage">70%</span></p>
+								<p>Premium <span class="percentage">{{$indicadores['premium'][1]}}%</span></p>
 							</div>
-							<div class="indicator__number">1400</div>
+							<div class="indicator__number">{{$indicadores['premium'][0]}}</div>
 						</div>
 						<div class="indicator indicator-default">
 							<div class="indicator__title">
 								<span class="icon-users indicator__logo"></span>
-								<p>Gratis <span class="percentage">5%</span></p>
+								<p>Gratis <span class="percentage">{{$indicadores['free'][1]}}%</span></p>
 							</div>
-							<div class="indicator__number">100</div>
+							<div class="indicator__number">{{$indicadores['free'][0]}}</div>
 						</div>
 					</div>
 
@@ -54,108 +54,68 @@
 							<div class="panel-container panel-column-2">
 								<div class="panel">
 									<div class="panel__heading">
-										Grafica 1
+										Generos más Populares
 										<div class="panel-buttons">
 											<span class="icon-chevron-up" data-toggle="panel"></span>
 											<span class="icon-close"></span>
 										</div>
 									</div>
-									<div class="panel__body">
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-										proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-									</div>
+									<div class="panel__body" id="first_chart"></div>
 								</div>
 								<div class="panel">
 									<div class="panel__heading">
-										Grafica 2
+										Cuentas Registradas en los ultimos 2 meses
 										<div class="panel-buttons">
 											<span class="icon-chevron-up" data-toggle="panel"></span>
 											<span class="icon-close"></span>
 										</div>
 									</div>
-									<div class="panel__body">
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-										proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-									</div>
-								</div>
-								<div class="panel">
-									<div class="panel__heading">
-										Grafica 3
-										<div class="panel-buttons">
-											<span class="icon-chevron-up" data-toggle="panel"></span>
-											<span class="icon-close"></span>
-										</div>
-									</div>
-									<div class="panel__body">
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-										proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+									<div class="panel__body" id="second_chart">
 									</div>
 								</div>
 							</div> {{-- Fin del panel-container --}}
 						</div>
+
+						{{-- TODO LIST --}}
 						<div class="ed-item m-100 xl-30">
-							{{-- TODO LIST --}}
 							<div class="panel">
 								<div class="panel__heading">
-									Tareas Pendientes
+									MIS TAREAS
 									<div class="panel-buttons">
 										<span class="icon-chevron-up" data-toggle="panel"></span>
 										<span class="icon-close"></span>
 									</div>
 								</div>
+
+								{{-- Nueva Tarea --}}
 								<div class="panel__body">
-									<div class="todo-list-container">
-									<ul class="todo-list">
-										<li class="todo-list__item active">
-											<a href="#"><span class="icon-check"></span> Tarea 1</a>
-										</li>
-										<li class="todo-list__item">
-											<a href="#"><span class="icon-check"></span> Tarea 2</a>
-										</li>
-										<li class="todo-list__item">
-											<a href="#"><span class="icon-check"></span> Tarea 3</a>
-										</li>
-										<li class="todo-list__item">
-											<a href="#"><span class="icon-check"></span> Tarea 4</a>
-										</li>
-									</ul>
-									</div>
-									<a href="#" class="button button-alice">Hecho</a>
-									<a href="{{url('/task')}}" class="button button-blue">Ver todas las tareas</a>
-								</div>
-								<div class="divider"></div>
-								<div class="panel__footer">
-									<h3 class="center">Nueva Tarea</h3>
-									<form class="form">
-										<div class="form-group">
-											<label class="label" for="title">Titulo</label>
-											<input type="text" class="input" id="title" name="title" placeholder="Titulo de la tarea ?">
-										</div>
-										<div class="form-group">
-											<label class="label" for="content">Contenido</label>
-											<input type="text" class="input" id="content" name="content" placeholder="Cuál es la tarea?">
-										</div>
-										<div class="form-group">
+									<form class="form" action="#" method="POST" id="form-task">
+										<div class="form-group inline">
+											<input class="input" id="title" name="title" placeholder="Cuál es la tarea?"></input>
 											<button type="submit" class="button button-alice">Guardar</button>
 										</div>
+										<span class="error"></span>
 									</form>
+								</div>
+
+								<div class="panel__footer <?php if(isset($tasks) && count($tasks) == 0){echo 'hide';} ?>">
+									{{-- Listado De Tareas --}}
+									<div class="todo-list-container" id="todo-list-container" style="margin-bottom: 1.5em;">
+										<ul class="todo-list" id="todo-list" style="max-height: 230px; overflow-y: auto;">
+											@foreach ($tasks as $task)
+												<li class="todo-list__item">
+													<?php $title = (strlen($task->titulo) > 20) ? substr($task->titulo, 0, 18).'...' : $task->titulo; ?>
+													<a href="#" data-task="{{$task->id_tarea}}"><span class="icon-check"></span> {{$title}} </a>
+												</li>
+											@endforeach
+										</ul>
+									</div>
+									<p class="error" id="error-message-task"></p>
+									<a href="#" class="button button-error bold hide" id="delete-task"><span class="icon-trash"></span> Eliminar Tarea</a>
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -164,8 +124,13 @@
 
 {{-- Footer --}}
 @extends('layouts.footerapp')
-@section('url_button_cancel', url('/dashboard/'))
 
+{{-- Scripts --}}
 @section('scripts')
-<script type="text/javascript" src="{{url('/js/animations/animations.js')}}"></script>
+	<script src="{{url('/js/libs/jquery.min.js')}}"></script>
+	<script src="{{url('/js/libs/jquery-ui.min.js')}}"></script>
+	<script src="{{url('/js/highcharts.js')}}"></script>
+	<script src="{{url('/js/exporting.js')}}"></script>
+	<script src="{{url('/js/app.min.js')}}"></script>
+	<script src="{{url('/js/dashboard.js')}}"></script>
 @endsection

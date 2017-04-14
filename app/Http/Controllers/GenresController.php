@@ -7,6 +7,7 @@ use App\Models\Genero;
 use App\Models\ImagenGenero;
 use App\Procedures\ChangeRoutesProcedure;
 use App\ValidationsMusic;
+use App\Sanitize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +16,7 @@ class GenresController extends Controller implements Crud
 {
 	public function __construct()
 	{
-		$this->middleware('admin');
+		$this->middleware(['admin', 'account_type']);
 	}
 
 	/**
@@ -25,14 +26,59 @@ class GenresController extends Controller implements Crud
 	public function index()
 	{
 		$total_genres = count(Genero::all());
-		$genres = Genero::orderBy('nombre_genero')->paginate(config('config_app.MAX_GENRES_PAGE'));
-		$index = ($genres->currentPage() == 1) ? 1 : (($genres->currentPage() - 1) * config('config_app.MAX_GENRES_PAGE')) + 1;
 
-		if (count($genres) === 0) {
-			$this->showForm();
-		} else {
-			return view('sections.genres.index', compact('genres', 'total_genres', 'index'));
+		$limit = $_GET['limit'] ?? config('config_app.MAX_GENRES_PAGE');
+
+		if (!in_array($limit, config('config_app.LIMITS'))) {
+			abort(404);
 		}
+
+		if (isset($_GET['filter'])) {
+			$filter = str_replace('%', '\\%', $_GET['filter']);
+			$filter = $filter."%";
+			$genres = Genero::where('nombre_genero', 'LIKE', $filter)->paginate($limit);
+		} else {
+			$genres = Genero::orderBy('nombre_genero', 'asc')->paginate($limit);
+		}
+
+		$index = ($genres->currentPage() == 1) ? 1 : (($genres->currentPage() - 1) * $limit) + 1;
+
+		if (count($genres) == 0 && $total_genres == 0) { // no hay generos en la app
+			return redirect('genres/add');
+		} else if (count($genres) == 0 && $total_genres > 0) { // en caso de que se modifique la url manualmente
+			abort(404);
+		} else {
+
+			return view('sections.genres.index', compact('genres', 'total_genres', 'index', 'limit'));
+		}
+	}
+
+	/**
+	 * search
+	 * @param  Request $request
+	 * @return JSON
+	 */
+	public function search(Request $request)
+	{
+		$total_data = count(Genero::all());
+
+		$limit = ($request->limit && in_array($request->limit, config('config_app.LIMITS'))) ? $request->limit : config('config_app.MAX_GENRES_PAGE');
+
+		$filter = str_replace('%', '\\%', $request->filter);
+		$filter = $filter."%";
+		$data = Genero::where('nombre_genero', 'LIKE', $filter)->orderBy('nombre_genero', 'asc')->paginate($limit);
+
+		$index = ($data->currentPage() == 1) ? 1 : (($data->currentPage() - 1) * $limit) + 1;
+
+		return response()->json([
+			'entitie'       => 'genre',
+			'filter'        => $request->filter,
+			'limit'			=> $limit,
+			'data'          => $data,
+			'total_data'    => $total_data,
+			'pagination'    => (string) $data->links(),
+			'message_panel' => 'Visualizando '.$data->currentPage().' de '.$data->lastPage().' paginas de '.$total_data.' generos.'
+		]);
 	}
 
 	/**
@@ -117,7 +163,7 @@ class GenresController extends Controller implements Crud
      */
 	public function edit(Request $request, $id)
 	{
-		if (isset($id) && preg_match('/^[0-9]$/', $id)) {
+		if (isset($id) && preg_match('/^[0-9]{1,}$/', $id)) {
 			// get data genre
 			$main_data = Genero::find($id);
 
@@ -315,5 +361,23 @@ class GenresController extends Controller implements Crud
 				]);
 			}
 		}
+	}
+
+	public static function mostPopular() {
+		$total_counter = \DB::table('cancion')->sum('contador');
+		$most_popular = \DB::select('CALL most_popular_genre()');
+
+		$porcentajes = array();
+
+		if ($total_counter !== null) {
+			$count_genres = count($most_popular);
+			for ($i = 0; $i < $count_genres; $i++) {
+				$porcentajes[] = [
+					$most_popular[$i]->nombre_genero,
+					((int) $most_popular[$i]->contador == 0) ? 0 : ((int) $most_popular[$i]->contador * 100) / $total_counter
+				];
+			}
+		}
+		return $porcentajes;
 	}
 }

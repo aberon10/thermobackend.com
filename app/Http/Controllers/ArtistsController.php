@@ -7,6 +7,7 @@ use App\Models\Artista;
 use App\Models\ImagenArtista;
 use App\Models\Genero;
 use App\ValidationsMusic;
+use App\Sanitize;
 use App\Procedures\ChangeRoutesProcedure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,7 @@ class ArtistsController extends Controller implements Crud
 {
     public function __construct()
 	{
-		$this->middleware('admin');
+		$this->middleware(['admin', 'account_type']);
 	}
 
 	/**
@@ -27,19 +28,70 @@ class ArtistsController extends Controller implements Crud
 	{
 		$total_artists = count(Artista::all());
 
-		$artists = \DB::table('artista')
-					->join('genero', 'artista.id_genero', '=', 'genero.id_genero')
-					->orderBy('genero.nombre_genero', 'desc')
-					->orderBy('artista.nombre_artista', 'desc')
-					->paginate(config('config_app.MAX_ARTISTS_PAGE'));
+		$filter = $_GET['filter'] ?? '';
+		$limit  = $_GET['limit'] ?? config('config_app.MAX_ARTISTS_PAGE');
 
-		$index = ($artists->currentPage() == 1) ? 1 : (($artists->currentPage() - 1) * config('config_app.MAX_ARTISTS_PAGE')) + 1;
-
-		if ($total_artists == 0) {
-			$this->showForm();
-		} else {
-			return view('sections.artists.index', compact('artists', 'total_artists', 'index'));
+		if (!in_array($limit, config('config_app.LIMITS'))) {
+			abort(404);
 		}
+
+		if ($filter) {
+			$filter = str_replace('%', '\\%', trim($filter));
+			$filter = $filter."%";
+		} else if(!$filter) {
+			$filter = '%';
+		}
+
+		$artists = \DB::table('artista')
+					->where('nombre_artista', 'LIKE', $filter)
+					->join('genero', 'artista.id_genero', '=', 'genero.id_genero')
+					->orderBy('genero.nombre_genero', 'asc')
+					->orderBy('artista.nombre_artista', 'asc')
+					->paginate($limit);
+
+		$index = ($artists->currentPage() == 1) ? 1 : (($artists->currentPage() - 1) * $limit) + 1;
+
+		if (count($artists) == 0 && $total_artists == 0) {
+			return redirect('artists/add');
+		} else if (count($artists) == 0 && $total_artists > 0) {
+			abort(404);
+		} else {
+			return view('sections.artists.index', compact('artists', 'total_artists', 'index', 'limit'));
+		}
+	}
+
+	/**
+	 * search
+	 * @param  Request $request
+	 * @return JSON
+	 */
+	public function search(Request $request)
+	{
+		$total_data = count(Artista::all());
+
+		$limit = ($request->limit && in_array($request->limit, config('config_app.LIMITS'))) ? $request->limit : config('config_app.MAX_ARTISTS_PAGE');
+
+		$filter = str_replace('%', '\\%', trim($request->filter));
+		$filter = $filter."%";
+
+		$data = \DB::table('artista')
+					->where('nombre_artista', 'LIKE', $filter)
+					->join('genero', 'artista.id_genero', '=', 'genero.id_genero')
+					->orderBy('genero.nombre_genero', 'asc')
+					->orderBy('artista.nombre_artista', 'asc')
+					->paginate($limit);
+
+		$index = ($data->currentPage() == 1) ? 1 : (($data->currentPage() - 1) * $limit) + 1;
+
+		return response()->json([
+			'entitie'       => 'artist',
+			'filter'        => $request->filter,
+			'limit'			=> $limit,
+			'data'          => $data,
+			'total_data'    => $total_data,
+			'pagination'    => (string) $data->links(),
+			'message_panel' => 'Visualizando '.$data->currentPage().' de '.$data->lastPage().' paginas de '.$total_data.' artistas.'
+		]);
 	}
 
 	/**
@@ -138,7 +190,7 @@ class ArtistsController extends Controller implements Crud
 	 */
 	public function edit(Request $request, $id)
 	{
-		if (isset($id) && preg_match('/^[0-9]$/', $id)) {
+		if (isset($id) && preg_match('/^[0-9]{1,}$/', $id)) {
 			$main_data = Artista::find($id);
 
 			if (!empty($main_data)) {
@@ -197,7 +249,7 @@ class ArtistsController extends Controller implements Crud
 
 					// recupero la ruta de la imagen
 					$img = ImagenArtista::find($artist->id_artista);
-					$base_dir = '/app/public/'.dirname(dirname($img->src_img));
+					$base_dir = '/app/public/'.dirname(dirname($img->src_img)); // /app/public/uploads/music/nombre_genero
 
 					// nuevo genero
 					$genre = Genero::find($request->select);
@@ -228,8 +280,8 @@ class ArtistsController extends Controller implements Crud
 								$img->save();
 
 								// PROCEDURE CHANGE_ROUTES_1
-								$old_route = 'uploads/music/'.basename($base_dir).'/'.$old_name_artist.'/';
-								$new_route = 'uploads/music/'.ucfirst($genre->nombre_genero).'/'.$new_name_artist.'/';
+								$old_route = 'uploads/music/'.basename($base_dir).'/'.$old_name_artist.'/';  // uploads/music/old_genre/old_artist
+								$new_route = 'uploads/music/'.ucfirst($genre->nombre_genero).'/'.$new_name_artist.'/'; // uploads/music/new_genre/new_artist
 								$procedure = ChangeRoutesProcedure::updateRouteArtist($old_route, $new_route);
 							}
 						}

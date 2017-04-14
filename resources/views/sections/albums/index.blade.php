@@ -3,11 +3,6 @@
 {{-- Titulo de la seccion --}}
 @section('title_left', config('config_app.sections_title.index_album'))
 
-{{-- Titulo de la seccion derecha--}}
-@section('title_right')
-	<a href="#" class="nodecoration" target="_blanck"><span class="icon-help icon-large info"></span></a>
-@endsection
-
 {{-- Menu Vertical --}}
 @extends('layouts.menuapp')
 
@@ -47,7 +42,7 @@
 @endsection
 
 @section('panel_footer')
-	<div class="panel-options">
+	<div class="panel-options" id="panel-options">
 		<div class="panel-options__left">
 			<p>Visualizando {{$albums->currentPage()}} de {{$albums->lastPage()}} paginas de {{$total_albums}} albums</p>
 		</div>
@@ -63,11 +58,5 @@
 
 {{-- URL button add --}}
 @section('url_add', url('albums/add'))
+@section('id_button_delete', 'delete-music')
 
-{{-- Scripts --}}
-@section('scripts')
-<script src="{{url('/js/utilities/ajax.js')}}"></script>
-<script src="{{url('/js/music-config.js')}}"></script>
-<script src="{{url('/js/music-delete.js')}}"></script>
-<script src="{{url('/js/music-init.js')}}"></script>
-@endsection

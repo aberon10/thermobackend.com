@@ -3,11 +3,6 @@
 {{-- Titulo de la seccion --}}
 @section('title_left', config('config_app.sections_title.index_genre'))
 
-{{-- Titulo de la seccion derecha--}}
-@section('title_right')
-	<a href="#" class="nodecoration" target="_blanck"><span class="icon-help icon-large info"></span></a>
-@endsection
-
 {{-- Menu Vertical --}}
 @extends('layouts.menuapp')
 
@@ -20,9 +15,9 @@
 @section('table_head')
 	<tr>
 		<th>#</th>
-		<th>Nombre Género</th>
-		<th>Fecha he creación</th>
-		<th>Ultima actualización</th>
+		<th>Género</th>
+		<th class="from-m">Fecha he creación</th>
+		<th class="from-m">Ultima actualización</th>
 		<th class="center">
 			<input type="checkbox" name="" value="" class="hide" id="delete-all">
 			<label for="delete-all"><span class="icon-trash error"></span></label>
@@ -35,15 +30,15 @@
 		<tr>
 			<td>{{$index++}}</td>
 			<td><a href="{{url('/genres/edit/'.$genre->id_genero)}}">{{$genre->nombre_genero}}</a></td>
-			<td>{{DateFormat::format($genre->created_at)}}</td>
-			<td>{{DateFormat::format($genre->updated_at)}}</td>
+			<td class="from-m">{{DateFormat::format($genre->created_at)}}</td>
+			<td class="from-m">{{DateFormat::format($genre->updated_at)}}</td>
 			<td class="center"><input type="checkbox" name="{{$genre->nombre_genero}}" data-music="true" value="{{$genre->id_genero}}"></td>
 		</tr>
 	@endforeach
 @endsection
 
 @section('panel_footer')
-	<div class="panel-options">
+	<div class="panel-options" id="panel-options">
 		<div class="panel-options__left">
 			<p>Visualizando {{$genres->currentPage()}} de {{$genres->lastPage()}} paginas de {{$total_genres}} generos</p>
 		</div>
@@ -58,11 +53,5 @@
 @extends('layouts.footerlist')
 
 @section('url_add', '/genres/add')
+@section('id_button_delete', 'delete-music')
 
-{{-- Scripts --}}
-@section('scripts')
-	<script src="{{url('/js/utilities/ajax.js')}}"></script>
-	<script src="{{url('/js/music-config.js')}}"></script>
-	<script src="{{url('/js/music-delete.js')}}"></script>
-	<script src="{{url('/js/music-init.js')}}"></script>
-@endsection

@@ -13,9 +13,12 @@
 		}
 
 		&.active {
-			span {
+			background: darken(#F3F3F3, 8%);
+			a {text-decoration: line-through; color: darken($color-error, 10%);}
+			a span {
 				color: #FFF;
-				background: $alice-blue;
+				background: darken($color-error, 10%);
+				text-decoration: none;
 			}
 		}
 	}
@@ -25,13 +28,6 @@
 		color: #73879C;
 		display: flex;
 		transition: all 0.3s;
-
-		&:active {
-			span {
-				color: #FFF;
-				background: $alice-blue;
-			}
-		}
 	}
 
 	span {

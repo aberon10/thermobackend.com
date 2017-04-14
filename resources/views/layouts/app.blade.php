@@ -10,6 +10,10 @@
 
     <title>{{ config('app.name') }}</title>
 
+    @if ($_SERVER['REQUEST_URI'] == '/dashboard')
+   		<link href="{{url('css/providers/jquery-ui.min.css')}}" rel="stylesheet">
+	@endif
+
     <!-- Styles -->
     <link href="{{url('css/styles.css')}}" rel="stylesheet">
 
@@ -22,7 +26,6 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
-
 </head>
 <body>
 
@@ -56,18 +59,10 @@
     @yield('footerapp') {{-- Pie de página --}}
     @yield('footerlist') {{-- Pie de página de los listados--}}
 
-    @yield('scripts') {{-- Scripts --}}
+	{{-- Scripts --}}
+    @section('scripts')
+		<script src="{{url('/js/app.min.js')}}"></script>
+	@show
 
-{{--     <script type="text/javascript">
-		document.addEventListener("DOMContentLoaded", function(e) {
-			var match = navigator.userAgent.match(/Chrome\/(\d+)/);
-		  	if (match && parseInt(match[1]) >= 55) {
-		  		var m = document.querySelector('.mask');
-		  		if (m !== null) {
-		   			m.style.display = 'block';
-		  		}
-		  	}
-		});
-	</script> --}}
 </body>
 </html>

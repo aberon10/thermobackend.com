@@ -6,4 +6,8 @@
 /public/storage
 /storage/app/public
 /TODO
+/public/js/exporting.js
+/public/js/highcharts.js
+/public/js/libs
 .env
+.vscode

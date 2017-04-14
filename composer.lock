@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "100840bff8048b661a86a4a3bb7aa310",
-    "content-hash": "0c989fadba60ae371c8e7024f9593461",
+    "hash": "9145c9001d4d0bddc1713bcdacd7a7bb",
+    "content-hash": "fcf22cf7ebad6d766eac11a7245af605",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -820,6 +820,66 @@
                 "random"
             ],
             "time": "2016-11-07 23:38:38"
+        },
+        {
+            "name": "phpmailer/phpmailer",
+            "version": "v5.2.22",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "b18cb98131bd83103ccb26a888fdfe3177b8a663"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/b18cb98131bd83103ccb26a888fdfe3177b8a663",
+                "reference": "b18cb98131bd83103ccb26a888fdfe3177b8a663",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "*",
+                "phpunit/phpunit": "4.7.*"
+            },
+            "suggest": {
+                "league/oauth2-google": "Needed for Google XOAUTH2 authentication"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "class.phpmailer.php",
+                    "class.phpmaileroauth.php",
+                    "class.phpmaileroauthgoogle.php",
+                    "class.smtp.php",
+                    "class.pop3.php",
+                    "extras/EasyPeasyICS.php",
+                    "extras/ntlm_sasl_client.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
+                },
+                {
+                    "name": "Marcus Bointon",
+                    "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Andy Prevost",
+                    "email": "codeworxtech@users.sourceforge.net"
+                },
+                {
+                    "name": "Brent R. Matzelle"
+                }
+            ],
+            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "time": "2017-01-09 09:33:47"
         },
         {
             "name": "psr/log",

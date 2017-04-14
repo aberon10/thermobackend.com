@@ -16,11 +16,11 @@ class SessionAdministrator
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {                  
+    {
         if ($request->session()->has('user')) {
-             return $next($request);        
+            return $next($request);
         }
-        
+
         return redirect('/login');
     }
 }

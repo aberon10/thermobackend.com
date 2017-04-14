@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 class TracksController extends Controller implements Crud
 {
     public function __construct() {
-    	$this->middleware('admin');
+    	$this->middleware(['admin', 'account_type']);
     }
 
 	/**
@@ -33,7 +33,7 @@ class TracksController extends Controller implements Crud
     				->join('album', 'album.id_album', '=', 'cancion.id_album')
 					->join('artista', 'album.id_artista', '=', 'artista.id_artista')
     				->join('img_album', 'album.id_album', '=', 'img_album.id_album')
-    				->orderBy('cancion.nombre_cancion')
+    				->orderBy('cancion.nombre_cancion', 'asc')
     				->get();
 
     		if (count($tracks) == 0) {
@@ -53,7 +53,12 @@ class TracksController extends Controller implements Crud
 	 */
 	public function showForm()
 	{
-		$albums       = Album::all();
+		$albums  = \DB::table('album')
+						->join('artista', 'artista.id_artista', '=', 'album.id_artista')
+						->orderBy('nombre_artista', 'asc')
+						->orderBy('nombre', 'asc')
+						->get();
+
 		$panel_title  = 'Agregar una Nueva Pista';
 		$label_select = 'Album';
 
@@ -151,14 +156,18 @@ class TracksController extends Controller implements Crud
 	 */
 	public function edit(Request $request, $id)
 	{
-		if (isset($id) && preg_match('/^[0-9]+$/', $id)) {
+		if (isset($id) && preg_match('/^[0-9]{1,}+$/', $id)) {
 			$main_data = Cancion::find($id);
 			if ($main_data != NULL) {
 				$name = $main_data->nombre_cancion;
 				$type = ($main_data->formato === 'mp3') ? 'audio/mpeg' : 'audio/ogg';
 
 				// get all albums
-				$albums = Album::all();
+				$albums = \DB::table('album')
+						->join('artista', 'artista.id_artista', '=', 'album.id_artista')
+						->orderBy('nombre_artista', 'asc')
+						->orderBy('nombre', 'asc')
+						->get();
 
 				$label_select = 'Albums';
 

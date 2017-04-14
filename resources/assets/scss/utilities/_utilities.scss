@@ -1,18 +1,26 @@
-// Tamaños de los iconos
-.icon-large	{
-	font-size: 1.6em;
+@import 'base/_colors';
+@import 'base/_typography';
+
+.icon-toggle {
+	display  : block;
+	margin   : 1rem 0;
+	cursor   : pointer;
+	color    : #222;
+	font-size: 3rem;
+}
+/* Tamaños de los iconos*/
+.icon-large {
+	font-size: 1.6rem;
 }
 
 .icon-middle {
-	font-size: 1.1em;
+	font-size: 1.1rem;
 }
 
 .icon-small {
-	font-size: 0.8em;
+	font-size: 0.8rem;
 }
-
-
-// Colors class
+/* Colors class*/
 .primary {
 	color: $color-primary !important;
 }
@@ -32,6 +40,7 @@
 .warning {
 	color: $color-warning !important;
 }
+
 .success {
 	color: $color-success !important;
 }
@@ -56,17 +65,17 @@
 	text-align: center;
 }
 
-.divider {
-	width: 100%;
-
-	height: 1px;
-
-	display: block;
-
-	background: $border-color;
+.no-border {
+	border: none;
 }
 
-// other classes
+.divider {
+	display   : block;
+	width     : 100%;
+	height    : 1px;
+	background: $border-color;
+}
+/* other classes*/
 .bg-facebook {
 	background-color: $facebook !important;
 }
@@ -92,11 +101,13 @@
 }
 
 .reduce-size {
-	transform: scale(.95);
+	-webkit-transform: scale(.95);
+	transform        : scale(.95);
 }
 
 .zoom {
-	transform: scale(1.2);
+	-webkit-transform: scale(1.2);
+	transform        : scale(1.2);
 }
 
 .radius {
@@ -112,8 +123,8 @@ a {
 		text-decoration: none;
 	}
 
-	&:hover,
-	&:active {
+	&:active,
+	&:hover {
 		&.nodecoration {
 			text-decoration: none;
 		}
