@@ -38,7 +38,9 @@ class LoginController extends Controller
         ]);
 
         $user = strtolower($request->usuario);
-		$userdata = Usuario::where('usuario', $user)->first();
+		$userdata = Usuario::where('usuario', '=', $user)
+			->whereIn('id_tipo_usuario', [1, 2])
+			->first();
 
         if ($userdata != null) {
 			$id_user  = $userdata->id_usuario;

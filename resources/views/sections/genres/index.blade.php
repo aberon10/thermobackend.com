@@ -3,10 +3,6 @@
 {{-- Titulo de la seccion --}}
 @section('title_left', config('config_app.sections_title.index_genre'))
 
-{{-- Titulo de la seccion derecha--}}
-@section('title_right')
-	<a href="#" class="nodecoration" target="_blanck"><span class="icon-help icon-large info"></span></a>
-@endsection
 {{-- Menu Vertical --}}
 @extends('layouts.menuapp')
 

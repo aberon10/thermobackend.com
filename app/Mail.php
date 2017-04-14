@@ -2,6 +2,31 @@
 declare(strict_types=1);
 namespace App;
 
+const HEAD = "
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>ThermoBackend</title>
+	<style>
+		html {box-sizing: border-box;font-family: Verdana, sans-serif;font-size: 16px;}
+		*, *::before, *::after { box-sizing: inherit;font-size: 1rem;margin: 0;padding: 0;color: #444;}
+		body {background-color: #fff;	}
+		h1 {font-size: 1.6rem; font-weight: 400; color: #1287A8; font-family: Verdana, sans-serif;}
+		p {margin-bottom: 1rem;}
+		.link {text-decoration: underline;color: #1287A8;display: block;}
+		.link:hover {color: #00f0ff;}
+		.header {height: 4rem; width: 100%;}
+		.logo {height: 100%;width: 100%;display: flex;align-items: center;justify-content: center;text-align: center;}
+		.main-container {width: 80%;margin: 1rem auto;padding: 1rem;}
+		.footer {text-align: center;display: flex;justify-content: center;align-items: center;padding: 1rem;}
+		.footer p {margin-bottom: 0;font-size: .8rem;}
+		.signature {margin-top: 2rem;}
+	</style>
+</head>";
+
 class Mail
 {
 	/**
@@ -137,7 +162,7 @@ class Mail
 					<html lang='es'>
 						<head>
 							<meta charset='UTF-8'>
-							<title>Bienvenido ThermoBackend</title>
+							<title>Cuenta Actualizada - ThermoBackend</title>
 							<style>
 							body {color: #555; margin: 0; padding: 0;}
 							.logo span {color: #1287A8;}
@@ -161,4 +186,59 @@ class Mail
 						</html>";
 		return $template;
 	}
+
+	/**
+	 * Esta funcion se encarga de realizar el envio de mails.
+	 *
+	 * @param string cuenta de correo del usuario
+	 * @param string nombre del usuario
+	 * @param string contenido del mensaje
+	 * @param string mensaje alternativo
+	 * @return boolean retorna true si el envio del correo es exitoso de lo contrario
+	 *      retorna false.
+	 */
+	public static function sendMail($to = '', $username = '', $subject = '', $content = '', $alt_message = '') {
+		// Create a new PHPMailer instance
+		$mail = new \PHPMailer;
+
+		// Set PHPMailer to use the sendmail transport
+		$mail->isSendmail();
+
+		// Set who the message is to be sent from
+		$mail->setFrom('thermoteam2016@gmail.com', 'ThermoBackend');
+
+		// Set an alternative reply-to address
+		$mail->addReplyTo('thermoteam2016@gmail.com', 'ThermoBackend');
+
+		// Set who the message is to be sent to
+		$mail->addAddress(trim($to), trim($username));
+
+		// Set the subject line
+		$mail->Subject = $subject;
+
+		// Read an HTML message body from an external file, convert referenced images to embedded,
+		// convert HTML into a basic plain-text alternative body
+		$content = HEAD . $content;
+
+		$mail->msgHTML($content);
+
+		// Replace the plain text body with one created manually
+		$mail->AltBody = trim($alt_message);
+
+		// $mail­->CharSet = "UTF­8";
+
+		// $mail­->Encoding = "quoted­printable";
+
+		// Attach an image file
+		//$mail->addAttachment('images/phpmailer_mini.png');
+
+		// Send the message, check for errors
+		if (!$mail->send()) {
+			// echo "Mailer Error: " . $mail->ErrorInfo;
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 }

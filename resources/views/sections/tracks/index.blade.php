@@ -7,7 +7,6 @@
 @section('title_right')
 	<input type="checkbox" class="hide" id="delete-all">
 	<label for="delete-all"><span class="icon-trash icon-large error"></span></label>
-	<a href="#" class="nodecoration" target="_blanck"><span class="icon-help icon-large info"></span></a>
 @endsection
 
 {{-- Menu Vertical --}}

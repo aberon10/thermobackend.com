@@ -29,7 +29,7 @@
 						<div class="indicator indicator-googlemas">
 							<div class="indicator__title">
 								<span class="icon-google indicator__logo"></span>
-								<p>Google <span class="percentage">{{$indicadores['google'][1]}}%</span></p>
+								<p>Google+ <span class="percentage">{{$indicadores['google'][1]}}%</span></p>
 							</div>
 							<div class="indicator__number">{{$indicadores['google'][0]}}</div>
 						</div>

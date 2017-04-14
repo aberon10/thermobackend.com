@@ -1,10 +1,12 @@
-$cssCore    : false;
-$cssHelpers : true;
-$devMode    : false;
-$max-width  : 1600px;
+$cssCore: false;
+$cssHelpers: true;
+$devMode: false;
+$max-width: 1600px;
 @import 'utilities/_utilities';
+
 /* Breakpoints*/
-$breakpoints: ( s : 0, m : 768px, l : 1024px, xl : 1440px );
+
+$breakpoints: ( s: 0, m: 768px, l: 1024px, xl: 1440px);
 @import 'providers/ed-grid';
 @import 'base/_base';
 @import 'utilities/_utilities';
@@ -21,10 +23,10 @@ $breakpoints: ( s : 0, m : 768px, l : 1024px, xl : 1440px );
 @import 'components/_tooltip';
 @import 'components/_snackbar';
 @import 'components/_tabs';
-@import 'components/_menu-vertical';
 @import 'components/_modal';
 @import 'layouts/_header';
 @import 'layouts/_footer';
 @import 'layouts/_menu-vertical';
 @import 'layouts/_preview';
 @import 'layouts/_home';
+@import 'layouts/_menu-vertical';

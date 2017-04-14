@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Tarea;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
-
+use DB;
 class DashboardController extends Controller
 {
     /**
@@ -30,13 +30,11 @@ class DashboardController extends Controller
         $total_users = count($users);
 
         // total users account facebook
-        $fa_users = Usuario::where('id_tipo_usuario', '=', 4)
-                ->orWhere('id_tipo_usuario', '=', 3)
+        $fa_users = Usuario::whereIn('id_tipo_usuario', [3, 4])
                 ->where('id_facebook', '!=', '')
                 ->get();
         // total users account google+
-        $g_users = Usuario::where('id_tipo_usuario', '=', 4)
-                ->orWhere('id_tipo_usuario', '=', 3)
+        $g_users = Usuario::whereIn('id_tipo_usuario', [3, 4])
                 ->where('id_google', '!=', '')
                 ->get();
         // total users account premium
@@ -44,10 +42,10 @@ class DashboardController extends Controller
         // total users account free
         $f_users = Usuario::where('id_tipo_usuario', '=', 4)->get();
 
-        $facebook_users = ($total_users == 0) ? 0 :(count($fa_users) * 100) / $total_users;
-        $google_users = ($total_users == 0) ? 0 :(count($g_users) * 100) / $total_users;
-        $premium_users = ($total_users == 0) ? 0 :(count($p_users) * 100) / $total_users;
-        $free_users = ($total_users == 0) ? 0 :(count($f_users) * 100) / $total_users;
+        $facebook_users = ($total_users == 0) ? 0 : round(((count($fa_users) * 100) / $total_users), 2);
+        $google_users = ($total_users == 0) ? 0 : round(((count($g_users) * 100) / $total_users), 2);
+        $premium_users = ($total_users == 0) ? 0 : round(((count($p_users) * 100) / $total_users), 2);
+        $free_users = ($total_users == 0) ? 0 : round(((count($f_users) * 100) / $total_users), 2);
 
     	$user = Usuario::where('usuario', '=', session('user'))->first();
 		$tasks = Tarea::where('id_usuario', '=', $user->id_usuario)->orderBy('id_tarea', 'desc')->where('estado', '=', 'PENDIENTE')->get();

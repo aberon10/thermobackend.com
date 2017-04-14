@@ -1,48 +1,31 @@
 {
-	"name": "ed-grid",
-	"version": "2.0.0",
-	"description": "Framework de CSS puro para crear diseños web responsive y mobile first.",
-	"style": "ed-grid.scss",
-	"main": "ed-grid.scss",
-	"author": "Alvaro Felipe <informes@escueladigital.pe>",
-	"contributors": [{
-		"name": "Daniel Guillermo Romero Gelvez",
-		"email": "danielromeroauk@gmail.com",
-		"url": "http://adsiar.com"
-	}, {
-		"name": "Carlos Eduardo Cuatin Guaitarilla",
-		"email": "cecg1996@gmail.com",
-		"url": "http://carloscuatin.com"
-	}],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/escueladigital/ED-GRID"
-	},
-	"bugs": {
-		"url": "https://github.com/escueladigital/ED-GRID/issues"
-	},
-	"scripts": {
-		"start": "./node_modules/.bin/gulp"
-	},
-	"license": "ISC",
-	"devDependencies": {
-		"autoprefixer": "^6.4.1",
-		"babel-cli": "^6.16.0",
-		"babel-plugin-add-module-exports": "^0.2.1",
-		"babel-preset-es2015": "^6.22.0",
-		"babel-preset-latest": "^6.16.0",
-		"babel-register": "^6.18.0",
-		"babelify": "^7.3.0",
-		"browser-sync": "^2.16.0",
-		"browserify": "^13.1.1",
-		"cssnano": "^3.7.5",
-		"gulp": "^3.9.1",
-		"gulp-babel": "^6.1.2",
-		"gulp-plumber": "^1.1.0",
-		"gulp-postcss": "^6.2.0",
-		"gulp-sass": "^2.3.2",
-		"gulp-sourcemaps": "^1.6.0",
-		"vinyl-buffer": "^1.0.0",
-		"vinyl-source-stream": "^1.1.0"
-	}
+    "name": "thermobackend.com",
+    "version": "1.0.0",
+    "description": "",
+    "main": "ed-grid.scss",
+    "author": "Alejandro Beron <alejandroberon@gmail.com",
+    "scripts": {
+        "start": "./node_modules/.bin/gulp"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "autoprefixer": "^6.4.1",
+        "babel-cli": "^6.16.0",
+        "babel-plugin-add-module-exports": "^0.2.1",
+        "babel-preset-es2015": "^6.22.0",
+        "babel-preset-latest": "^6.16.0",
+        "babel-register": "^6.18.0",
+        "babelify": "^7.3.0",
+        "browser-sync": "^2.16.0",
+        "browserify": "^13.1.1",
+        "cssnano": "^3.7.5",
+        "gulp": "^3.9.1",
+        "gulp-babel": "^6.1.2",
+        "gulp-plumber": "^1.1.0",
+        "gulp-postcss": "^6.2.0",
+        "gulp-sass": "^2.3.2",
+        "gulp-sourcemaps": "^1.6.0",
+        "vinyl-buffer": "^1.0.0",
+        "vinyl-source-stream": "^1.1.0"
+    }
 }

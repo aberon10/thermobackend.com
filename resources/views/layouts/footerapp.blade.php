@@ -21,7 +21,7 @@
 			</div>
 		@elseif ($_SERVER['REQUEST_URI'] == '/dashboard')
 			<h3 style="margin: 0; padding: .2em .5em;">DashBoard
-			<small style="color: #777; font-weight: normal;"> Graficas - Estadisticas - Tareas</small></h3>
+			<small style="color: #777; font-weight: normal;"> Gráficas - Estadisticas - Tareas</small></h3>
 		@elseif (preg_match("/^(\/advertising\/add\/|\/advertising\/edit\/){1}[0-9]{1,}$/", $_SERVER['REQUEST_URI']))
 			<h3 style="margin: 0; padding: .2em .5em;">Publicidad
 			<small style="color: #777; font-weight: normal;"> Audios - Banners Publicitarios</small></h3>

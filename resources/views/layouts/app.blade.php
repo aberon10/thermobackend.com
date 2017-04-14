@@ -64,17 +64,5 @@
 		<script src="{{url('/js/app.min.js')}}"></script>
 	@show
 
-{{--     <script type="text/javascript">
-		document.addEventListener("DOMContentLoaded", function(e) {
-			var match = navigator.userAgent.match(/Chrome\/(\d+)/);
-		  	if (match && parseInt(match[1]) >= 55) {
-		  		var m = document.querySelector('.mask');
-		  		if (m !== null) {
-		   			m.style.display = 'block';
-		  		}
-		  	}
-		});
-	</script> --}}
-
 </body>
 </html>

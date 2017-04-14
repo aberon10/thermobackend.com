@@ -293,7 +293,7 @@ class AlbumsController extends Controller implements Crud
 
 				// recupero la ruta de la imagen
 				$img = ImagenAlbum::find($album->id_album);
-				$base_dir = dirname(dirname($img->src_img)); // uploads/music/Cumbia/Marama
+				$base_dir = dirname(dirname($img->src_img));
 
 				if ($exist_album == NULL) {
 
@@ -349,7 +349,7 @@ class AlbumsController extends Controller implements Crud
 								$album->save();
 
 								// PROCEDURE CHANGE_ROUTES_1
-								$procedure = ChangeRoutesProcedure::updateRouteAlbum($old_src.'/', $new_src.'/');
+								$procedure = ChangeRoutesProcedure::updateRouteArtist($old_src.'/', $new_src.'/');
 							}
 						}
 

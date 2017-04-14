@@ -15,6 +15,11 @@
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 Route::get('/help', 'HomeController@help');
+Route::get('/help/users', 'HomeController@helpUsers');
+Route::get('/help/music', 'HomeController@helpMusic');
+Route::get('/help/advertising', 'HomeController@helpAdvertising');
+Route::get('/forgotPassword', 'HomeController@forgotPassword');
+Route::post('/resetPassword', 'HomeController@resetPassword');
 
 // Login
 Route::get('/login', 'LoginController@showLoginForm');

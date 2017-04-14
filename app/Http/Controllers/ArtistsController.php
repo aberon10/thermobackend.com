@@ -249,7 +249,7 @@ class ArtistsController extends Controller implements Crud
 
 					// recupero la ruta de la imagen
 					$img = ImagenArtista::find($artist->id_artista);
-					$base_dir = '/app/public/'.dirname(dirname($img->src_img));
+					$base_dir = '/app/public/'.dirname(dirname($img->src_img)); // /app/public/uploads/music/nombre_genero
 
 					// nuevo genero
 					$genre = Genero::find($request->select);
@@ -280,8 +280,8 @@ class ArtistsController extends Controller implements Crud
 								$img->save();
 
 								// PROCEDURE CHANGE_ROUTES_1
-								$old_route = 'uploads/music/'.basename($base_dir).'/'.$old_name_artist.'/';
-								$new_route = 'uploads/music/'.ucfirst($genre->nombre_genero).'/'.$new_name_artist.'/';
+								$old_route = 'uploads/music/'.basename($base_dir).'/'.$old_name_artist.'/';  // uploads/music/old_genre/old_artist
+								$new_route = 'uploads/music/'.ucfirst($genre->nombre_genero).'/'.$new_name_artist.'/'; // uploads/music/new_genre/new_artist
 								$procedure = ChangeRoutesProcedure::updateRouteArtist($old_route, $new_route);
 							}
 						}

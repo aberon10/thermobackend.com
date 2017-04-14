@@ -3,10 +3,6 @@
 {{-- Titulo de la seccion izquierda--}}
 @section('title_left', config('config_app.sections_title.index_advertising'))
 
-{{-- Titulo de la seccion derecha--}}
-@section('title_right')
-	<span class="icon-help icon-large info"></span>
-@endsection
 
 {{-- Menu Vertical --}}
 @extends('layouts.menuapp')
