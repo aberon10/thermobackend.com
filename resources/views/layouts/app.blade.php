@@ -26,6 +26,9 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+	<noscript>
+		<meta http-equiv="refresh" content="0;URL='http://thermobackend.com/home/disabledJS'" />
+	</noscript>
 </head>
 <body>
 

@@ -20,6 +20,7 @@ Route::get('/help/music', 'HomeController@helpMusic');
 Route::get('/help/advertising', 'HomeController@helpAdvertising');
 Route::get('/forgotPassword', 'HomeController@forgotPassword');
 Route::post('/resetPassword', 'HomeController@resetPassword');
+Route::get('/home/disabledJS', 'HomeController@disabledJS');
 
 // Login
 Route::get('/login', 'LoginController@showLoginForm');

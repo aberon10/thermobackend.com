@@ -40,6 +40,11 @@ class HomeController extends Controller
 		return view('sections.forgot');
 	}
 
+	public function disabledJS(Request $request)
+	{
+		return view('sections.disabledJS');
+	}
+
 	/**
 	 * resetPassword
 	 *
