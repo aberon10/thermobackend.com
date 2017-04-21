@@ -11,7 +11,7 @@
     <div class="content">
         <div class="message-error">
             <h1>Javascript Deshabilitado.</h1>
-            <p>Upps! al parecer javscript no esta habilitado en tú navegador.</p>
+            <p>Upps! al parecer javascript no esta habilitado en tú navegador.</p>
             <p>Es necesario que lo actives para poder utilizar Thermobackend.</p>
 			<a class="button button-blue" href="http://thermobackend.com">ir a thermobackend.com</a>
         </div>
