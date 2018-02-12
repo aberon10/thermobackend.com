@@ -3,7 +3,7 @@
 	<div class="panel__heading">@yield('panel_title')</div>
 	<div class="panel__body">
 		<form action="#" method="POST" class="form" id="form-add" enctype="multipart/form-data">
-			{{csrf_field()}}
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<div class="form-group">
 				<label for="nombre" class="label">Nombre</label>
 				<input type="text" class="input" name="nombre" id="nombre" placeholder="Nombre" value="{{old('nombre')}}" autofocus>
@@ -85,7 +85,6 @@
 			@endif
 			{{-- DROP ZONE --}}
 			<div class="preview" id="drop-zone"></div>
-			<input type="submit" class="hide">
 		</form>
 	</div>
 </div>

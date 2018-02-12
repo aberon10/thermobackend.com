@@ -150,7 +150,7 @@ class AlbumsController extends Controller implements Crud
 	 * @return Illuminate\Http\Response
 	 */
 	public function add(Request $request)
-	{
+	{	
 		// validations fields
 		if ($errors = ValidationsMusic::validateFields($request->only('nombre', 'select', 'cant_pistas', 'anio', 'file'))) {
 			return response()->json([

@@ -4,6 +4,9 @@
  * @return undefined
  */
 Music.responseServerAdd = function(response) {
+
+	console.log(response);
+
 	if (response) {
 		if (response.hasOwnProperty('success') && !response.success) {
 			// exist
@@ -79,8 +82,8 @@ Music.responseServerAdd = function(response) {
  * @return undefined
  */
 Music.uploadToServer = function() {
-	var formData = null;
-	var url = window.location.href;
+	let formData = null;
+	let url = window.location.href;
 
 	// create a formData
 	formData = new FormData();
@@ -90,14 +93,15 @@ Music.uploadToServer = function() {
 	formData.append("file", Validations.file.FILES);
 	formData.append("cant_pistas", (Music.Fields.quantity_tracks) ? Music.Fields.quantity_tracks.value : '');
 	formData.append("anio", (Music.Fields.year) ? Music.Fields.year.value : '');
-
+	
 	if (Music.paths.edit.test(Music.PATHNAME)) {
 		url = url.replace("edit", "update");
 	}
 
+	Ajax.send(url, "POST", "json", Music.responseServerAdd, formData, "FormData");
+	
 	Animations.loaderMessage.innerHTML = 'Procesando solicitud...';
 	Animations.showHideLoader();
-	Ajax.send(url, "POST", "json", Music.responseServerAdd, formData, "FormData");
 };
 
 /**

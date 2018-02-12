@@ -117,7 +117,7 @@ Ajax.send = function(url, method, responseType, callback, data, typeData) {
 
         //
         http.onerror = function() {};
-
+        
         http.send(data);
 
     } catch (error) {

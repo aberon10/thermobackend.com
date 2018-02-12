@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\File;
@@ -13,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class TracksController extends Controller implements Crud
+class TracksController extends Controller
 {
     public function __construct() {
     	$this->middleware(['admin', 'account_type']);
@@ -71,7 +70,7 @@ class TracksController extends Controller implements Crud
 	 * @return Illuminate\Http\Response
 	 */
 	public function add(Request $request)
-	{
+	{	
 		// valido los campos nombre y select
 		if (NULL == ($errors = ValidationsMusic::validateFields($request->only('nombre', 'select')))) {
 			// valido el archivo

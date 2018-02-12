@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Http\Request;
+
 // Home - Help
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');

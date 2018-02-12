@@ -31,68 +31,85 @@ class Mail
 {
 	/**
 	 * send
-	 * Este metodo se encarga de realizar el envio de mails.
-	 *
-	 * @param string cuenta de correo del usuario
-	 * @param array datos necesarios para el mensaje
-	 * @param string contenido del mensaje
-	 * @param string mensaje alternativo
-	 * @return boolean retorna true si el envio del correo es exitoso de lo contrario
-	 *         retorna false.
+	 * @return boolean
 	 */
-	public static function send($to = '', array $data, $subject = '', $content = '', $alt_message = '')
-	{
-		// Create a new PHPMailer instance
-	    $mail = new \PHPMailer();
+	public static function send($to = '', array $data, $subject = '', $content = '', $alt_message = '') {
+		try {
+			$mail = new \PHPMailer;
 
-	   	$mail->CharSet = "utf-8";
+			// Set mailer to use SMTP
+			$mail->isSMTP();
 
-	    // Set PHPMailer to use the sendmail transport
-	    $mail->isSendmail();
+			// Enable SMTP debugging
+			// 0 = off (for production use)
+			// 1 = client messages
+			// 2 = client and server messages
+			$mail->SMTPDebug = 0;
 
-	    // Set who the message is to be sent from
-	    $mail->setFrom('thermoteam2016@gmail.com', 'ThermoBackend');
+			//Ask for HTML-friendly debug output
+			//$mail->Debugoutput = 'html';
 
-	    // Set an alternative reply-to address
-	    $mail->addReplyTo('thermoteam2016@gmail.com', 'ThermoBackend');
+			// Set the hostname of the mail server
+			$mail->Host = getenv('SMTP_HOST');
 
-	    // Set who the message is to be sent to
-	    $mail->addAddress(trim($to), trim($data['username']));
+			// TCP port to connect to
+			$mail->Port = getenv('SMTP_PORT');
 
-	    // Set the subject line
-	    $mail->Subject = $subject;
+			// Set the encryption system to use
+			$mail->SMTPSecure = 'tls';
 
-	    // Read an HTML message body from an external file, convert referenced images to embedded,
-	    // convert HTML into a basic plain-text alternative body
-	   	if (isset($content)) {
-	   		switch ($content) {
-	   			case 1:
-	   				$content = self::templateWelcome($data);
-	   				break;
-	   			case 2:
-	   				$content = self::templateUpdateAccount($data);
-	   				break;
-	   			default:
-	   				$content = self::templateWelcome($data);
-	   				break;
-	   		}
-	    	$mail->msgHTML($content);
-	   	}
+			// Whether to use SMTP authentication
+			$mail->SMTPAuth = true;
 
-	    // Replace the plain text body with one created manually
-	    $mail->AltBody = trim($alt_message);
+			// Username to use for SMTP authentication
+			$mail->Username = getenv('SMTP_USER');
 
-	    // Attach an image file
-	    //$mail->addAttachment('images/phpmailer_mini.png');
+			// Password to use for SMTP authentication
+			$mail->Password = getenv('SMTP_PASS');
 
-	    // Send the message, check for errors
-	    if (!$mail->send()) {
-	        // echo "Mailer Error: " . $mail->ErrorInfo;
-	        return false;
-	    } else {
-	        return true;
-	    }
+			// Set who the message is to be sent from
+			$mail->setFrom(getenv('APP_CONTACT_EMAIL'), getenv('APP_NAME'));
+
+			// Set an alternative reply-to address
+			$mail->addReplyTo(getenv('APP_CONTACT_EMAIL'), getenv('APP_NAME'));
+
+			// Set who the message is to be sent to
+			$mail->addAddress(trim($to), trim($data['username']));
+
+			//Set the subject line
+			$mail->Subject = $subject;
+
+			// Read an HTML message body from an external file, convert referenced images to embedded,
+			// convert HTML into a basic plain-text alternative body
+			if (isset($content)) {
+				switch ($content) {
+					case 1:
+						$content = self::templateWelcome($data);
+						break;
+					case 2:
+						$content = self::templateUpdateAccount($data);
+						break;
+					default:
+						$content = self::templateWelcome($data);
+						break;
+				}
+				$mail->msgHTML($content);
+			}
+
+			// Replace the plain text body with one created manually
+			$mail->AltBody = $alt_message;
+
+			// send the message, check for errors
+			if (!$mail->send()) {
+			    return 'Mailer Error: '.$mail->ErrorInfo;
+			} else {
+			    return true;
+			}
+		} catch (\phpmailerException $e) {
+			die($e->errorMessage());
+		}
 	}
+
 
 	/**
 	 * templateWelcome
@@ -198,22 +215,48 @@ class Mail
 	 *      retorna false.
 	 */
 	public static function sendMail($to = '', $username = '', $subject = '', $content = '', $alt_message = '') {
-		// Create a new PHPMailer instance
 		$mail = new \PHPMailer;
 
-		// Set PHPMailer to use the sendmail transport
-		$mail->isSendmail();
+		// Set mailer to use SMTP
+		$mail->isSMTP();
+
+		// Enable SMTP debugging
+		// 0 = off (for production use)
+		// 1 = client messages
+		// 2 = client and server messages
+		$mail->SMTPDebug = 0;
+
+		//Ask for HTML-friendly debug output
+		//$mail->Debugoutput = 'html';
+
+		// Set the hostname of the mail server
+		$mail->Host = getenv('SMTP_HOST');
+
+		// TCP port to connect to
+		$mail->Port = getenv('SMTP_PORT');
+
+		// Set the encryption system to use
+		$mail->SMTPSecure = 'tls';
+
+		// Whether to use SMTP authentication
+		$mail->SMTPAuth = true;
+
+		// Username to use for SMTP authentication
+		$mail->Username = getenv('SMTP_USER');
+
+		// Password to use for SMTP authentication
+		$mail->Password = getenv('SMTP_PASS');
 
 		// Set who the message is to be sent from
-		$mail->setFrom('thermoteam2016@gmail.com', 'ThermoBackend');
+		$mail->setFrom(getenv('APP_CONTACT_EMAIL'), getenv('APP_NAME'));
 
 		// Set an alternative reply-to address
-		$mail->addReplyTo('thermoteam2016@gmail.com', 'ThermoBackend');
+		$mail->addReplyTo(getenv('APP_CONTACT_EMAIL'), getenv('APP_NAME'));
 
 		// Set who the message is to be sent to
 		$mail->addAddress(trim($to), trim($username));
 
-		// Set the subject line
+		//Set the subject line
 		$mail->Subject = $subject;
 
 		// Read an HTML message body from an external file, convert referenced images to embedded,

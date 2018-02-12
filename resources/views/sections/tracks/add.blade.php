@@ -10,6 +10,11 @@
 @extends('layouts.form')
 @section('panel_title', config('config_app.sections_title.add_track'))
 
+{{-- Scripts --}}
+@section('scripts')
+	<script src="{{url('/js/app.min.js')}}"></script>
+@endsection
+
 {{-- Footer --}}
 @extends('layouts.footerapp')
 

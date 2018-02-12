@@ -3,16 +3,14 @@ const sass = require('gulp-sass');
 const plumber = require('gulp-plumber');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
-// const cssnano = require('cssnano');
-// const browserSync = require('browser-sync');
-// const sourcemaps = require('gulp-sourcemaps');
-// const browserify = require('browserify');
-// const babelify = require('babelify');
-// const buffer = require('vinyl-buffer');
-// const source = require('vinyl-source-stream');
-// const concatJS = require('gulp-concat');
-// const uglify = require('gulp-uglify');
-// const babel = require('gulp-babel');
+const cssnano = require('cssnano');
+const browserify = require('browserify');
+const babelify = require('babelify');
+const buffer = require('vinyl-buffer');
+const source = require('vinyl-source-stream');
+const concatJS = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const babel = require('gulp-babel');
 
 let postcssPlugins = [
     autoprefixer({
@@ -52,7 +50,6 @@ gulp.task('scripts', () =>
         './resources/assets/js/music/music-add-edit.js',
         './resources/assets/js/music/music-delete.js',
         './resources/assets/js/music/music-init.js',
-        './resources/assets/js/music/music-init.js',
         './resources/assets/js/search/*.js',
         './resources/assets/js/user/*.js',
         './resources/assets/js/advertising/*.js',
@@ -83,6 +80,6 @@ gulp.task('sw', () =>
 );
 
 gulp.task('default', () => {
-    gulp.watch('./resources/assets/scss/**/**.scss', ['styles']);
-    // gulp.watch('./resources/assets/js/**/**.js', ['scripts']);
+    // gulp.watch('./resources/assets/scss/**/**.scss', ['styles']);
+    gulp.watch('./resources/assets/js/**/**.js', ['scripts']);
 });

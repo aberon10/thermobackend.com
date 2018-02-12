@@ -19,7 +19,6 @@
 
     <!-- Icons -->
     <link href="{{url('css/icons/icons.css')}}" rel="stylesheet">
-
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
