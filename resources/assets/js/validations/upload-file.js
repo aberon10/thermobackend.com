@@ -47,7 +47,8 @@ Validations.file.mimeType = {
 	"audio": {
 		"mp3": "audio/mp3",
 		"audio_ogg": "audio/ogg",
-		"wav": "audio/wav"
+		"wav": "audio/wav",
+		"mpeg": "audio/mpeg"
 	},
 	"video": {
 		"mp4": "video/mp4",
@@ -210,6 +211,8 @@ Validations.file.upload = function(element, mime, create) {
 		return false;
 	}
 
+	console.log(mime);
+
 	/**
 	 * maxFileSize
 	 * Tamaño maximo del archivo (Bytes).
@@ -283,6 +286,10 @@ Validations.file.upload = function(element, mime, create) {
 		var i = 0;
 		var type = file[0].type; // tipo del archivo a subir
 		var countMime = Object.keys(Validations.file.mimeType).length; // cantidad de mimes
+
+
+		console.log(type);
+
 
 		// comprueba que el tipo mime sea valido
 		while (validType === false && i < countMime) {

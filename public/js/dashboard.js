@@ -137,5 +137,5 @@ $(document).ready(function () {
 
 			charUsers(porcentajes_usuarios);
 		})
-		.fail(function (jXHR) {});
-});
+		.fail(function (jXHR) { console.log(jXHR); });
+});c

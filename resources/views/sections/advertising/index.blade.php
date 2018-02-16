@@ -38,7 +38,7 @@
 		@foreach ($advertising_audio as $adv)
 			<div class="panel">
 				<div class="panel__heading">
-					<a href="{{url('/adv/edit/'.$adv->id_publicidad)}}">{{ $adv->nombre_publicidad}}</a>
+					<a href="{{url('/advertising/edit/'.$adv->id_publicidad)}}">{{ $adv->nombre_publicidad}}</a>
 					<div class="panel-buttons">
 						<input type="checkbox" class="" data-advertising="true" value="{{$adv->id_publicidad}}">
 						<span class="icon-chevron-down"></span>

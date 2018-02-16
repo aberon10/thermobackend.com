@@ -83,9 +83,11 @@ Animations.toggleMenuSecondary = function (e) {
  * @return undefined
  */
 Animations.togglePanel = function (e) {
-	var btnsToggle = document.querySelectorAll('span[data-toggle="panel"]');
+	var btnsToggle = Array.prototype.slice.call(document.querySelectorAll('span[data-toggle="panel"]'));
 
-	if (btnsToggle) {
+	console.log(btnsToggle);
+
+	if (btnsToggle && btnsToggle.length) {
 
 		btnsToggle.forEach(function (element, index) {
 			element.addEventListener('click', function (e) {
@@ -151,7 +153,7 @@ Animations.showHideLoader = function () {
 };
 
 Animations.tabs = function () {
-	var tabsLink = [].slice.call(document.querySelectorAll('a.tab-link'));
+	var tabsLink = Array.prototype.slice.call(document.querySelectorAll('a.tab-link'));
 
 	tabsLink.forEach(function (element, index) {
 		element.addEventListener('click', function (e) {
